@@ -123,6 +123,9 @@ class _database():
             strTable = strTable+_list[0]+" INT,"
         print(strTable[0:-1])
         self.m.executescript("CREATE TABLE IF NOT EXISTS Data ("+strTable[0:-1]+");")
+	
+    def executemany(self,string,many):
+	return self.m.executemany(string,many)
     def t1(self):
         self.m.execute("SELECT SQLITE_VERSION()")
         print(self.m.fetchone())
@@ -140,6 +143,11 @@ class _database():
     def rmrow(self,row):
         row=str(row)
         self.m.execute("DELETE FROM Data WHERE oid="+row+";")
+    def insTable(self,_tab):
+	for value in _tab:
+                    self.m.execute("INSERT INTO Data VALUES"+str(value))
+                    print("INSERT INTO Data VALUES"+str(value))
+
     def databaseImport(self):
         self.cleardb()
         location = "rawDatabases/"
@@ -153,10 +161,8 @@ class _database():
                 cur.execute("SELECT * FROM Data")
                 _tab = cur.fetchall()
                 print("~"+str(_tab))
-                for value in _tab:
-                    self.m.execute("INSERT INTO Data VALUES"+str(value))
-                    print("INSERT INTO Data VALUES"+str(value))
-
+		self.insTable(_tab)
+                
     def setLeVars(self):
         strTable = ""
         for _list in letable:
@@ -266,12 +272,35 @@ def clientEnd():
 
 	return render_template('client.html', test="Testing... 1... 2... 3...",letable=letable)
 
-@app.route("/submit")
+@app.route("/submit", methods=['GET','POST']) #change back to post
+def clientSubmit():
+	print(request.form.get("0"))
+	res = []	
+
+	i = -1
+	for _ in letable:
+		i = i +1
+		#try:
+		req = request.form.get(str(i))
+		if req == None:
+			req = 0
+
+		res.append( str(int(str(req))) )
+		print(str(i))
+		print("="+res[i])
+		print(str(i) == "29")
+		#except:
+		#	failure()
+		#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized and input is converted to a number before entry-->"
+	#insert into db
+	m = sq.connect("MASTERDB").cursor()
 	
+        m.execute("INSERT INTO Data VALUES("+str(res)[1:-1]+")")
 
-
-
-
+#m.executemany("INSERT INTO Data VALUES("+what+")",res)	
+	return str(res)
+	
+	
 
 
 
