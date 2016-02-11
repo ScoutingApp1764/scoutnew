@@ -47,6 +47,7 @@ def get_db():
     sql = getattr(g, 'MASTERDB', None)
     if sql is None:
         sql = g._database = sqlite3.connect("MASTERDB") 
+	return sql
 
 @app.route('/')
 def clientEnd():
@@ -113,4 +114,4 @@ def teamSort(s):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=82)
-    print("hi")
+    #get_db().close() 
