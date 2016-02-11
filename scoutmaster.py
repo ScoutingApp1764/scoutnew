@@ -64,7 +64,7 @@ def clientSubmit():
 	i = -1
 	for _ in letable:
 		i = i +1
-		#try:
+		try:
 		req = request.form.get(str(i))
 		if req == None:
 			req = 0
@@ -73,16 +73,15 @@ def clientSubmit():
 		print(str(i))
 		print("="+res[i])
 		print(str(i) == "29")
-		#except:
-		#	failure()
-		#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized --input is converted to a number before entry-->"
+		except:
+			failure()
+			return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized --input is converted to a number before entry-->"
 	#insert into db
 	
 	sql=get_db()
 	m=sql.cursor()
         m.execute("INSERT INTO Data VALUES("+str(res)[1:-1]+")")
 	sql.commit()
-	sql.close()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
 	return "<script>window.history.back()</script><p>Git javascript m8</p></script>"
@@ -99,7 +98,6 @@ def itemSort(s):
 	sql=get_db()
 	m=sql.cursor()
 	return render_template("server.html",s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
-	sql.close()
 	
 
 @app.route('/teamSort/<s>')
@@ -118,3 +116,4 @@ def teamSort(s):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=82)
+    print("hi")
