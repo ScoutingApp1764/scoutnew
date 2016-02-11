@@ -79,9 +79,9 @@ def clientSubmit():
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
 	return "<script>window.history.back()</script><p>Git javascript m8</p></script>"
 
+sql=sq.connect("MASTERDB")
 @app.route("/master")
 def serverEnd():
-	sql=sq.connect("MASTERDB")
 	m=sql.cursor()
 	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 	s.close()
