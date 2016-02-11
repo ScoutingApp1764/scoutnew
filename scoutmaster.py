@@ -43,13 +43,11 @@ for arg in sys.argv:
     if arg == "-c":
 	print"ur a dum"
 
-
+@app.before_request
 def get_db():
-    db = getattr(g, 'MASTERDB', None)
-    if db is None:
-        db = g._database = sqlite3.connect("MASTERDB") 
-    return db
-
+    sql = getattr(g, 'MASTERDB', None)
+    if sql is None:
+        sql = g._database = sqlite3.connect("MASTERDB") 
 
 @app.route('/')
 def clientEnd():
@@ -78,7 +76,7 @@ def clientSubmit():
 			return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized --input is converted to a number before entry-->"
 	#insert into db
 	
-	sql=get_db()
+	#sql=get_db()
 	m=sql.cursor()
         m.execute("INSERT INTO Data VALUES("+str(res)[1:-1]+")")
 	sql.commit()
@@ -88,14 +86,14 @@ def clientSubmit():
 
 @app.route("/master")
 def serverEnd():
-	sql=get_db()
+	#sql=get_db()
 	m=sql.cursor()
 	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 	s.close()
 @app.route('/itemSort/<s>')
 def itemSort(s):
 	s=int(s) #can never be too safe
-	sql=get_db()
+	#sql=get_db()
 	m=sql.cursor()
 	return render_template("server.html",s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 	
@@ -103,7 +101,7 @@ def itemSort(s):
 @app.route('/teamSort/<s>')
 def teamSort(s):
 	s=int(s) #can never be too safe
-	sql=get_db()
+	#sql=get_db()
 	m=sql.cursor()
 	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
