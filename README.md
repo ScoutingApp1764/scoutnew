@@ -1,15 +1,10 @@
-This is the 2016 1764 Scoutting App repository. It uses a >3.0 version of Tkinter and python2. 
-
-Complain to the macbook managers for using the old libraries and programming languages, they maintain this stuff.
+This is the 2016 1764 Scoutting App repository. The second one, anyway. It used python2 and Flask 0.10. 
+Hopefully this one doesn't get remade entirely again.
 
 ===
 
-Variable naming:
+Client instructions:
+If you can't figure out how to use this, you probably shouldn't be a scouter
 
-<abrievatedSubject><Tkinterclassabrev>
-
-ex: autoLabel
-For the autonomous label.
-
-For non-tkinter stuff, just make a 2-3 word named casedLikeThis.
-
+Master instructions:
+Go to the /master subsite. The top URLS will link to specific comparisons of certain attributes, and the numbers below link to specific teams
