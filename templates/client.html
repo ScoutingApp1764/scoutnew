@@ -1,0 +1,30 @@
+
+<p>Test: {{test}}</p>
+{# % for obj in letable %}
+	<p>{{obj.0}}</p>
+{% endfor % #}
+
+<form action="/submit" method=POST >
+{% set i = -1 %}
+{% for obj in letable %}
+	{% set i = i+1 %}
+	{% if obj.1 == 'radio' %}
+		{% set thisval = -1 %}
+		{% for thisname in obj.3 %}
+			{% set thisval = thisval+1 %}
+			<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
+		{% endfor %}
+		<br>
+	{% else %}
+		{% if obj.1 == 'check' %}
+			{% set type = 'checkbox' %}
+		{% elif obj.1 == 'updown' %}
+			{% set type = 'number' %}
+		{% endif %}
+		<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% else%}0{% endif %}">{{obj.2}} <br>
+	{% endif %}
+{% endfor %}
+
+
+<input type="submit">
+</form>
