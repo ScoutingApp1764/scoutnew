@@ -37,7 +37,7 @@ letable = [
 	["highScored","updown","Low scored"],
 	["strategy","radio","Strategy",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
 	["gaveBall","updown","Number of balls given to teammate"],
-	["recBall","check","Numberof balls recieved from team"],
+	["recBall","updown","Number of balls recieved from team"],
 	["manipFail","check","Manipulator failure"],
 	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"]
@@ -158,6 +158,7 @@ def _min(s,_isMax = False):
 	length = len(teamall)
 	i = -1
 	for ty in letable:
+		print(ty[1])
 		if ty[1] == "radio":
 			fakeall.append("No min/max for radiobuttons")
 		else:
