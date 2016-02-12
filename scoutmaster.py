@@ -108,7 +108,12 @@ def teamSort(s):
 
 
 
-
+#for ty in letable:
+#	for 6:
+#		addavg data[i][o] 	
+@app.route("/avg")
+def brilliance(s):
+	
 
 
 
