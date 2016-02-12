@@ -9,6 +9,7 @@
 {% for obj in letable %}
 	{% set i = i+1 %}
 	{% if obj.1 == 'radio' %}
+		{{obj.2}}
 		{% set thisval = -1 %}
 		{% for thisname in obj.3 %}
 			{% set thisval = thisval+1 %}
