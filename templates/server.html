@@ -37,15 +37,18 @@
 				{{letable[i].3[data]}}
 
 			{% elif letable[i].1 == 'check' %}
-				{{data}}
-				{% if data == 0 %}
-					[x]
+				{% if avg %}
+					{{data * 100}}% of the time
 				{% else %}
-					[√]
+					{% if data == 0 %}
+						[x]
+					{% else %}
+						[√]
+					{% endif %}
 				{% endif %}
 
 			{% else %}
-				{{data}}
+				{{data}} times {% if avg %}on average{% endif%}
 			{% endif %}
 			</td></tr>	
 		{% endfor %}
