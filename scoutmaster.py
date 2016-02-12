@@ -158,11 +158,11 @@ def _min(s,_isMax = False):
 	length = len(teamall)
 	i = -1
 	for ty in letable:
-		print(ty[1])
+		i = i+1
 		if ty[1] == "radio":
-			fakeall.append("No min/max for radiobuttons")
+			print("wasRadio")
+			fakeall.append(-1)
 		else:
-			i = i+1
 			fakeall.append(teamall[0][i])
 			for o in range(length-1):
 				if _isMax:
