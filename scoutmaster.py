@@ -130,12 +130,12 @@ def brilliance(s):
 	i = -1
 	for ty in letable:
 		i = i+1
-		fakeall.append([])
-		for o in range(length):
-			fakeall[i] = fakeall[i]+(teamall[i][o]/length)
+		fakeall.append(0)
+		for o in range(length-1):
+			fakeall[i] = fakeall[i]+(teamall[o][i]/length)
 	
 
-	purposeerror()
+	#purposeerror()
 	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakeall) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
