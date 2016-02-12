@@ -44,7 +44,11 @@
 				<tr><td>{{letable[i].2}}</td><td>
 				{% if letable[i].1 == 'radio' %}
 
-					{{letable[i].3[data]}}
+					{% if minmax %}
+						No radiobutton data for {{minmax}}imum
+					{% else %}
+						{{letable[i].3[data]}}
+					{% endif %}
 
 				{% elif letable[i].1 == 'check' %}
 					{% if minmax == 'max' %}
