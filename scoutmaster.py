@@ -22,7 +22,7 @@ letable = [
 	["gateCrossed","check","Crossed gate"],
 	["pickedBall","check","Picked up a ball"],
 	["startedBall","check","Started w/ ball"],
-	["shotBall","radio","Shot ball",["High","Low","Didn't"]],
+	["shotBall","radio","Shot ball",["Didn't","Low","High"]],
 	["teleHead","head","Teleop"],
 	["teleCSally","updown","Crossed sallywood"],
 	["teleCRough","updown","Crossed rough terrain"],
@@ -158,13 +158,16 @@ def _min(s,_isMax = False):
 	length = len(teamall)
 	i = -1
 	for ty in letable:
-		i = i+1
-		fakeall.append(teamall[0][i])
-		for o in range(length-1):
-			if _isMax:
-				fakeall[i] = max(fakeall[i],teamall[o][i])
-			else:
-				fakeall[i] = min(fakeall[i],teamall[o][i])
+		if ty[1] == "radio":
+			fakeall.append("No min/max for radiobuttons")
+		else:
+			i = i+1
+			fakeall.append(teamall[0][i])
+			for o in range(length-1):
+				if _isMax:
+					fakeall[i] = max(fakeall[i],teamall[o][i])
+				else:
+					fakeall[i] = min(fakeall[i],teamall[o][i])
 	minmax = "min"
 	if _isMax:
 		minmax = "max"
