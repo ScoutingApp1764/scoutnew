@@ -16,7 +16,15 @@ for arg in sys.argv:
 		m.execute("DELETE FROM Data WHERE 1=1")
 		s.commit()
 		s.close()
-		print("Database cleared. Continuing with application startup.")
+		print("Database cleared. Recreating template and continuing with application startup.")
+		self.s = sq.connect("MASTERDB") #This will make a very-obvously-declared master database
+		self.m = self.s.cursor()
+		#self.m.executescript("CREATE TABLE Data IF NOT EXISTS")
+		strTable = ""
+		for _list in letable:
+			strTable = strTable+_list[0]+" INT,"
+			print(strTable[0:-1])
+			self.m.executescript("CREATE TABLE IF NOT EXISTS Data ("+strTable[0:-1]+");")
 
 letable = [
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
