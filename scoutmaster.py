@@ -113,7 +113,27 @@ def teamSort(s):
 #		addavg data[i][o] 	
 @app.route("/avg")
 def brilliance(s):
+	s=int(s) #can never be too safe
+	sql=get_db()
+	m=sql.cursor()
 	
+	
+
+
+
+
+	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall())
+	fakeall = ()
+	length = len(teamall)
+	i = -1
+	for ty in letable:
+		i = i+1
+		for o in range(0):
+			fakeall[i] = fakeall[i]+(teamall[i][o]/length)
+	
+
+
+	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
 
