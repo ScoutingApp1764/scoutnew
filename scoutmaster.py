@@ -10,6 +10,7 @@ letable = [
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["teamNum","updown","Team num"],
 	["posi","radio","Position",["Red 1","Red 2","Red 3","Blue 1","Blue 2","Blue 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
+	["0","head","Autonomous:"],
 	["sallyScrossed","check","A: Crossed Sallydoors"],
 	["drawCrossed","check","A: Crossed drawbridge"],
 	["roughCrossed","check","A: Crossed rough terrain"],
@@ -22,6 +23,7 @@ letable = [
 	["pickedBall","check","A:Picked up a ball"],
 	["startedBall","check","A: Started w/ ball"],
 	["shotBall","radio","A: Shot ball",["High","Low","Didn't"]],
+	["1","head","Teleop"],
 	["teleCSally","updown","Crossed sallywood"],
 	["teleCRough","updown","Crossed rough terrain"],
 	["teleCStone","updown","Crossed stone wall"],
@@ -34,8 +36,8 @@ letable = [
 	["lowScored","updown","High scored"],
 	["highScored","updown","Low scored"],
 	["strategy","radio","Strategy",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
-	["gaveBall","check","Gave ball to teammate"],
-	["recBall","check","Recieved ball from team"],
+	["gaveBall","updown","Number of balls given tp teammate"],
+	["recBall","check","Numberof balls recieved from team"],
 	["manipFail","check","Manipulator failure"],
 	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"]

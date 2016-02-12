@@ -31,26 +31,29 @@
 	{% else %}
 		{% for data in datatable %}
 			{% set i = i+1 %}
-			<tr><td>{{letable[i].2}}</td><td>
-			{% if letable[i].1 == 'radio' %}
-
-				{{letable[i].3[data]}}
-
-			{% elif letable[i].1 == 'check' %}
-				{% if avg %}
-					{{data * 100}}% of the time
-				{% else %}
-					{% if data == 0 %}
-						[x]
-					{% else %}
-						[√]
-					{% endif %}
-				{% endif %}
-
+			{% if letable[i].1 == 'head' %}
+				<h1>{{letable[i].2}}</h1>
 			{% else %}
-				{{data}} times {% if avg %}on average{% endif%}
+				<tr><td>{{letable[i].2}}</td><td>
+				{% if letable[i].1 == 'radio' %}
+
+					{{letable[i].3[data]}}
+
+				{% elif letable[i].1 == 'check' %}
+					{% if avg %}
+						{{data * 100}}% of the time
+					{% else %}
+						{% if data == 0 %}
+							[x]
+						{% else %}
+							[√]
+						{% endif %}
+					{% endif %}
+				{% else %}
+					{{data}} times {% if avg %}on average{% endif%}
+				{% endif %}
+				</td></tr>	
 			{% endif %}
-			</td></tr>	
 		{% endfor %}
 		</table>
 		<hr>
