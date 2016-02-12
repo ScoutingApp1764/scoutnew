@@ -36,6 +36,8 @@ letable = [
 	["strategy","radio","Strategy",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
 	["gaveBall","check","Gave ball to teammate"],
 	["recBall","check","Recieved ball from team"],
+	["manipFail","check","Manipulator failure"],
+	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"]
 ]
 didC = False
