@@ -154,7 +154,7 @@ def brilliance(s):
 	
 
 	#purposeerror()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
 
