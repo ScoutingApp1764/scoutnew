@@ -50,14 +50,14 @@ for arg in sys.argv:
 		m = s.cursor()
 		#m.execute("DELETE FROM Data WHERE 1=1")
 		m.execute("DROP TABLE Data")
+		s.commit()
 		print("Database cleared. Recreating template and continuing with application startup.")
-		s = sqlite3.connect("MASTERDB") #This will make a very-obvously-declared master database
-		m = s.cursor()
+		
 		strTable = ""
 		for _list in letable:
 			strTable = strTable+_list[0]+" INT,"
 			print(strTable[0:-1])
-			m.executescript("CREATE TABLE IF NOT EXISTS Data ("+strTable[0:-1]+");")
+		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
 		
@@ -144,17 +144,17 @@ def brilliance(s):
 
 	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
 	fakeall = []
-	length = len(teamall)
+	length = float(len(teamall))
 	i = -1
 	for ty in letable:
 		i = i+1
-		fakeall.append(0)
-		for o in range(length-1):
-			fakeall[i] = fakeall[i]+(teamall[o][i]/length)
+		fakeall.append(0.0)
+		for o in range(int(length)-1):
+			fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 	
 
 	#purposeerror()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakeall) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
 
