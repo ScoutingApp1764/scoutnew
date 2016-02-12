@@ -40,7 +40,12 @@
 					{{letable[i].3[data]}}
 
 				{% elif letable[i].1 == 'check' %}
-					{% if avg or minmax %}
+					{% if minmax == 'max' %}
+						was ever checked
+					{% elif minmax == 'min' %}
+						was ever unchecked
+					{% endif %}
+					{% if avg  %}
 						{{data * 100}}% of the time
 					{% else %}
 						{% if data == 0 %}
