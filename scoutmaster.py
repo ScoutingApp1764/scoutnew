@@ -6,6 +6,18 @@ from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
 import sys
 
+didC = False
+for arg in sys.argv:
+    if arg == "-c":
+	print"Really clear database? [y/n]"
+	if raw_input() == "y":
+		s = sqlite3.connect("MASTERDB")
+		m = s.cursor()
+		m.execute("DELETE FROM Data WHERE 1=1")
+		s.commit()
+		s.close()
+		print("Database cleared. Continuing with application startup.")
+
 letable = [
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["teamNum","updown","Team num"],
@@ -40,11 +52,6 @@ letable = [
 	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"]
 ]
-didC = False
-for arg in sys.argv:
-    if arg == "-c":
-	print"ur a dum"
-
 def get_db():
     sql = getattr(g, 'MASTERDB', None)
     if sql is None:
