@@ -6,25 +6,6 @@ from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
 import sys
 
-didC = False
-for arg in sys.argv:
-    if arg == "-c":
-	print"Really clear database? [y/n]"
-	if raw_input() == "y":
-		s = sqlite3.connect("MASTERDB")
-		m = s.cursor()
-		m.execute("DELETE FROM Data WHERE 1=1")
-		print("Database cleared. Recreating template and continuing with application startup.")
-		s = sqlite3.connect("MASTERDB") #This will make a very-obvously-declared master database
-		m = s.cursor()
-		strTable = ""
-		for _list in letable:
-			strTable = strTable+_list[0]+" INT,"
-			print(strTable[0:-1])
-			m.executescript("CREATE TABLE IF NOT EXISTS Data ("+strTable[0:-1]+");")
-		s.commit()
-		s.close()
-
 letable = [
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["teamNum","updown","Team num"],
@@ -59,6 +40,29 @@ letable = [
 	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"]
 ]
+doNotStart = False
+for arg in sys.argv:
+    if arg == "-c":
+	doNotStart = True
+	print"Really clear database? [y/n]"
+	if raw_input() == "y":
+		s = sqlite3.connect("MASTERDB")
+		m = s.cursor()
+		#m.execute("DELETE FROM Data WHERE 1=1")
+		m.execute("DROP TABLE Data")
+		print("Database cleared. Recreating template and continuing with application startup.")
+		s = sqlite3.connect("MASTERDB") #This will make a very-obvously-declared master database
+		m = s.cursor()
+		strTable = ""
+		for _list in letable:
+			strTable = strTable+_list[0]+" INT,"
+			print(strTable[0:-1])
+			m.executescript("CREATE TABLE IF NOT EXISTS Data ("+strTable[0:-1]+");")
+		s.commit()
+		s.close()
+		
+
+
 def get_db():
     sql = getattr(g, 'MASTERDB', None)
     if sql is None:
@@ -154,6 +158,6 @@ def brilliance(s):
 
 
 
-if __name__ == '__main__':
+if __name__ == '__main__' and not doNotStart:
     app.run(debug=True, host='0.0.0.0',port=82)
     #get_db().close() 
