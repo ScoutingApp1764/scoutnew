@@ -10,7 +10,7 @@ letable = [
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["teamNum","updown","Team num"],
 	["posi","radio","Position",["Red 1","Red 2","Red 3","Blue 1","Blue 2","Blue 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
-	["0","head","Autonomous:"],
+	["0","head","Autonomous"],
 	["sallyScrossed","check","A: Crossed Sallydoors"],
 	["drawCrossed","check","A: Crossed drawbridge"],
 	["roughCrossed","check","A: Crossed rough terrain"],
@@ -36,7 +36,7 @@ letable = [
 	["lowScored","updown","High scored"],
 	["highScored","updown","Low scored"],
 	["strategy","radio","Strategy",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
-	["gaveBall","updown","Number of balls given tp teammate"],
+	["gaveBall","updown","Number of balls given to teammate"],
 	["recBall","check","Numberof balls recieved from team"],
 	["manipFail","check","Manipulator failure"],
 	["explodes","check","Spontaneous combustion"],
