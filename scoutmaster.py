@@ -125,16 +125,17 @@ def brilliance(s):
 
 
 	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
-	fakeall = ()
+	fakeall = []
 	length = len(teamall)
 	i = -1
 	for ty in letable:
 		i = i+1
-		for o in range(0):
+		fakeall.append([])
+		for o in range(length):
 			fakeall[i] = fakeall[i]+(teamall[i][o]/length)
 	
 
-
+	purposeerror()
 	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakeall) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
