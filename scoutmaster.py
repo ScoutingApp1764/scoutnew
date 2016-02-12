@@ -138,12 +138,6 @@ def brilliance(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	
-	
-
-
-
-
 	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
 	fakeall = []
 	length = float(len(teamall))
@@ -153,10 +147,40 @@ def brilliance(s):
 		fakeall.append(0.0)
 		for o in range(int(length)-1):
 			fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
-	
-
-	#purposeerror()
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+@app.route("/min/<s>")
+def _min(s):
+	s=int(s) #can never be too safe
+	sql=get_db()
+	m=sql.cursor()
+	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
+	fakeall = []
+	length = len(teamall)
+	i = -1
+	for ty in letable:
+		i = i+1
+		fakeall.append(-1)
+		for o in range(length-1):
+			fakeall[i] = min(fakeall[i],teamall[o][i]))
+	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+@app.route("/max/<s>")
+def _max(s):
+	s=int(s) #can never be too safe
+	sql=get_db()
+	m=sql.cursor()
+	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
+	fakeall = []
+	length = len(teamall)
+	i = -1
+	for ty in letable:
+		i = i+1
+		fakeall.append(-1)
+		for o in range(length-1):
+			fakeall[i] = max(fakeall[i],teamall[o][i]))
+	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+
+
+
 
 
 
