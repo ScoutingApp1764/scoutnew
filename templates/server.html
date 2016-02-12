@@ -40,7 +40,7 @@
 					{{letable[i].3[data]}}
 
 				{% elif letable[i].1 == 'check' %}
-					{% if avg %}
+					{% if avg or minmax %}
 						{{data * 100}}% of the time
 					{% else %}
 						{% if data == 0 %}
