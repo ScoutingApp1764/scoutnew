@@ -50,7 +50,7 @@
 						{% endif %}
 					{% endif %}
 				{% else %}
-					{{data}} times {% if avg %}on average{% endif%}
+					{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
 				{% endif %}
 				</td></tr>	
 			{% endif %}

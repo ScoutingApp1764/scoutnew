@@ -161,7 +161,7 @@ def _min(s):
 		i = i+1
 		fakeall.append(-1)
 		for o in range(length-1):
-			fakeall[i] = min(fakeall[i],teamall[o][i]))
+			fakeall[i] = min(fakeall[i],teamall[o][i])
 	return render_template("server.html",minmax="min",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 @app.route("/max/<s>")
 def _max(s):
@@ -176,7 +176,7 @@ def _max(s):
 		i = i+1
 		fakeall.append(-1)
 		for o in range(length-1):
-			fakeall[i] = max(fakeall[i],teamall[o][i]))
+			fakeall[i] = max(fakeall[i],teamall[o][i])
 	return render_template("server.html",minmax="max",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
