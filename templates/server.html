@@ -32,7 +32,7 @@
 		{% for data in datatable %}
 			{% set i = i+1 %}
 			{% if letable[i].1 == 'head' %}
-				<tr><td><h1>{{letable[i].2}}</h1></td><td>
+				<tr><td><hr><h1>{{letable[i].2}}</h1></td><td>
 			{% else %}
 				<tr><td>{{letable[i].2}}</td><td>
 				{% if letable[i].1 == 'radio' %}
@@ -56,7 +56,7 @@
 			{% endif %}
 		{% endfor %}
 		</table>
-		<hr>
+		<hr style = "border-width: 5px;">
 	{% endif %}
 {% endfor %}
 <!--p>hi i exist 2</p-->

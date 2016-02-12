@@ -7,22 +7,22 @@ app = Flask(__name__)
 import sys
 
 letable = [
-        ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["teamNum","updown","Team num"],
+        ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
 	["posi","radio","Position",["Red 1","Red 2","Red 3","Blue 1","Blue 2","Blue 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
 	["0","head","Autonomous"],
-	["sallyScrossed","check","A: Crossed Sallydoors"],
-	["drawCrossed","check","A: Crossed drawbridge"],
-	["roughCrossed","check","A: Crossed rough terrain"],
-	["stoneCrossed","check","A: Crossed stone wall"],
-	["moatCrossed","check","A: Crossed moat"],
-	["sawCrossed","check","A: Crossed seasaw"],
-	["lowCrossed","check","A: Crossed lowbar"],
-	["rampCrossed","check","A: Crossedramp"],
-	["gateCrossed","check","A: Crossed gate"],
-	["pickedBall","check","A:Picked up a ball"],
-	["startedBall","check","A: Started w/ ball"],
-	["shotBall","radio","A: Shot ball",["High","Low","Didn't"]],
+	["sallyScrossed","check","Crossed Sallydoors"],
+	["drawCrossed","check","Crossed drawbridge"],
+	["roughCrossed","check","Crossed rough terrain"],
+	["stoneCrossed","check","Crossed stone wall"],
+	["moatCrossed","check","Crossed moat"],
+	["sawCrossed","check","Crossed seasaw"],
+	["lowCrossed","check","Crossed lowbar"],
+	["rampCrossed","check","Crossedramp"],
+	["gateCrossed","check","Crossed gate"],
+	["pickedBall","check","Picked up a ball"],
+	["startedBall","check","Started w/ ball"],
+	["shotBall","radio","Shot ball",["High","Low","Didn't"]],
 	["1","head","Teleop"],
 	["teleCSally","updown","Crossed sallywood"],
 	["teleCRough","updown","Crossed rough terrain"],

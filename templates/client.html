@@ -1,5 +1,3 @@
-
-<p>Test: {{test}}</p>
 {# % for obj in letable %}
 	<p>{{obj.0}}</p>
 {% endfor % #}
@@ -16,6 +14,8 @@
 			<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
 		{% endfor %}
 		<br>
+	{% elif obj.1 == 'head' %}
+		<hr><h1>{{obj.2}}</h1>
 	{% else %}
 		{% if obj.1 == 'check' %}
 			{% set type = 'checkbox' %}
