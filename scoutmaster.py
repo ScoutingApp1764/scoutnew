@@ -68,8 +68,9 @@ for arg in sys.argv:
 
 def soap(washed):
 	washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
-	string.replace(washed,"\x00","NUL")
+	string.replace(washed,"\x00","NUL") #Nullify any null-character attempts
 	string.replace(washed,'"','""') #no little bobby tables	
+	return washed
 
 
 def get_db():
@@ -86,24 +87,21 @@ def clientEnd():
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
 	res = []	
-
 	i = -1
-	for _ in letable:
+	for ty in letable:
 		i = i +1
 		try:
-			req = request.form.get(str(i))
-			if req == None:
-				req = 0
-
-			res.append( str(int(str(req))) )
+			var = request.form.get(str(i))
+			if var == None:
+				var = 0
+			res.append( soap(var) )
 		except:
-			failure()
-			return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized --input is converted to a number before entry-->"
+			return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized"
 	#insert into db
 	
 	sql=get_db()
 	m=sql.cursor()
-        m.execute("INSERT INTO Data VALUES("+str(res)[1:-1]+")")
+        m.execute("INSERT INTO Data VALUES("+res[1:-1]+")")
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
