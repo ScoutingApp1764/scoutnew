@@ -141,7 +141,6 @@ def brilliance(s):
 	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
 	fakeall = []
 	length = float(len(teamall))
-	_everNot0 = False
 	i = -1
 	for ty in letable: #go through letable
 		i = i+1 # fake a range for loo
@@ -151,25 +150,14 @@ def brilliance(s):
 				fakeall[i].append(0)
 		else:
 			fakeall.append(0.0)#normal
-		for o in range(int(length)-1):
+		for o in range(int(length)):
 			if ty[1] == "radio":
-				_radioValues = teamall[o][i]
-				if _radioValues is not 0:
-					_everNot0 = True
-					print"we area sucsesws"
-				_fakeAllPos = fakeall[i]
-				_teamAllPos = teamall[o]
-				
-				_fakeAllFullIndexation = fakeall[i][teamall[o][i]]				
-
 				#Go to the radio button's table, then go to that specific radio button option that was checked this time arround
 				#Add a 1 divided by the total ammount of radio buttons to it if it was checked this time
 				#We get which radio button was checked by the value of the the radio button 
 				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
-				#more()
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
-	#intentionalerrr()
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
