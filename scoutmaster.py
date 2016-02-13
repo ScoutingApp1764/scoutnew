@@ -163,6 +163,7 @@ def brilliance(s):
 				_fakeAllFullIndexation = fakeall[i][teamall[o][i]]				
 
 				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)	
+				more()
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 	intentionalerrr()
