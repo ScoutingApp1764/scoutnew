@@ -8,7 +8,7 @@ import sys
 
 letable = [
 	["teamNum","updown","Team num"],
-        ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]
+        ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
 	["posi","radio","Position",["Red 1","Red 2","Red 3","Blue 1","Blue 2","Blue 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
 	["autoHead","head","Autonomous"],
 	["sallyScrossed","check","Crossed Sallydoors"],
@@ -23,6 +23,7 @@ letable = [
 	["pickedBall","check","Picked up a ball"],
 	["startedBall","check","Started w/ ball"],
 	["shotBall","radio","Shot ball",["Didn't","Low","High"]],
+	["wasntABrick","check","Moved to ramp"],
 	["teleHead","head","Teleop"],
 	["teleCSally","updown","Crossed sallywood"],
 	["teleCRough","updown","Crossed rough terrain"],
@@ -40,7 +41,8 @@ letable = [
 	["recBall","updown","Number of balls recieved from team"],
 	["manipFail","check","Manipulator failure"],
 	["explodes","check","Spontaneous combustion"],
-	["gotStuck","check","Got stuck"]
+	["gotStuck","check","Got stuck"],
+	["paperweight","check","Didn't move at all"],
 ]
 doNotStart = False
 for arg in sys.argv:
