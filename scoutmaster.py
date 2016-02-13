@@ -87,9 +87,11 @@ def clientEnd():
 
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
-	res = []
+	res = ()
+	what = ""
 	i = -1
 	for ty in letable:
+		what = what+"?,"
 		i = i +1
 		try:
 			var = request.form.get(str(i))
@@ -102,7 +104,7 @@ def clientSubmit():
 	
 	sql=get_db()
 	m=sql.cursor()
-        m.execute("INSERT INTO Data VALUES("+str(res[1:-1])+")")
+        m.executemany("INSERT INTO Data VALUES("+what[0:-1]+")",[res])
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
