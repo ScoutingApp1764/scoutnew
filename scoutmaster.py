@@ -5,6 +5,8 @@ import sqlite3
 from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
 import sys
+from sqlalchemy import Sequence, create_engine,
+from sqlalchemy.orm import sessionmaker
 
 letable = [
 	["teamNum","updown","Team num"],
@@ -52,7 +54,6 @@ for arg in sys.argv:
 	if raw_input() == "y":
 		s = sqlite3.connect("MASTERDB")
 		m = s.cursor()
-		#m.execute("DELETE FROM Data WHERE 1=1")
 		m.execute("DROP TABLE IF EXISTS Data")
 		s.commit()
 		print("Database cleared. Recreating template and continuing with application startup.")
