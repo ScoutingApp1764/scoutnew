@@ -70,6 +70,7 @@ def soap(washed):
 	washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
 	string.replace(washed,"\x00","NUL") #Nullify any null-character attempts
 	string.replace(washed,'"','""') #no little bobby tables	
+	string.replace(washed,"'","''") #no little bobby tables	
 	return washed
 
 
