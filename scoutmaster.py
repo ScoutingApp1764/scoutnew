@@ -5,7 +5,7 @@ import sqlite3
 from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
 import sys
-from sqlalchemy import Sequence, create_engine,
+from sqlalchemy import Sequence, create_engine,Column, Integer, String,
 from sqlalchemy.orm import sessionmaker
 
 letable = [
