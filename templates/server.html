@@ -49,7 +49,7 @@
 					{% elif avg %}
 						{% set butnum = -1 %}
 						{% for butavged in data %}
-							{% set butnum = butnum + 1 }
+							{% set butnum = butnum + 1 %}
 							{{letable[i].3[butnum]}}: {{butavged * 100}}%, 
 						{% endfor %}
 							
