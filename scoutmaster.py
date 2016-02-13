@@ -60,7 +60,6 @@ for arg in sys.argv:
 		strTable = ""
 		for _list in letable:
 			strTable = strTable+_list[0]+" INT,"
-			print(strTable[0:-1])
 		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
@@ -80,7 +79,6 @@ def clientEnd():
 
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
-	print(request.form.get("0"))
 	res = []	
 
 	i = -1
@@ -92,9 +90,6 @@ def clientSubmit():
 				req = 0
 
 			res.append( str(int(str(req))) )
-			print(str(i))
-			print("="+res[i])
-			print(str(i) == "29")
 		except:
 			failure()
 			return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized --input is converted to a number before entry-->"
@@ -176,7 +171,6 @@ def _min(s,_isMax = False):
 	for ty in letable:
 		i = i+1
 		if ty[1] == "radio":
-			print("wasRadio")
 			fakeall.append(-1)
 		else:
 			fakeall.append(teamall[0][i])
