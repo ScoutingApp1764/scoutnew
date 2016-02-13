@@ -152,7 +152,10 @@ def brilliance(s):
 			fakeall.append(0.0)
 		for o in range(int(length)-1):
 			if ty[1] == "radio":
-				_db = teamall[o][i]
+				_radioValues = teamall[o][i]
+				_fakeAllPos = fakeall[i]
+				_teamAllPos = teamall[o]
+				
 				fakeall[i][teamall[o][i]] = fakeall[i][teamall[i][o]] + (1.0/length)	
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
