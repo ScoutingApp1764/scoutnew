@@ -143,14 +143,14 @@ def brilliance(s):
 	length = float(len(teamall))
 	_everNot0 = False
 	i = -1
-	for ty in letable:
-		i = i+1
-		if ty[1] == "radio":
-			fakeall.append([])
-			for radios in ty[3]:
+	for ty in letable: #go through letable
+		i = i+1 # fake a range for loo
+		if ty[1] == "radio": #different method of handling radio buttons
+			fakeall.append([]) # we will have a table of avg times radiobutton was checked
+			for radios in ty[3]: #iterate thru the optinos and create a 0 value for them
 				fakeall[i].append(0)
 		else:
-			fakeall.append(0.0)
+			fakeall.append(0.0)#normal
 		for o in range(int(length)-1):
 			if ty[1] == "radio":
 				_radioValues = teamall[o][i]
@@ -162,11 +162,14 @@ def brilliance(s):
 				
 				_fakeAllFullIndexation = fakeall[i][teamall[o][i]]				
 
-				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)	
-				more()
+				#Go to the radio button's table, then go to that specific radio button option that was checked this time arround
+				#Add a 1 divided by the total ammount of radio buttons to it if it was checked this time
+				#We get which radio button was checked by the value of the the radio button 
+				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
+				#more()
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
-	intentionalerrr()
+	#intentionalerrr()
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
 
 
