@@ -46,6 +46,13 @@
 
 					{% if minmax %}
 						No radiobutton data for {{minmax}}imum
+					{% elif avg %}
+						{% set butnum = -1 %}
+						{% for butavged in data %}
+							{% set butnum = butnum + 1 }
+							{{letable[i].3[butnum]}}: {{butavged * 100}}%, 
+						{% endfor %}
+							
 					{% else %}
 						{{letable[i].3[data]}}
 					{% endif %}

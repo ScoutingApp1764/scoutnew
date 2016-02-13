@@ -156,7 +156,9 @@ def brilliance(s):
 				_fakeAllPos = fakeall[i]
 				_teamAllPos = teamall[o]
 				
-				fakeall[i][teamall[o][i]] = fakeall[i][teamall[i][o]] + (1.0/length)	
+				_fakeAllFullIndexation = fakeall[i][teamall[o][i]]				
+
+				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)	
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
