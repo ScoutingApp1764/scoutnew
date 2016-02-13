@@ -1,6 +1,6 @@
 YUP Headers not messing up stuff
 YUP Add min & max + min/max/avg links
-*avg/min/max handing of radiobuttons
+YUPORONDOS avg/min/max handing of radiobuttons
 *Switch to SQLAlchemy (not using object stuff)
 *Then, add text box to other
 *Graphs

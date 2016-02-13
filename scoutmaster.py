@@ -193,4 +193,3 @@ def _max(s):
 
 if __name__ == '__main__' and not doNotStart:
     app.run(debug=True, host='0.0.0.0',port=82)
-    #get_db().close() 
