@@ -141,6 +141,7 @@ def brilliance(s):
 	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
 	fakeall = []
 	length = float(len(teamall))
+	_everNot0 = False
 	i = -1
 	for ty in letable:
 		i = i+1
@@ -153,6 +154,9 @@ def brilliance(s):
 		for o in range(int(length)-1):
 			if ty[1] == "radio":
 				_radioValues = teamall[o][i]
+				if _radioValues is not 0:
+					_everNot0 = True
+					print"we area sucsesws"
 				_fakeAllPos = fakeall[i]
 				_teamAllPos = teamall[o]
 				
