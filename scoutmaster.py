@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #This is a fork of scoutmaster.py with an html frontend, which is a fork of...
 #FORK OF SCOUT.PY, TKINTER REMOVED
+import string
 import sqlite3
 from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
@@ -63,6 +64,12 @@ for arg in sys.argv:
 		s.commit()
 		s.close()
 		
+
+
+def soap(washed):
+	washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
+	string.replace(washed,"\x00","NUL")
+	string.replace(washed,'"','""') #no little bobby tables	
 
 
 def get_db():
