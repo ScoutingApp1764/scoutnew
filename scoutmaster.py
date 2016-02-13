@@ -86,7 +86,7 @@ def clientEnd():
 
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
-	res = []	
+	res = []
 	i = -1
 	for ty in letable:
 		i = i +1
@@ -101,7 +101,7 @@ def clientSubmit():
 	
 	sql=get_db()
 	m=sql.cursor()
-        m.execute("INSERT INTO Data VALUES("+res[1:-1]+")")
+        m.execute("INSERT INTO Data VALUES("+str(res[1:-1])+")")
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
@@ -111,14 +111,14 @@ def clientSubmit():
 def serverEnd():
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) 
 	s.close()
 @app.route('/itemSort/<s>')
 def itemSort(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
 	
 
 @app.route('/teamSort/<s>')
@@ -126,7 +126,7 @@ def teamSort(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) 
 
 
 
@@ -159,7 +159,7 @@ def brilliance(s):
 				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
 			else:
 				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
-	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
 
@@ -186,7 +186,7 @@ def _min(s,_isMax = False):
 	minmax = "min"
 	if _isMax:
 		minmax = "max"
-	return render_template("server.html",minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+	return render_template("server.html",minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 @app.route("/max/<s>")
 def _max(s):
 	return _min(s,True)
