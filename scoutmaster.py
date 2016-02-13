@@ -159,9 +159,15 @@ def brilliance(s):
 				#Go to the radio button's table, then go to that specific radio button option that was checked this time arround
 				#Add a 1 divided by the total ammount of radio buttons to it if it was checked this time
 				#We get which radio button was checked by the value of the the radio button 
-				fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
+				try:
+					fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
+				except:
+					fakeall[i][teamall[o][i]] = "An error occured while trying to average this data"
 			else:
-				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
+				try:
+					fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
+				except:
+					fakeall[i] = "An error occured while trying to average this data"
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
@@ -182,10 +188,13 @@ def _min(s,_isMax = False):
 		else:
 			fakeall.append(teamall[0][i])
 			for o in range(length-1):
-				if _isMax:
-					fakeall[i] = max(fakeall[i],teamall[o][i])
-				else:
-					fakeall[i] = min(fakeall[i],teamall[o][i])
+				try:
+					if _isMax:
+						fakeall[i] = max(fakeall[i],teamall[o][i])
+					else:
+						fakeall[i] = min(fakeall[i],teamall[o][i])
+				except:
+					fakeall[i] = "An error occured while trying to min or max this data"
 	minmax = "min"
 	if _isMax:
 		minmax = "max"
