@@ -144,10 +144,22 @@ def brilliance(s):
 	i = -1
 	for ty in letable:
 		i = i+1
-		fakeall.append(0.0)
+		if ty[1] == "radio":
+			fakeall.append([])
+			for radios in ty[3]:
+				fakeall[i].append(0)
+		else:
+			fakeall.append(0.0)
 		for o in range(int(length)-1):
-			fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
+			if ty[1] == "radio":
+				_db = teamall[o][i]
+				fakeall[i][teamall[o][i]] = fakeall[i][teamall[i][o]] + (1.0/length)	
+			else:
+				fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) #BOY, SURE HOPE THIS DOESN'T GET AN DATABASE ERROR
+
+
+
 @app.route("/min/<s>")
 def _min(s,_isMax = False):
 	s=int(s) #can never be too safe
