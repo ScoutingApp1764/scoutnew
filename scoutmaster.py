@@ -128,7 +128,7 @@ def clientSubmit():
 def serverEnd():
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) 
+	return render_template("server.html",secureMode=secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) 
 	s.close()
 @app.route('/itemSort/<s>')
 def itemSort(s):

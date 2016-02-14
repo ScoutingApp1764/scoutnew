@@ -6,5 +6,6 @@ NOPE, just sanitized SQLite | Switch to SQLAlchemy (not using object stuff)
 *Submit databases to master over an internet connection. Needs to have some sort of fallback.
 *Graphs
 *UI Clean-up
+*Modifying data on the server-side. Probably won't be needed but you never know.
 *
 
