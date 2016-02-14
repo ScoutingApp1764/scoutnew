@@ -3,12 +3,14 @@
 	<head>
 	</head>
 	<body>
-		<h1><center>1764 Scouting App</center></h1>
+		<center>
+			<h1>1764 Scouting App</h1>
 
-		{% if secureMode %}
-			<h2><center>Secure Mode - No modifying data.</center></h2>
-		{% endif %}
-
+			{% if secureMode %}
+				<h2>Secure Mode - No modifying data.</h2>
+			{% endif %}
+			<h3>Database View</h3>
+		</center>
 
 		{% set i = -1 %}
 		{% for part in letable %}
@@ -95,6 +97,5 @@
 				<hr style = "border-width: 5px;">
 			{% endif %}
 		{% endfor %}
-		<!--p>hi i exist 2</p-->
 	</body>
 </html>
