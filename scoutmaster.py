@@ -112,7 +112,7 @@ def clientSubmit():
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
-	return "<script>window.history.back()</script><p>Git javascript m8</p></script>"
+	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/\"></head></html>"
 
 @app.route("/master")
 def serverEnd():
