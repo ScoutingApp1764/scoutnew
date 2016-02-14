@@ -10,7 +10,8 @@ import sys
 letable = [
 	["teamNum","updown","Team num"],
         ["roundNum","updown","Round Num"], #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
-	["posi","radio","Position",["Red 1","Red 2","Red 3","Blue 1","Blue 2","Blue 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
+	["isRed","check","Is on red team"],
+	["posi","radio","Position",["Position 1","Position 2","Position 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
 	["autoHead","head","Autonomous"],
 	["sallyScrossed","check","Crossed Sallyport"],
 	["drawCrossed","check","Crossed drawbridge"],
