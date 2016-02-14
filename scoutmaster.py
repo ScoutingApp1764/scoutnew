@@ -8,9 +8,9 @@ app = Flask(__name__)
 import sys
 
 letable = [
-	["teamNum","updown","Team num","The team number you're scouting"],
+	["teamNum","updown","Team num","The team number"],
         ["roundNum","updown","Round Num","The round number"], #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
-	["isRed","check","Is on red team","Is the robot you're scouting on the red team?"],
+	["isRed","check","Is on red team","Is the robot on the red team?"],
 	["posi","radio","Position","The position--starting from the closest to you and going to the farthest--the robot is in",["Position 1","Position 2","Position 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
 	["autoHead","head","Autonomous"],
 	["sallyScrossed","check","Crossed Sallyport","Wheather the robot crossed the sallyport in autonomous"],
