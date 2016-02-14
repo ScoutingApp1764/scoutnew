@@ -1,91 +1,100 @@
-{% if secureMode %}
-	<h2><center>Secure Mode - No modifying data.</center></h2>
-{% endif %}
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1><center>1764 Scouting App</center></h1>
 
-
-{% set i = -1 %}
-{% for part in letable %}
-	{% set i = i+1 %}
-	<a href="/itemSort/{{i}}">{{part.2}}</a>
-{% endfor %}
-<br>
-
-{% for datatable in teams %}
-	{{datatable.0}}:
-	{% set humanReads = ["Team","Avg","Min","Max"] %}
-	{% set i = -1 %}
-	{% for link in ["teamSort","avg","min","max"] %}
-		{% set i = i+1 %}
-		<a href="/{{link}}/{{datatable.0}}">{{humanReads[i]}}</a>
-	{% endfor %}
-	; 
-{% endfor %}
-
-
-
-
-
-
-
-
-{% set lastTeam = -1337 %}
-{% for datatable in alls %}
-	<table>
-	{% set i = -1 %}
-	{% if itemSort %}
-		{% if lastTeam != datatable.0 %}
-			<hr>
-			<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
+		{% if secureMode %}
+			<h2><center>Secure Mode - No modifying data.</center></h2>
 		{% endif %}
-		{% set lastTeam = datatable.0 %}
-		<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
-				
-	{% else %}
-		{% for data in datatable %}
+
+
+		{% set i = -1 %}
+		{% for part in letable %}
 			{% set i = i+1 %}
-			<tr title="{{letable[i].3}}">
-			{% if letable[i].1 == 'head' %}
-				<td><hr><h1>{{letable[i].2}}</h1></td><td>
-			{% else %}
-				<td>{{letable[i].2}}</td><td>
-				{% if letable[i].1 == 'radio' %}
+			<a href="/itemSort/{{i}}">{{part.2}}</a>
+		{% endfor %}
+		<br>
 
-					{% if minmax %}
-						No radiobutton data for {{minmax}}imum
-					{% elif avg %}
-						{% set butnum = -1 %}
-						{% for butavged in data %}
-							{% set butnum = butnum + 1 %}
-							{{letable[i].4[butnum]}}: {{butavged * 100}}%, 
-						{% endfor %}
-							
-					{% else %}
-						{{letable[i].4[data]}}
-					{% endif %}
+		{% for datatable in teams %}
+			{{datatable.0}}:
+			{% set humanReads = ["Team","Avg","Min","Max"] %}
+			{% set i = -1 %}
+			{% for link in ["teamSort","avg","min","max"] %}
+				{% set i = i+1 %}
+				<a href="/{{link}}/{{datatable.0}}">{{humanReads[i]}}</a>
+			{% endfor %}
+			; 
+		{% endfor %}
 
-				{% elif letable[i].1 == 'check' %}
-					{% if minmax == 'max' %}
-						was ever checked
-					{% elif minmax == 'min' %}
-						was ever unchecked
-					{% endif %}
-					{% if avg  %}
-						{{data * 100}}% of the time
-					{% else %}
-						{% if data == 0 %}
-							[x]
-						{% else %}
-							[√]
-						{% endif %}
-					{% endif %}
-				{% else %}
-					{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+
+
+
+
+
+
+
+		{% set lastTeam = -1337 %}
+		{% for datatable in alls %}
+			<table>
+			{% set i = -1 %}
+			{% if itemSort %}
+				{% if lastTeam != datatable.0 %}
+					<hr>
+					<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
 				{% endif %}
-				</td></tr>	
+				{% set lastTeam = datatable.0 %}
+				<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
+						
+			{% else %}
+				{% for data in datatable %}
+					{% set i = i+1 %}
+					<tr title="{{letable[i].3}}">
+					{% if letable[i].1 == 'head' %}
+						<td><hr><h1>{{letable[i].2}}</h1></td><td>
+					{% else %}
+						<td>{{letable[i].2}}</td><td>
+						{% if letable[i].1 == 'radio' %}
+
+							{% if minmax %}
+								No radiobutton data for {{minmax}}imum
+							{% elif avg %}
+								{% set butnum = -1 %}
+								{% for butavged in data %}
+									{% set butnum = butnum + 1 %}
+									{{letable[i].4[butnum]}}: {{butavged * 100}}%, 
+								{% endfor %}
+									
+							{% else %}
+								{{letable[i].4[data]}}
+							{% endif %}
+
+						{% elif letable[i].1 == 'check' %}
+							{% if minmax == 'max' %}
+								was ever checked
+							{% elif minmax == 'min' %}
+								was ever unchecked
+							{% endif %}
+							{% if avg  %}
+								{{data * 100}}% of the time
+							{% else %}
+								{% if data == 0 %}
+									[x]
+								{% else %}
+									[√]
+								{% endif %}
+							{% endif %}
+						{% else %}
+							{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+						{% endif %}
+						</td></tr>	
+					{% endif %}
+				{% endfor %}
+				</table>
+				<hr style = "border-width: 5px;">
 			{% endif %}
 		{% endfor %}
-		</table>
-		<hr style = "border-width: 5px;">
-	{% endif %}
-{% endfor %}
-<!--p>hi i exist 2</p-->
+		<!--p>hi i exist 2</p-->
+	</body>
+</html>

@@ -1,36 +1,44 @@
-{# % for obj in letable %}
-	<p>{{obj.0}}</p>
-{% endfor % #}
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1><center>1764 Scouting App</center></h1>
+		{# % for obj in letable %}
+			<p>{{obj.0}}</p>
+		{% endfor % #}
 
-<form action="/submit" method=POST >
-{% set i = -1 %}
-{% for obj in letable %}
-	<div title="{{obj.3}}">
-	{% set i = i+1 %}
-	{% if obj.1 == 'radio' %}
-		{{obj.2}}:  
-		{% set thisval = -1 %}
-		{% for thisname in obj.4 %}
-			{% set thisval = thisval+1 %}
-			<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
+		<form action="/submit" method=POST >
+		{% set i = -1 %}
+		{% for obj in letable %}
+			<div title="{{obj.3}}">
+			{% set i = i+1 %}
+			{% if obj.1 == 'radio' %}
+				{{obj.2}}:  
+				{% set thisval = -1 %}
+				{% for thisname in obj.4 %}
+					{% set thisval = thisval+1 %}
+					<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
+				{% endfor %}
+				<br>
+			{% elif obj.1 == 'head' %}
+				<hr><h1>{{obj.2}}</h1>
+			{% else %}
+				{% if obj.1 == 'check' %}
+					{% set type = 'checkbox' %}
+				{% elif obj.1 == 'updown' %}
+					{% set type = 'number' %}
+				{% elif obj.1 == 'text' %}
+					{% set type = 'text' %}
+				{% endif %}
+				<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% elif type == 'text' %} {% else%}0{% endif %}"> {{obj.2}} <br> 
+				{# Code inside a string. That's amazing. #}
+				</div>
+			{% endif %}
 		{% endfor %}
-		<br>
-	{% elif obj.1 == 'head' %}
-		<hr><h1>{{obj.2}}</h1>
-	{% else %}
-		{% if obj.1 == 'check' %}
-			{% set type = 'checkbox' %}
-		{% elif obj.1 == 'updown' %}
-			{% set type = 'number' %}
-		{% elif obj.1 == 'text' %}
-			{% set type = 'text' %}
-		{% endif %}
-		<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% elif type == 'text' %} {% else%}0{% endif %}"> {{obj.2}} <br> 
-		{# Code inside a string. That's amazing. #}
-		</div>
-	{% endif %}
-{% endfor %}
 
 
-<input type="submit">
-</form>
+		<input type="submit">
+		</form>
+	</body>
+</html>
