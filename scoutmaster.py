@@ -112,7 +112,7 @@ def clientSubmit():
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
-	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/\"></head></html>"
+	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
 
 @app.route("/master")
 def serverEnd():
