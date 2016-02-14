@@ -190,7 +190,7 @@ def _min(s,_isMax = False):
 		if ty[1] == "radio":
 			fakeall.append(-1)
 		else:
-			fakeall.append(teamall[0][i])
+			fakeall.append(teamall[o][i])
 			for o in range(length-1):
 				try:
 					if _isMax:
