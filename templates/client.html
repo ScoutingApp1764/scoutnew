@@ -9,7 +9,7 @@
 	{% if obj.1 == 'radio' %}
 		{{obj.2}}
 		{% set thisval = -1 %}
-		{% for thisname in obj.3 %}
+		{% for thisname in obj.4 %}
 			{% set thisval = thisval+1 %}
 			<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
 		{% endfor %}

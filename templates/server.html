@@ -55,11 +55,11 @@
 						{% set butnum = -1 %}
 						{% for butavged in data %}
 							{% set butnum = butnum + 1 %}
-							{{letable[i].3[butnum]}}: {{butavged * 100}}%, 
+							{{letable[i].4[butnum]}}: {{butavged * 100}}%, 
 						{% endfor %}
 							
 					{% else %}
-						{{letable[i].3[data]}}
+						{{letable[i].4[data]}}
 					{% endif %}
 
 				{% elif letable[i].1 == 'check' %}
