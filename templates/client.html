@@ -24,7 +24,8 @@
 		{% elif obj.1 == 'text' %}
 			{% set type = 'text' %}
 		{% endif %}
-		<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% else%}0{% endif %}">{{obj.2}} <br>
+		<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% elif type == 'text' %} {% else%}0{% endif %}">{{obj.2}} <br> 
+		{# Code inside a string. That's amazing. #}
 	{% endif %}
 {% endfor %}
 

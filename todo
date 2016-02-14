@@ -1,8 +1,9 @@
 YUP Headers not messing up stuff
 YUP Add min & max + min/max/avg links
 YUPORONDOS avg/min/max handing of radiobuttons
-*Switch to SQLAlchemy (not using object stuff)
+NOPE, just sanitized SQLite | Switch to SQLAlchemy (not using object stuff)
 *Then, add text box to other
+*Submit databases to master over an internet connection. Needs to have some sort of fallback.
 *Graphs
 *UI Clean-up
 *
