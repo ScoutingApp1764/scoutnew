@@ -77,7 +77,7 @@ for arg in sys.argv:
 		
 
 
-def soap(washed):
+def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
 	string.replace(washed,"\x00","NUL") #Nullify any null-character attempts
 	string.replace(washed,'"','""') #no little bobby tables	
@@ -95,7 +95,7 @@ def get_db():
 def clientEnd():
 	if paranoidMode:
 		return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
-	return render_template('client.html', test="Testing... 1... 2... 3...",letable=letable)
+	return render_template('client.html',letable=letable)
 
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
@@ -216,6 +216,18 @@ def _min(s,_isMax = False):
 @app.route("/max/<s>")
 def _max(s):
 	return _min(s,True)
+
+@app.route("/uploadsql")
+def securityVulnerability():
+	if secureMode:
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading foriegn SQL databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+	print("f " + tfile + " ~ " + location + " dat and " + location+tfile)
+	curData = sq.connect(location + tfile)
+	cur = curData.cursor()
+	cur.execute("SELECT * FROM Data")
+	_tab = cur.fetchall()
+	print("~"+str(_tab))
+	m.executemany("INSERT INTO Data VALUES("+what[0:-1]+")",[tuple(res)])
 
 
 
