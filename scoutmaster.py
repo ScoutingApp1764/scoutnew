@@ -97,15 +97,20 @@ def clientEnd():
 		return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
 	return render_template('client.html',letable=letable)
 
-@app.route("/submit", methods=['GET','POST']) #change back to post
+
+#this will be used in clientSubmit and in the sql submitting
+what = ""
+for _ in letable:
+	what = what+"?,"
+what = what[0:-1]
+
+@app.route("/submit", methods=['POST']) #change back to post
 def clientSubmit():
 	if paranoidMode:
 		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
 	res = []
-	what = ""
 	i = -1
 	for ty in letable:
-		what = what+"?,"
 		i = i +1
 		#try:
 		var = request.form.get(str(i))
@@ -118,7 +123,7 @@ def clientSubmit():
 	
 	sql=get_db()
 	m=sql.cursor()
-        m.executemany("INSERT INTO Data VALUES("+what[0:-1]+")",[tuple(res)])
+        m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
@@ -227,7 +232,7 @@ def securityVulnerability():
 	cur.execute("SELECT * FROM Data")
 	_tab = cur.fetchall()
 	print("~"+str(_tab))
-	m.executemany("INSERT INTO Data VALUES("+what[0:-1]+")",[tuple(res)])
+	m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
 
 
 
