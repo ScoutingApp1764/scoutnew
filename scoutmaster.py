@@ -101,7 +101,7 @@ def clientSubmit():
 		var = request.form.get(str(i))
 		if var == None:
 			var = 0
-		res.append( soap(var) )
+		res.append(var)
 		#except:
 		#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized"
 	#insert into db
@@ -190,7 +190,7 @@ def _min(s,_isMax = False):
 		if ty[1] == "radio":
 			fakeall.append(-1)
 		else:
-			fakeall.append(teamall[o][i])
+			fakeall.append(teamall[0][i])
 			for o in range(length-1):
 				try:
 					if _isMax:
