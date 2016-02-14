@@ -69,9 +69,9 @@ for arg in sys.argv:
 		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
-    elif arg = "-s":#secure mode
+    elif arg == "-s": #secure mode
 	secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
-    elif arg = "-p":
+    elif arg == "-p":
 	secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
 	paranoidMode = True
 		
@@ -93,11 +93,14 @@ def get_db():
 
 @app.route('/')
 def clientEnd():
-
+	if paranoidMode:
+		return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
 	return render_template('client.html', test="Testing... 1... 2... 3...",letable=letable)
 
 @app.route("/submit", methods=['GET','POST']) #change back to post
 def clientSubmit():
+	if paranoidMode:
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
 	res = []
 	what = ""
 	i = -1
@@ -132,7 +135,7 @@ def itemSort(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
+	return render_template("server.html",secureMode = secureMode,s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
 	
 
 @app.route('/teamSort/<s>')
@@ -140,7 +143,7 @@ def teamSort(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	return render_template("server.html",letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) 
+	return render_template("server.html",secureMode = secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) 
 
 
 
@@ -179,7 +182,7 @@ def brilliance(s):
 					fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 				except:
 					fakeall[i] = "An error occured while trying to average this data"
-	return render_template("server.html",avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
+	return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
 
@@ -209,7 +212,7 @@ def _min(s,_isMax = False):
 	minmax = "min"
 	if _isMax:
 		minmax = "max"
-	return render_template("server.html",minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
+	return render_template("server.html",secureMode = secureMode,minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 @app.route("/max/<s>")
 def _max(s):
 	return _min(s,True)
