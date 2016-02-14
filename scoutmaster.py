@@ -47,6 +47,8 @@ letable = [
 	["paperweight","check","Didn't move at all"],
 ]
 doNotStart = False
+secureMode = False
+paranoidMode = False
 for arg in sys.argv:
     if arg == "-c":
 	doNotStart = True
@@ -67,6 +69,11 @@ for arg in sys.argv:
 		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
+    elif arg = "-s":#secure mode
+	secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
+    elif arg = "-p":
+	secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
+	paranoidMode = True
 		
 
 
