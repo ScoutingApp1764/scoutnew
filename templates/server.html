@@ -35,18 +35,19 @@
 	{% if itemSort %}
 		{% if lastTeam != datatable.0 %}
 			<hr>
-			<tr><td>Team num</td><td> {{datatable.0}}</tr>
+			<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
 		{% endif %}
 		{% set lastTeam = datatable.0 %}
-		<tr><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
+		<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
 				
 	{% else %}
 		{% for data in datatable %}
 			{% set i = i+1 %}
+			<tr title="{{letable[i].3}}">
 			{% if letable[i].1 == 'head' %}
-				<tr><td><hr><h1>{{letable[i].2}}</h1></td><td>
+				<td><hr><h1>{{letable[i].2}}</h1></td><td>
 			{% else %}
-				<tr><td>{{letable[i].2}}</td><td>
+				<td>{{letable[i].2}}</td><td>
 				{% if letable[i].1 == 'radio' %}
 
 					{% if minmax %}
