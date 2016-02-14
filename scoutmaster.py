@@ -42,6 +42,7 @@ letable = [
 	["strategyOther","text","Other textbox (leave blank if not other)"],
 	["gaveBall","updown","Number of balls given to teammate"],
 	["recBall","updown","Number of balls recieved from team"],
+	["scaledTower","check","Climbed tower"],
 	["manipFail","check","Manipulator failure"],
 	["explodes","check","Spontaneous combustion"],
 	["gotStuck","check","Got stuck"],
