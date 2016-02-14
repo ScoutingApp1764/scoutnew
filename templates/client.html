@@ -21,6 +21,8 @@
 			{% set type = 'checkbox' %}
 		{% elif obj.1 == 'updown' %}
 			{% set type = 'number' %}
+		{% elif obj.1 == 'text' %}
+			{% set type = 'text' %}
 		{% endif %}
 		<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% else%}0{% endif %}">{{obj.2}} <br>
 	{% endif %}

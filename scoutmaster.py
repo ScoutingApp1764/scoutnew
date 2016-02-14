@@ -38,6 +38,7 @@ letable = [
 	["lowScored","updown","High scored"],
 	["highScored","updown","Low scored"],
 	["strategy","radio","Strategy",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
+	["strategyOther","text","Other textbox (leave blank if not other)"],
 	["gaveBall","updown","Number of balls given to teammate"],
 	["recBall","updown","Number of balls recieved from team"],
 	["manipFail","check","Manipulator failure"],
@@ -59,7 +60,10 @@ for arg in sys.argv:
 		
 		strTable = ""
 		for _list in letable:
-			strTable = strTable+_list[0]+" INT,"
+			if _list[1] == "text":
+				strTable = strTable+_list[0]+" TEXT,"
+			else: 
+				strTable = strTable+_list[0]+" INT,"
 		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
