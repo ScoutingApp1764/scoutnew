@@ -14,7 +14,7 @@ letable = [
 	["posi","radio","Position","The position--starting from the closest to you and going to the farthest--the robot is in",["Position 1","Position 2","Position 3"]], #Here is a radiobutton-the extra table is the choices for the radiobutton.
 	["autoHead","head","Autonomous"],
 	["sallyScrossed","check","Crossed Sallyport","Wheather the robot crossed the sallyport in autonomous"],
-	["drawCrossed","check","Crossed drawbridge"."Wheather the robot crossed the drawbridge in autonomous"],
+	["drawCrossed","check","Crossed drawbridge","Wheather the robot crossed the drawbridge in autonomous"],
 	["roughCrossed","check","Crossed rough terrain","Wheather the robot crossed the rought terrain in autonomous"],
 	["stoneCrossed","check","Crossed stone wall","Wheather the robot crossed the stone wall in autonomous"],
 	["moatCrossed","check","Crossed moat","Wheather the robot crossed the moat in autonomous"],
