@@ -56,7 +56,7 @@ for arg in sys.argv:
 		m = s.cursor()
 		m.execute("DROP TABLE IF EXISTS Data")
 		s.commit()
-		print("Database cleared. Recreating template and continuing with application startup.")
+		print("Database cleared. Recreating template and quitting.")
 		
 		strTable = ""
 		for _list in letable:
