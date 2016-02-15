@@ -227,7 +227,11 @@ def _min(s,_isMax = False):
 def _max(s):
 	return _min(s,True)
 
-@app.route("/uploadsql")
+@app.route("/uploaddb/")
+def uploaddb():
+	#upload our database to the master
+	return render_template("uploaddb.html")
+@app.route("/uploaddb_up"/,methods=["POST"])
 def securityVulnerability():
 	if secureMode:
 		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
