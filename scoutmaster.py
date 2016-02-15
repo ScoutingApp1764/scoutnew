@@ -238,6 +238,7 @@ def uploaddb():
 		
 @app.route("/uploaddb_up/",methods=["POST"])
 def securityVulnerability():
+	print("uploaddb_up requerst")
 	if secureMode:
 		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
 	print("f " + tfile + " ~ " + location + " dat and " + location+tfile)
