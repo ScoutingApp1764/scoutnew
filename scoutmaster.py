@@ -76,6 +76,15 @@ for arg in sys.argv:
 		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
 		s.commit()
 		s.close()
+    elif arg == "--help":
+	doNotStart = True
+	print'''Usage: sudo python scoutmaster.py
+Options:
+-c	Clear the database
+-s	Secure mode--No uploading databases
+-p 	Paranoid mode--No uploading or using the client
+-xxs	Debug option to host on a different port to test uploading databases'''
+	
     elif arg == "-s": #secure mode
 	secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
     elif arg == "-p":
