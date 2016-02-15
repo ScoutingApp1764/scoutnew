@@ -2,6 +2,7 @@
 #This is a fork of scoutmaster.py with an html frontend, which is a fork of...
 #FORK OF SCOUT.PY, TKINTER REMOVED
 import string
+import json
 import sqlite3
 from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
@@ -231,8 +232,12 @@ def _max(s):
 def uploaddb():
 	#upload our database to the master
 	if request.method == "POST":
-		ip = request.form.get("ip")			
-		return render_template("uploaddb_ok.html",ip=ip)
+		ip = request.form.get("ip")
+		sql = get_db()
+		m=sql.cursor()
+		sqall = m.execute("SELECT * FROM Data").fetchall()
+		jsoned = json.dumps(sqall,sort_keys = False)		
+		return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 
 	return render_template("uploaddb.html")
 		
@@ -254,4 +259,4 @@ def securityVulnerability():
 
 
 if __name__ == '__main__' and not doNotStart:
-    app.run(debug=True, host='0.0.0.0',port=82)
+	app.run(debug=True, host='0.0.0.0',port=82)
