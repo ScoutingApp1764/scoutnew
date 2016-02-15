@@ -42,7 +42,8 @@
 			<table>
 			{% set i = -1 %}
 			{% if itemSort %}
-				{% if lastTeam != datatable.0 %}
+				{% if lastTeam != datatable.0 %} {#we just need to give the team number, and the value of the variable requested. We also don't
+want to duplicate team number and line--it helps that SQL has orginized it by team for us.#}
 					<hr>
 					<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
 				{% endif %}
@@ -53,23 +54,23 @@
 				{% for data in datatable %}
 					{% set i = i+1 %}
 					<tr title="{{letable[i].3}}">
-					{% if letable[i].1 == 'head' %}
+					{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
 						<td><hr><h1>{{letable[i].2}}</h1></td><td>
 					{% else %}
-						<td>{{letable[i].2}}</td><td>
-						{% if letable[i].1 == 'radio' %}
+						<td>{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
+						{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
 
 							{% if minmax %}
-								No radiobutton data for {{minmax}}imum
-							{% elif avg %}
+								No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
+							{% elif avg %} {#can show the avg times each one was selected #}
 								{% set butnum = -1 %}
 								{% for butavged in data %}
 									{% set butnum = butnum + 1 %}
-									{{letable[i].4[butnum]}}: {{butavged * 100}}%, 
+									{{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
 								{% endfor %}
 									
 							{% else %}
-								{{letable[i].4[data]}}
+								{{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
 							{% endif %}
 
 						{% elif letable[i].1 == 'check' %}
@@ -79,7 +80,7 @@
 								was ever unchecked
 							{% endif %}
 							{% if avg  %}
-								{{data * 100}}% of the time
+								{{data * 100}}% of the time {# demical > percentage #}
 							{% else %}
 								{% if data == 0 %}
 									[x]
@@ -87,10 +88,9 @@
 									[√]
 								{% endif %}
 							{% endif %}
-						{% elif letable[i].1 == 'text' %}
-							{{data}}
 						{% else %}
 							{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+							{# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
 						{% endif %}
 						</td></tr>	
 					{% endif %}
