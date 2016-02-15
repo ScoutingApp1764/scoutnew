@@ -120,6 +120,11 @@ def clientSubmit():
 		i = i +1
 		#try:
 		var = request.form.get(str(i))
+		if ty[1] != "text":
+			try:
+				var = str(int(var)) #make sure no text is put in in place of a number
+			except: #1337 H4X0RS!
+				var = 0
 		if var == None:
 			var = 0
 		res.append(var)
