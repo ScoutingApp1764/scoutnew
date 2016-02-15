@@ -172,7 +172,7 @@ def brilliance(s):
 	s=int(s) #can never be too safe
 	sql=get_db()
 	m=sql.cursor()
-	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
+	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()
 	fakeall = []
 	length = float(len(teamall))
 	i = -1
@@ -198,6 +198,7 @@ def brilliance(s):
 					fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 				except:
 					fakeall[i] = "An error occured while trying to average this data"
+	intrer()
 	return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
