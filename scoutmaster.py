@@ -180,8 +180,8 @@ def brilliance(s):
 		i = i+1 # fake a range for loo
 		if ty[1] == "radio": #different method of handling radio buttons
 			fakeall.append([]) # we will have a table of avg times radiobutton was checked
-			for radios in ty[3]: #iterate thru the optinos and create a 0 value for them
-				fakeall[i].append(0)
+			for radios in ty[4]: #iterate thru the optinos and create a 0 value for them
+				fakeall[i].append(0.0)
 		else:
 			fakeall.append(0.0)#normal
 		for o in range(int(length)):
@@ -193,12 +193,13 @@ def brilliance(s):
 					fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
 				except:
 					fakeall[i][teamall[o][i]] = "An error occured while trying to average this data"
+			elif ty[1] == "text":
+				fakeall[i] = "Cannot average text fields."
 			else:
 				try:
 					fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 				except:
 					fakeall[i] = "An error occured while trying to average this data"
-	intrer()
 	return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
