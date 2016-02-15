@@ -55,6 +55,7 @@ letable = [
 doNotStart = False
 secureMode = False
 paranoidMode = False
+xxs=False
 for arg in sys.argv:
     if arg == "-c":
 	doNotStart = True
@@ -80,6 +81,8 @@ for arg in sys.argv:
     elif arg == "-p":
 	secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
 	paranoidMode = True
+    elif arg == "-xxs":
+	xxs = True
 		
 
 
@@ -270,4 +273,8 @@ def securityVulnerability():
 
 
 if __name__ == '__main__' and not doNotStart:
-	app.run(debug=True, host='0.0.0.0',port=82)
+	port =	82
+	if xxs:
+		port = 83
+	
+	app.run(debug=True, host='0.0.0.0',port=port)
