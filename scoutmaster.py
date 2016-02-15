@@ -135,6 +135,7 @@ def clientSubmit():
 	sql=get_db()
 	m=sql.cursor()
         m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
+        print("INSERT INTO Data VALUES("+what+")",[tuple(res)])
 	sql.commit()
 
 #m.executemany("INSERT INTO Data VALUES("+what+")",res)	
@@ -259,7 +260,7 @@ def securityVulnerability():
 	jsoned = request.form.get("json")
 	data= json.loads(jsoned) # tuple > list is sql ? format
 	for listed in data:
-		print("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
+		a = ("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
 		m.execute("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
 	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
 	
