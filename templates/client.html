@@ -4,35 +4,33 @@
 	</head>
 	<body>
 		<h1><center>1764 Scouting App</center></h1>
-		{# % for obj in letable %}
-			<p>{{obj.0}}</p>
-		{% endfor % #}
-
 		<form action="/submit" method=POST >
 		{% set i = -1 %}
 		{% for obj in letable %}
-			<div title="{{obj.3}}">
+			<div title="{{obj.3}}"> {# Gives tootips #}
 			{% set i = i+1 %}
 			{% if obj.1 == 'radio' %}
-				{{obj.2}}:  
+				{{obj.2}}: {# print out the name of the object #} 
 				{% set thisval = -1 %}
 				{% for thisname in obj.4 %}
 					{% set thisval = thisval+1 %}
-					<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}}
+					<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
 				{% endfor %}
 				<br>
 			{% elif obj.1 == 'head' %}
-				<hr><h1>{{obj.2}}</h1>
+				<hr><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
 			{% else %}
 				{% if obj.1 == 'check' %}
 					{% set type = 'checkbox' %}
+					{% set val = 1 %}
 				{% elif obj.1 == 'updown' %}
 					{% set type = 'number' %}
+					{% set val = 0 %}
 				{% elif obj.1 == 'text' %}
 					{% set type = 'text' %}
-				{% endif %}
-				<input type="{{type}}" name="{{i}}" value="{% if type == 'checkbox' %}1{% elif type == 'text' %} {% else%}0{% endif %}"> {{obj.2}} <br> 
-				{# Code inside a string. That's amazing. #}
+					{% set val = ' ' %}
+				{% endif %} {# These all have just about the same handling, so they're all down here #}
+				<input type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
 				</div>
 			{% endif %}
 		{% endfor %}
