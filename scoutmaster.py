@@ -248,11 +248,13 @@ def securityVulnerability():
 		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
 	#get it out of json
 	jsoned = request.form.get("json")
+	data= json.loads(jsoned) # tuple > list is sql ? format
 	i = -1
 	for listed in data:
 		i=i+1
 		data[i]=tuple(listed)
-	data=tuple(json.loads(jsoned)) # tuple > list is sql ? format
+
+	data=tuple(data)
 
 	sql = get_db()
 	m=sql.cursor()
