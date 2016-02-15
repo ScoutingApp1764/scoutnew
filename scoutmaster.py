@@ -230,7 +230,7 @@ def _max(s):
 @app.route("/uploadsql")
 def securityVulnerability():
 	if secureMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading foriegn SQL databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
 	print("f " + tfile + " ~ " + location + " dat and " + location+tfile)
 	curData = sq.connect(location + tfile)
 	cur = curData.cursor()
