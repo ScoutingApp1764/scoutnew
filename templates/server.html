@@ -87,6 +87,8 @@
 									[√]
 								{% endif %}
 							{% endif %}
+						{% elif letable[i].1 == 'text' %}
+							{{data}}
 						{% else %}
 							{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
 						{% endif %}
