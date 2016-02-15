@@ -4,7 +4,7 @@
 	<body>
 		<h1>Final step</h1>
 		<p>This is kind of sketchy, but basically you can't submit data to another site-- a security feature to prevent a random site you visited from deleting your facebook account. Sadly, this means I can't submit the scouting data to the IP address you entered in--HOWEVER, there is a work-arround: Using forms and a hidden textbox I'm able to submit the data.<br><strong>TL;DR: Click submit and it will send the scouting data to the master database.</strong></p>
-		<form action="{{ip}}/uploaddb_up" method = POST>
+		<form action="http://{{ip}}/uploaddb_up/" method = POST>
 			<input type = "text" name = "json" value="{{json}}" hidden>
 			<input type="submit" value="Submit">	
 		</form>
