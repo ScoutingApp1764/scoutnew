@@ -3,6 +3,7 @@
 #FORK OF SCOUT.PY, TKINTER REMOVED
 import string
 import json
+import random
 import sqlite3
 from flask import Flask,request,send_file,render_template,g
 app = Flask(__name__)
@@ -253,8 +254,12 @@ def jsondb():
 	sqall = m.execute("SELECT * FROM Data").fetchall()
 	return json.dumps(sqall,sort_keys = False)		
 
-	
-
+@app.route("/exportdb/")
+def exportdb():
+	_file = open("exportedDb_"+str(random.randrange(9999)),"w")
+	_file.write(jsondb)
+	_file.close()
+	return '<!DOCTYPE html><html><head></head><body><p>Database can be found at exportedDB_ and then a random number.</p></body></html>'
 @app.route("/uploaddb/",methods=["GET","POST"])
 def uploaddb():
 	#upload our database to the master
