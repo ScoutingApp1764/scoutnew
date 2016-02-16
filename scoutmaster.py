@@ -256,10 +256,15 @@ def jsondb():
 
 @app.route("/exportdb/")
 def exportdb():
+	if secureMode:
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off exporting JSON\'d databases.</p></body></html>'
+
 	_file = open("exportedDb_"+str(random.randrange(9999)),"w")
-	_file.write(jsondb)
+	_file.write(jsondb())
 	_file.close()
 	return '<!DOCTYPE html><html><head></head><body><p>Database can be found at exportedDB_ and then a random number.</p></body></html>'
+
+
 @app.route("/uploaddb/",methods=["GET","POST"])
 def uploaddb():
 	#upload our database to the master
