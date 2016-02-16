@@ -247,15 +247,20 @@ def _min(s,_isMax = False):
 def _max(s):
 	return _min(s,True)
 
+def jsondb():
+	sql = get_db()
+	m=sql.cursor()
+	sqall = m.execute("SELECT * FROM Data").fetchall()
+	return json.dumps(sqall,sort_keys = False)		
+
+	
+
 @app.route("/uploaddb/",methods=["GET","POST"])
 def uploaddb():
 	#upload our database to the master
 	if request.method == "POST":
 		ip = request.form.get("ip")
-		sql = get_db()
-		m=sql.cursor()
-		sqall = m.execute("SELECT * FROM Data").fetchall()
-		jsoned = json.dumps(sqall,sort_keys = False)		
+		json = jsondb()			
 		return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 
 	return render_template("uploaddb.html")
