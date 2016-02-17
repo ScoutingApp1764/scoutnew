@@ -139,25 +139,6 @@
 		}
 		function onBodyStart()
 		{
-			
-			{% for datatable in alls %}
-			var data = {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
-			
-				datasets: [
-				{
-					label: "Data",
-					fillColor: "rgba(220,220,220,0.2)",
-					strokeColor: "rgba(220,220,220,1)",
-					pointColor: "rgba(220,220,220,1)",
-					pointStrokeColor: "#fff",
-					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(220,220,220,1)",
-					data: [65, 59, 80, 81, 56, 55, 5]
-				},
-			    ]
-			};
-			{% endfor %}
 			var options = {
 
 			    ///Boolean - Whether grid lines are shown across the chart
@@ -208,9 +189,28 @@
 			};
 
 
-			var ctx = document.getElementById("myChart").getContext("2d");
-			//var myNewChart = new Chart(ctx).PolarArea(data,options);
-			var myLineChart = new Chart(ctx).Radar(data, options);
+
+			{% for part in letable %}
+			var data = {
+				labels: ["January", "February", "March", "April", "May", "June", "July"],
+			
+				datasets: [
+				{
+					label: "Data",
+					fillColor: "rgba(220,220,220,0.2)",
+					strokeColor: "rgba(220,220,220,1)",
+					pointColor: "rgba(220,220,220,1)",
+					pointStrokeColor: "#fff",
+					pointHighlightFill: "#fff",
+					pointHighlightStroke: "rgba(220,220,220,1)",
+					data: [65, 59, 80, 81, 56, 55, 5]
+				},
+			    ]
+			};
+				var ctx = document.getElementById("myChart").getContext("2d");
+				//var myNewChart = new Chart(ctx).PolarArea(data,options);
+				var myLineChart = new Chart(ctx).Radar(data, options);
+			{% endfor %}
 		
 		}
 	</script>
