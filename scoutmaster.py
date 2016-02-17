@@ -5,8 +5,6 @@ import string
 import json
 import random
 import sqlite3
-from flask import Flask,request,send_file,render_template,g
-app = Flask(__name__)
 import sys
 
 
@@ -94,6 +92,10 @@ Options:
     elif arg == "-xxs":
 	xxs = True
 		
+if not doNotStart:
+	from flask import Flask,request,send_file,render_template,g
+	app = Flask(__name__)
+
 
 
 def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
