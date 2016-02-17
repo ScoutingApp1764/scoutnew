@@ -310,7 +310,14 @@ if not doNotStart:
 		jsoned = request.form.get("json")
 		jsontoSql(jsoned)
 		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
-		
+	
+	@app.route("/Chart.js")
+	def chartjs():
+		_file = open("Chart.js","r")
+		_res = _file.read()
+		_file.close()
+		return _res	
+	
 
 
 
