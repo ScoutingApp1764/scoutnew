@@ -180,7 +180,7 @@ if not doNotStart:
 	#	for 6:
 	#		addavg data[i][o] 	
 	@app.route("/avg/<s>")
-	def brilliance(s):
+	def brilliance(s,functioned):
 		s=int(s) #can never be too safe
 		sql=get_db()
 		m=sql.cursor()
@@ -212,8 +212,19 @@ if not doNotStart:
 						fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
 					except:
 						fakeall[i] = "An error occured while trying to average this data"
+		if functioned:
+			return fakeall
 		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
+	@app.route("/allavg")
+	def allavg():
+		sql = get_db()
+		m=sql.cursor()
+		teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall()
+		fakealls=[]
+		for team in teams:
+			fakealls.append(brilliance(team,True))
+			return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall])
 
 
 	@app.route("/min/<s>")
