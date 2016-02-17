@@ -223,8 +223,8 @@ if not doNotStart:
 		teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall()
 		fakealls=[]
 		for team in teams:
-			fakealls.append(brilliance(team,True))
-			return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall])
+			fakealls.append(brilliance(team[0],True))
+		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakealls)
 
 
 	@app.route("/min/<s>")
