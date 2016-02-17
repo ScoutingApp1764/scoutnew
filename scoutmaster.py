@@ -275,21 +275,41 @@ def uploaddb():
 
 	return render_template("uploaddb.html")
 		
-@app.route("/uploaddb_up/",methods=["POST"])
-def securityVulnerability():
-	print("uploaddb_up requerst")
-	if secureMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+def jsonToSql(jsoned):
 	#get it out of json
 	sql = get_db()
 	m=sql.cursor()
-	jsoned = request.form.get("json")
 	data= json.loads(jsoned) # tuple > list is sql ? format
 	for listed in data:
 		print("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
 		m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
 	m.close()
 	sql.commit()
+
+@app.route("/importdbs/")
+def importDbs():
+	if secureMode:
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+		
+	location = "rawDatabases/"
+	print("list " + str(listdir(location)))	
+	for tfile in listdir(location):
+		if tfile[0:1] != ".":
+			_file = open(location + tfile)
+			jsonToSql(_file.read())
+			_file.close()
+
+
+	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master/\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
+
+
+@app.route("/uploaddb_up/",methods=["POST"])
+def securityVulnerability():
+	print("uploaddb_up requerst")
+	if secureMode:
+		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+	jsoned = request.form.get("json")
+	jsontoSql(jsoned)
 	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
 	
 
