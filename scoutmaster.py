@@ -6,7 +6,7 @@ import json
 import random
 import sqlite3
 import sys
-
+from os import listdir
 
 
 #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
@@ -95,232 +95,229 @@ Options:
 if not doNotStart:
 	from flask import Flask,request,send_file,render_template,g
 	app = Flask(__name__)
+	def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
+		washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
+		string.replace(washed,"\x00","NUL") #Nullify any null-character attempts
+		string.replace(washed,'"','""') #no little bobby tables	
+		string.replace(washed,"'","''") #no little bobby tables	
+		return washed
 
 
+	def get_db():
+	    sql = getattr(g, 'MASTERDB', None)
+	    if sql is None:
+		sql = g._database = sqlite3.connect("MASTERDB") 
+		return sql
 
-def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
-	string.replace(washed,"\x00","NUL") #Nullify any null-character attempts
-	string.replace(washed,'"','""') #no little bobby tables	
-	string.replace(washed,"'","''") #no little bobby tables	
-	return washed
-
-
-def get_db():
-    sql = getattr(g, 'MASTERDB', None)
-    if sql is None:
-        sql = g._database = sqlite3.connect("MASTERDB") 
-	return sql
-
-@app.route('/')
-def clientEnd():
-	if paranoidMode:
-		return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
-	return render_template('client.html',letable=letable)
+	@app.route('/')
+	def clientEnd():
+		if paranoidMode:
+			return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
+		return render_template('client.html',letable=letable)
 
 
-#this will be used in clientSubmit and in the sql submitting
-what = ""
-for _ in letable:
-	what = what+"?,"
-what = what[0:-1]
+	#this will be used in clientSubmit and in the sql submitting
+	what = ""
+	for _ in letable:
+		what = what+"?,"
+	what = what[0:-1]
 
-@app.route("/submit", methods=['POST']) #change back to post
-def clientSubmit():
-	if paranoidMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
-	res = []
-	i = -1
-	for ty in letable:
-		i = i +1
-		#try:
-		var = request.form.get(str(i))
-		if ty[1] != "text":
-			try:
-				var = str(int(var)) #make sure no text is put in in place of a number
-			except: #1337 H4X0RS!
+	@app.route("/submit", methods=['POST']) #change back to post
+	def clientSubmit():
+		if paranoidMode:
+			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
+		res = []
+		i = -1
+		for ty in letable:
+			i = i +1
+			#try:
+			var = request.form.get(str(i))
+			if ty[1] != "text":
+				try:
+					var = str(int(var)) #make sure no text is put in in place of a number
+				except: #1337 H4X0RS!
+					var = 0
+			if var == None:
 				var = 0
-		if var == None:
-			var = 0
-		res.append(var)
-		#except:
-		#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized"
-	#insert into db
-	
-	sql=get_db()
-	m=sql.cursor()
-        m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
-	sql.commit()
+			res.append(var)
+			#except:
+			#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized"
+		#insert into db
+		
+		sql=get_db()
+		m=sql.cursor()
+		m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
+		sql.commit()
 
-#m.executemany("INSERT INTO Data VALUES("+what+")",res)	
-	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
+	#m.executemany("INSERT INTO Data VALUES("+what+")",res)	
+		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
 
-@app.route("/master")
-def serverEnd():
-	sql=get_db()
-	m=sql.cursor()
-	return render_template("server.html",secureMode=secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) 
-	s.close()
-@app.route('/itemSort/<s>')
-def itemSort(s):
-	s=int(s) #can never be too safe
-	sql=get_db()
-	m=sql.cursor()
-	return render_template("server.html",secureMode = secureMode,s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
-	
+	@app.route("/master/")
+	def serverEnd():
+		sql=get_db()
+		m=sql.cursor()
+		return render_template("server.html",secureMode=secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data ORDER BY teamNum").fetchall()) 
+		s.close()
+	@app.route('/itemSort/<s>')
+	def itemSort(s):
+		s=int(s) #can never be too safe
+		sql=get_db()
+		m=sql.cursor()
+		return render_template("server.html",secureMode = secureMode,s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
+		
 
-@app.route('/teamSort/<s>')
-def teamSort(s):
-	s=int(s) #can never be too safe
-	sql=get_db()
-	m=sql.cursor()
-	return render_template("server.html",secureMode = secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) 
+	@app.route('/teamSort/<s>')
+	def teamSort(s):
+		s=int(s) #can never be too safe
+		sql=get_db()
+		m=sql.cursor()
+		return render_template("server.html",secureMode = secureMode,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()) 
 
 
 
 
-#for ty in letable:
-#	for 6:
-#		addavg data[i][o] 	
-@app.route("/avg/<s>")
-def brilliance(s):
-	s=int(s) #can never be too safe
-	sql=get_db()
-	m=sql.cursor()
-	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()
-	fakeall = []
-	length = float(len(teamall))
-	i = -1
-	for ty in letable: #go through letable
-		i = i+1 # fake a range for loo
-		if ty[1] == "radio": #different method of handling radio buttons
-			fakeall.append([]) # we will have a table of avg times radiobutton was checked
-			for radios in ty[4]: #iterate thru the optinos and create a 0 value for them
-				fakeall[i].append(0.0)
-		else:
-			fakeall.append(0.0)#normal
-		for o in range(int(length)):
-			if ty[1] == "radio":
-				#Go to the radio button's table, then go to that specific radio button option that was checked this time arround
-				#Add a 1 divided by the total ammount of radio buttons to it if it was checked this time
-				#We get which radio button was checked by the value of the the radio button 
-				try:
-					fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
-				except:
-					fakeall[i][teamall[o][i]] = "An error occured while trying to average this data"
-			elif ty[1] == "text":
-				fakeall[i] = "Cannot average text fields."
+	#for ty in letable:
+	#	for 6:
+	#		addavg data[i][o] 	
+	@app.route("/avg/<s>")
+	def brilliance(s):
+		s=int(s) #can never be too safe
+		sql=get_db()
+		m=sql.cursor()
+		teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str(s)+" ORDER BY teamNum").fetchall()
+		fakeall = []
+		length = float(len(teamall))
+		i = -1
+		for ty in letable: #go through letable
+			i = i+1 # fake a range for loo
+			if ty[1] == "radio": #different method of handling radio buttons
+				fakeall.append([]) # we will have a table of avg times radiobutton was checked
+				for radios in ty[4]: #iterate thru the optinos and create a 0 value for them
+					fakeall[i].append(0.0)
 			else:
-				try:
-					fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
-				except:
-					fakeall[i] = "An error occured while trying to average this data"
-	return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
+				fakeall.append(0.0)#normal
+			for o in range(int(length)):
+				if ty[1] == "radio":
+					#Go to the radio button's table, then go to that specific radio button option that was checked this time arround
+					#Add a 1 divided by the total ammount of radio buttons to it if it was checked this time
+					#We get which radio button was checked by the value of the the radio button 
+					try:
+						fakeall[i][teamall[o][i]] = fakeall[i][teamall[o][i]] + (1.0/length)
+					except:
+						fakeall[i][teamall[o][i]] = "An error occured while trying to average this data"
+				elif ty[1] == "text":
+					fakeall[i] = "Cannot average text fields."
+				else:
+					try:
+						fakeall[i] = fakeall[i]+(float(teamall[o][i])/length)
+					except:
+						fakeall[i] = "An error occured while trying to average this data"
+		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
 
 
-@app.route("/min/<s>")
-def _min(s,_isMax = False):
-	s=int(s) #can never be too safe
-	sql=get_db()
-	m=sql.cursor()
-	teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
-	fakeall = []
-	length = len(teamall)
-	i = -1
-	for ty in letable:
-		i = i+1
-		if ty[1] == "radio":
-			fakeall.append(-1)
-		else:
-			fakeall.append(teamall[0][i])
-			for o in range(length-1):
-				try:
-					if _isMax:
-						fakeall[i] = max(fakeall[i],teamall[o][i])
-					else:
-						fakeall[i] = min(fakeall[i],teamall[o][i])
-				except:
-					fakeall[i] = "An error occured while trying to min or max this data"
-	minmax = "min"
-	if _isMax:
-		minmax = "max"
-	return render_template("server.html",secureMode = secureMode,minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
-@app.route("/max/<s>")
-def _max(s):
-	return _min(s,True)
+	@app.route("/min/<s>")
+	def _min(s,_isMax = False):
+		s=int(s) #can never be too safe
+		sql=get_db()
+		m=sql.cursor()
+		teamall = m.execute("SELECT * FROM Data WHERE teamNum = "+str    (s)+" ORDER BY teamNum").fetchall()
+		fakeall = []
+		length = len(teamall)
+		i = -1
+		for ty in letable:
+			i = i+1
+			if ty[1] == "radio":
+				fakeall.append(-1)
+			else:
+				fakeall.append(teamall[0][i])
+				for o in range(length-1):
+					try:
+						if _isMax:
+							fakeall[i] = max(fakeall[i],teamall[o][i])
+						else:
+							fakeall[i] = min(fakeall[i],teamall[o][i])
+					except:
+						fakeall[i] = "An error occured while trying to min or max this data"
+		minmax = "min"
+		if _isMax:
+			minmax = "max"
+		return render_template("server.html",secureMode = secureMode,minmax=minmax,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
+	@app.route("/max/<s>")
+	def _max(s):
+		return _min(s,True)
 
-def jsondb():
-	sql = get_db()
-	m=sql.cursor()
-	sqall = m.execute("SELECT * FROM Data").fetchall()
-	return json.dumps(sqall,sort_keys = False)		
+	def jsondb():
+		sql = get_db()
+		m=sql.cursor()
+		sqall = m.execute("SELECT * FROM Data").fetchall()
+		return json.dumps(sqall,sort_keys = False)		
 
-@app.route("/exportdb/")
-def exportdb():
-	if secureMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off exporting JSON\'d databases.</p></body></html>'
+	@app.route("/exportdb/")
+	def exportdb():
+		if secureMode:
+			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off exporting JSON\'d databases.</p></body></html>'
 
-	_file = open("exportedDb_"+str(random.randrange(9999)),"w")
-	_file.write(jsondb())
-	_file.close()
-	return '<!DOCTYPE html><html><head></head><body><p>Database can be found at exportedDB_ and then a random number.</p></body></html>'
+		_file = open("exportedDb_"+str(random.randrange(9999)),"w")
+		_file.write(jsondb())
+		_file.close()
+		return '<!DOCTYPE html><html><head></head><body><p>Database can be found at exportedDB_ and then a random number.</p></body></html>'
 
 
-@app.route("/uploaddb/",methods=["GET","POST"])
-def uploaddb():
-	#upload our database to the master
-	if request.method == "POST":
-		ip = request.form.get("ip")
-		json = jsondb()			
-		return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
+	@app.route("/uploaddb/",methods=["GET","POST"])
+	def uploaddb():
+		#upload our database to the master
+		if request.method == "POST":
+			ip = request.form.get("ip")
+			json = jsondb()			
+			return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 
-	return render_template("uploaddb.html")
+		return render_template("uploaddb.html")
+			
+	def jsonToSql(jsoned):
+		#get it out of json
+		sql = get_db()
+		m=sql.cursor()
+		data= json.loads(jsoned) # tuple > list is sql ? format
+		for listed in data:
+			print("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
+			m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
+		m.close()
+		sql.commit()
+
+	@app.route("/importdbs/")
+	def importDbs():
+		if secureMode:
+			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+			
+		location = "rawDatabases/"
+		print("list " + str(listdir(location)))	
+		for tfile in listdir(location):
+			if tfile[0:1] != ".":
+				_file = open(location + tfile)
+				jsonToSql(_file.read())
+				_file.close()
+
+
+		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master/\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
+
+
+	@app.route("/uploaddb_up/",methods=["POST"])
+	def securityVulnerability():
+		print("uploaddb_up requerst")
+		if secureMode:
+			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+		jsoned = request.form.get("json")
+		jsontoSql(jsoned)
+		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
 		
-def jsonToSql(jsoned):
-	#get it out of json
-	sql = get_db()
-	m=sql.cursor()
-	data= json.loads(jsoned) # tuple > list is sql ? format
-	for listed in data:
-		print("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
-		m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
-	m.close()
-	sql.commit()
 
-@app.route("/importdbs/")
-def importDbs():
-	if secureMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+
+
+
+	if __name__ == '__main__' and not doNotStart:
+		port =	82
+		if xxs:
+			port = 83
 		
-	location = "rawDatabases/"
-	print("list " + str(listdir(location)))	
-	for tfile in listdir(location):
-		if tfile[0:1] != ".":
-			_file = open(location + tfile)
-			jsonToSql(_file.read())
-			_file.close()
-
-
-	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master/\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
-
-
-@app.route("/uploaddb_up/",methods=["POST"])
-def securityVulnerability():
-	print("uploaddb_up requerst")
-	if secureMode:
-		return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
-	jsoned = request.form.get("json")
-	jsontoSql(jsoned)
-	return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
-	
-
-
-
-
-if __name__ == '__main__' and not doNotStart:
-	port =	82
-	if xxs:
-		port = 83
-	
-	app.run(debug=True, host='0.0.0.0',port=port)
+		app.run(debug=True, host='0.0.0.0',port=port)
