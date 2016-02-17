@@ -180,7 +180,7 @@ if not doNotStart:
 	#	for 6:
 	#		addavg data[i][o] 	
 	@app.route("/avg/<s>")
-	def brilliance(s,functioned):
+	def brilliance(s,functioned = False):
 		s=int(s) #can never be too safe
 		sql=get_db()
 		m=sql.cursor()
