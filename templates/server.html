@@ -216,13 +216,6 @@
 					
 						datasets: [
 						{
-							label: "Data",
-							fillColor: "rgba(220,220,220,0.2)",
-							strokeColor: "rgba(220,220,220,1)",
-							pointColor: "rgba(220,220,220,1)",
-							pointStrokeColor: "#fff",
-							pointHighlightFill: "#fff",
-							pointHighlightStroke: "rgba(220,220,220,1)",
 							data: [
 								{% set firstTime = True %}
 								{% for datatable in alls %}
@@ -237,9 +230,8 @@
 								{% endfor %}
 							]
 						},]
-					//};
+					};
 					var ctx = document.getElementById("{{part.0}}").getContext("2d");
-					//var myNewChart = new Chart(ctx).PolarArea(datasets,options);
 					var myLineChart = new Chart(ctx).Bar(data, options);
 				{% endif %}
 			{% endfor %}
