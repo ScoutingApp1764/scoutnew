@@ -190,8 +190,18 @@
 
 	
 			{% set i=-1 %}
+			{% set doNotEverStart = False %}
+			{% set doNotStart = False %}
 			{% for part in letable %}
-				{% if part[1] != "text" %}
+				{% set doNotStart = False %}
+				{% if doNotEverStart %}
+					{% set doNotStart = True %}
+				{% elif itemSort %}
+					{% set i = s %}
+					{% set doNotEverStart = True %}	
+				{% endif %} 
+	
+				{% if not doNotStart %}
 					{% set i=i+1 %}
 					var data = {
 						labels: [
