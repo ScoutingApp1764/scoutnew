@@ -188,10 +188,19 @@
 
 			};
 
-	
+			{% set neverStart %}
 			{% set i=-1 %}
 			{% for part in letable %}
-				{% if part[1] != "text" %}
+				{% set doNotStart = False %}
+				{% if part[1] == "text" or neverStart %}
+					{% set doNotStart = True %}
+				{% elif itemSort %}
+					{% if i == 0 %}{# if teamNum has been done let's switch it to the current one we want to do
+						{% set i = s %}
+						{% set neverStart = True %}
+					{% endif %}
+				{% endif %}
+				{% if not doNotStart %}
 					{% set i=i+1 %}
 					var data = {
 						labels: [
