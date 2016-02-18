@@ -240,7 +240,7 @@
 							},]
 						};
 						var ctx = document.getElementById("{{part.0}}").getContext("2d");
-						var myLineChart = new Chart(ctx).Bar(data, options);
+						new Chart(ctx).Bar(data, options);
 					{% endif %}
 				{% endfor %}
 			
