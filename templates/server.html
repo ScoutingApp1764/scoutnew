@@ -198,6 +198,7 @@
 					{% set doNotStart = True %}
 				{% elif itemSort %}
 					{% set i = s %}
+					{% set part = letable[s] %}
 					{% set doNotEverStart = True %}	
 				{% endif %} 
 	
@@ -229,7 +230,7 @@
 										{% if part[1] == "radio" %}
 											
 										{% else%}
-											{% if not firstTime %},{% endif %}{{datatable[i]}}
+											{% if not firstTime %},{% endif %}{% if itemSort %}{{datatable[1]}}{%  else  %}{{datatable[i]}}{% endif%}
 											{% set firstTime = False %}
 										{% endif %}
 									{% endif %}
