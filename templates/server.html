@@ -207,8 +207,10 @@
 						data: [
 							{% set firstTime = True %}
 							{% for datatable in alls %}
-								{% if not firstTime %},{% endif %}{{datatable[i]}}
-								{% set firstTime = False %}
+								{% if type(datatable[i]) != "string" %}
+									{% if not firstTime %},{% endif %}{{datatable[i]}}
+									{% set firstTime = False %}
+								{% endif %}
 							{% endfor %}
 						]
 					},]
