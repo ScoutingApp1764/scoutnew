@@ -283,7 +283,11 @@
 			; 
 		{% endfor %}
 		<br>
-		{% if not itemSort %}
+		{% if itemSort %}
+			{{letable[s].3}}:
+			<br>
+			<canvas id="{{letable[s].0}}"></canvas><br>
+		{% else %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
 			<div id="charts" style="display: none;">
