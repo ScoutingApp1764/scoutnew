@@ -191,10 +191,17 @@
 	
 			{% set i=-1 %}
 			{% for part in letable %}
-				{#% if part[1] != "text" %#}{% if i==-1 %}
+				{#% if part[1] != "text" %#}{% if i <5 %}
 					{% set i=i+1 %}
 					var data = {
-						labels: [],
+						labels: [
+						{% set firstTime = True %}
+						{% for team in teams %}
+							{% if not firstTime %},{% endif %}{{team.0}} 
+							{% set firstTime = False %}
+						{% endfor %}
+
+						],
 					
 						datasets: [
 						{
