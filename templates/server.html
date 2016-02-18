@@ -197,7 +197,7 @@
 						labels: [
 						{% set firstTime = True %}
 						{% for team in teams %}
-							{% if not firstTime %},{% endif %}{{team.0}} 
+							{% if not firstTime %},{% endif %}"Team {{team.0}}"
 							{% set firstTime = False %}
 						{% endfor %}
 
