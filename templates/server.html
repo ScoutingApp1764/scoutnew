@@ -273,15 +273,17 @@
 			; 
 		{% endfor %}
 		<br>
-		<input type="button" value="Show/hide graphs" onclick="showhide();" />
-		<br>
-		<div id="charts" style="display: none;">
-		{% for part in letable %}
-			{{part.3}}: <a href ="#top">(back to top)</a>
+		{% if not itemSort %}
+			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
-			<canvas id="{{part.0}}"></canvas><br>	
-		{% endfor %}
-		</div>
+			<div id="charts" style="display: none;">
+			{% for part in letable %}
+				{{part.3}}: <a href ="#top">(back to top)</a>
+				<br>
+				<canvas id="{{part.0}}"></canvas><br>	
+			{% endfor %}
+			</div>
+		{% endif %}
 
 
 
