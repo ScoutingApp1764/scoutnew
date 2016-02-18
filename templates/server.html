@@ -264,11 +264,15 @@
 			; 
 		{% endfor %}
 		<br>
+		<input type="button" value="Show/hide graphs" onclick="document.getElementById(\"charts\")" />
+		<br>
+		<div id="charts">
 		{% for part in letable %}
 			{{part.3}}:
+			<br>
 			<canvas id="{{part.0}}"></canvas><br>	
 		{% endfor %}
-	
+		</div>
 
 
 
