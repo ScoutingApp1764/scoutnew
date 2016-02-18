@@ -191,7 +191,7 @@
 	
 			{% set i=-1 %}
 			{% for part in letable %}
-				{#% if part[1] != "text" %#}{% if i <5 %}
+				{#% if part[1] != "text" %#}{% if i <2 %}
 					{% set i=i+1 %}
 					var data = {
 						labels: [
@@ -237,7 +237,6 @@
 	</script>
 	</head>
 	<body onload="onBodyStart();">
-		<canvas id="myChart" width="400" height="400"></canvas>
 		<center>
 			<h1>1764 Scouting App</h1>
 
@@ -254,16 +253,18 @@
 		{% endfor %}
 		<br>
 
-		{% for datatable in teams %}
-			{{datatable.0}}:
+		{% for team in teams %}
+			{{team.0}}:
 			{% set humanReads = ["Team","Avg","Min","Max"] %}
 			{% set i = -1 %}
 			{% for link in ["teamSort","avg","min","max"] %}
 				{% set i = i+1 %}
-				<a href="/{{link}}/{{datatable.0}}">{{humanReads[i]}}</a>
+				<a href="/{{link}}/{{team.0}}">{{humanReads[i]}}</a>
 			{% endfor %}
 			; 
 		{% endfor %}
+		{% for team in teams %}
+	
 
 
 
