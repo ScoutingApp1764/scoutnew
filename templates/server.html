@@ -205,8 +205,10 @@
 						pointHighlightFill: "#fff",
 						pointHighlightStroke: "rgba(220,220,220,1)",
 						data: [
+							{% set firstTime = True %}
 							{% for datatable in alls %}
-								{{datatable[i]}},
+								{% if not firstTime %},{% endif %}{{datatable[i]}}
+								{% set firstTime = False %}
 							{% endfor %}
 						]
 					},]
