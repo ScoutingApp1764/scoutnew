@@ -191,33 +191,35 @@
 	
 			{% set i=-1 %}
 			{% for part in letable %}
-				{% set i=i+1 %}
-				var data = {
-					labels: ["January", "February", "March", "April", "May", "June", "July"],
-				
-					datasets: [
-					{
-						label: "Data",
-						fillColor: "rgba(220,220,220,0.2)",
-						strokeColor: "rgba(220,220,220,1)",
-						pointColor: "rgba(220,220,220,1)",
-						pointStrokeColor: "#fff",
-						pointHighlightFill: "#fff",
-						pointHighlightStroke: "rgba(220,220,220,1)",
-						data: [
-							{% set firstTime = True %}
-							{% for datatable in alls %}
-								{% if type(datatable[i]) != "string" %}
-									{% if not firstTime %},{% endif %}{{datatable[i]}}
-									{% set firstTime = False %}
-								{% endif %}
-							{% endfor %}
-						]
-					},]
-				};
-				var ctx = document.getElementById("myChart").getContext("2d");
-				//var myNewChart = new Chart(ctx).PolarArea(data,options);
-				var myLineChart = new Chart(ctx).Radar(data, options);
+				{% if part[1] != "text" %}
+					{% set i=i+1 %}
+					var data = {
+						labels: ["January", "February", "March", "April", "May", "June", "July"],
+					
+						datasets: [
+						{
+							label: "Data",
+							fillColor: "rgba(220,220,220,0.2)",
+							strokeColor: "rgba(220,220,220,1)",
+							pointColor: "rgba(220,220,220,1)",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(220,220,220,1)",
+							data: [
+								{% set firstTime = True %}
+								{% for datatable in alls %}
+									{% if datatable[i] is not string %}
+										{% if not firstTime %},{% endif %}{{datatable[i]}}
+										{% set firstTime = False %}
+									{% endif %}
+								{% endfor %}
+							]
+						},]
+					};
+					var ctx = document.getElementById("myChart").getContext("2d");
+					//var myNewChart = new Chart(ctx).PolarArea(data,options);
+					var myLineChart = new Chart(ctx).Radar(data, options);
+				{% endif %}
 			{% endfor %}
 		
 		}
