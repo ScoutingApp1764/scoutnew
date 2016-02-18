@@ -239,7 +239,6 @@
 						},]
 					};
 					var ctx = document.getElementById("{{part.0}}").getContext("2d");
-					//var myNewChart = new Chart(ctx).PolarArea(datasets,options);
 					var myLineChart = new Chart(ctx).Bar(data, options);
 				{% endif %}
 			{% endfor %}
