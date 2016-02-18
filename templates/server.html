@@ -234,6 +234,14 @@
 			{% endfor %}
 		
 		}
+		function showhide()
+		{
+			charts = document.getElementById("charts")
+			if (charts.style.display=="block")
+				charts.style.display="none"
+			else
+				charts.style.display="block"
+		}
 	</script>
 	</head>
 	<body onload="onBodyStart();">
@@ -265,11 +273,11 @@
 			; 
 		{% endfor %}
 		<br>
-		<input type="button" value="Show/hide graphs" onclick="document.getElementById(\"charts\")" />
+		<input type="button" value="Show/hide graphs" onclick="showhide();" />
 		<br>
-		<div id="charts">
+		<div id="charts" style="display: block;">
 		{% for part in letable %}
-			{{part.3}}:
+			{{part.3}}: <a href ="#top">(back to top)</a>
 			<br>
 			<canvas id="{{part.0}}"></canvas><br>	
 		{% endfor %}
