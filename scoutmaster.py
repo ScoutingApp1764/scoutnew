@@ -216,7 +216,7 @@ if not doNotStart:
 			return fakeall
 		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = [fakeall]) 
 
-	@app.route("/allavg")
+	@app.route("/allavg/")
 	def allavg():
 		sql = get_db()
 		m=sql.cursor()
