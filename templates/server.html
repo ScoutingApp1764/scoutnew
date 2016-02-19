@@ -79,23 +79,24 @@
 				    {#legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"#}
 
 				};
-
+				{% set needGraphs = False %}
 		
 				{% if itemSort %}
+					{% set needGraphs = True %}
 					{% call input() %}
 						{% set firstTime = True %}
 						{% for datatable in alls %}
 							{% if datatable[s] is not string %}
 								{% if letable[s].1 == "radio" %}
 								{% else%}
-									{% if not firstTime %},{% endif %}{{datatable[s]}}
+									{% if not firstTime %},{% endif %}{{datatable[s]}} {%%}
 									{% set firstTime = False %}
 								{% endif %}
 							{% endif %}
 						{% endfor %}
 					{% endcall %}
-				{% else %}
-
+				{% elif avg or minmax %}
+					{% set needGraphs = True %}
 					{% set i=-1 %}
 					{% for part in letable %}
 						{% set i=i+1 %}
@@ -111,9 +112,11 @@
 								{% endif %}
 							{% endfor %}
 						{% endcall %}
-						var ctx = document.getElementById("{{part.0}}").getContext("2d");
-						new Chart(ctx).Bar(data, options);
 					{% endfor %}
+				{% endif %}
+				{% if needGraphs %}
+					var ctx = document.getElementById("{{part.0}}").getContext("2d");
+					new Chart(ctx).Bar(data, options);
 				{% endif %}
 			
 			}
@@ -161,7 +164,7 @@
 			{{letable[s].2}}:
 			<br>
 			<canvas id="{{letable[s].0}}"></canvas><br>
-		{% elif avg or minmax %}
+		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
 			<div id="charts" style="display: none;">
