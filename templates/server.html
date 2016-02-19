@@ -128,8 +128,14 @@
 				{% endif %}
 			
 			}
+			var loaded = false;
 			function showhide()
 			{
+				if (loaded == false)
+				{
+					loaded = true;
+					onBodyStart();
+				}
 				charts = document.getElementById("charts")
 				if (charts.style.display=="block")
 					charts.style.display="none"
@@ -139,7 +145,7 @@
 		</script>
 	{% endif %}
 	</head>
-	<body onload="onBodyStart();">
+	<body {% if itemSort %}onLoad="onBodyStart();"{% endif %}>
 		<center>
 			<h1>1764 Scouting App</h1>
 
@@ -171,7 +177,7 @@
 		{% if itemSort %}
 			{{letable[s].2}}:
 			<br>
-			<canvas id="{{letable[s].0}}" width="1000" height="400" ></canvas><br>
+			<canvas  id="{{letable[s].0}}" width="1000" height="400" ></canvas><br>
 		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
