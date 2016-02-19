@@ -3,7 +3,10 @@
 		labels: [
 		{% set firstTime = True %}
 		{% if itemSort %}
-			
+			{% for teamtab in alls %}
+				{%if not firstTime %},{% endif %}"Team {{teamtab.0}}"	
+				{% set firstTime = False %}
+			{% endfor %}
 		{% else %}
 			{% for team in teams %}
 				{% if not firstTime %},{% endif %}"Team {{team.0}}"
