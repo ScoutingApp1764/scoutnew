@@ -1,4 +1,4 @@
-{% macro input(table) -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
+{% macro input() -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
 	var data = {
 		labels: [
 		{% set firstTime = True %}
@@ -18,7 +18,7 @@
 			pointStrokeColor: "#fff",
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(220,220,220,1)",
-			data: [{{table}}]
+			data: [{{caller()}}]
 		},]
 	};
 
@@ -82,24 +82,22 @@
 
 		
 				{% set i=-1 %}
-				{% set doNotEverStart = False %}
-				{% set doNotStart = False %}
 				{% for part in letable %}
-					{% set doNotStart = False %}
-					{% if doNotEverStart %}
-						{% set doNotStart = True %}
-					{% elif itemSort %}
-						{% set i = s %}
-						{% set part = letable[s] %}
-						{% set doNotEverStart = True %}	
-					{% endif %} 
-		
-					{% if not doNotStart %}
-						{% set i=i+1 %}
-						{% call input(part) %}				
-						var ctx = document.getElementById("{{part.0}}").getContext("2d");
-						new Chart(ctx).Bar(data, options);
-					{% endif %}
+					{% set i=i+1 %}
+					{% call input(part) %}
+						{% set firstTime = True %}
+						{% for datatable in alls %}
+							{% if datatable[i] is not string %}
+								{% if part[1] == "radio" %}
+								{% else%}
+									{% if not firstTime %},{% endif %}{{datatable[i]}}
+									{% set firstTime = False %}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endcall %}
+					var ctx = document.getElementById("{{part.0}}").getContext("2d");
+					new Chart(ctx).Bar(data, options);
 				{% endfor %}
 			
 			}
