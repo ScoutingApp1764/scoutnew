@@ -89,12 +89,14 @@
 							{% if datatable[s] is not string %}
 								{% if letable[s].1 == "radio" %}
 								{% else%}
-									{% if not firstTime %},{% endif %}{{datatable[s]}} {%%}
+									{% if not firstTime %},{% endif %}{{datatable[s]}}
 									{% set firstTime = False %}
 								{% endif %}
 							{% endif %}
 						{% endfor %}
 					{% endcall %}
+					var ctx = document.getElementById("{{letable[s].0}}").getContext("2d");
+					new Chart(ctx).Bar(data, options);
 				{% elif avg or minmax %}
 					{% set needGraphs = True %}
 					{% set i=-1 %}
@@ -112,11 +114,11 @@
 								{% endif %}
 							{% endfor %}
 						{% endcall %}
+						var ctx = document.getElementById("{{part.0}}").getContext("2d");
+						new Chart(ctx).Bar(data, options);
 					{% endfor %}
 				{% endif %}
 				{% if needGraphs %}
-					var ctx = document.getElementById("{{part.0}}").getContext("2d");
-					new Chart(ctx).Bar(data, options);
 				{% endif %}
 			
 			}
@@ -163,7 +165,7 @@
 		{% if itemSort %}
 			{{letable[s].2}}:
 			<br>
-			<canvas id="{{letable[s].0}}"></canvas><br>
+			<canvas id="{{letable[s].0}}" width="800" height=400" ></canvas><br>
 		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
