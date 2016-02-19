@@ -89,7 +89,7 @@
 							{% if datatable[s] is not string %}
 								{% if letable[s].1 == "radio" %}
 								{% else%}
-									{% if not firstTime %},{% endif %}{{datatable[s]}}
+									{% if not firstTime %},{% endif %}{{datatable[1]}}
 									{% set firstTime = False %}
 								{% endif %}
 							{% endif %}
