@@ -86,10 +86,11 @@
 					{% call input() %}
 						{% set firstTime = True %}
 						{% for datatable in alls %}
-							{% if datatable[s] is not string %}
+
+							{% if datatable[1] is not string %}
 								{% if letable[s].1 == "radio" %}
 								{% else%}
-									{% if not firstTime %},{% endif %}{{datatable[1]}}
+									{% if not firstTime %},{% endif %}{{datatable[1]}}.0
 									{% set firstTime = False %}
 								{% endif %}
 							{% endif %}
@@ -165,7 +166,7 @@
 		{% if itemSort %}
 			{{letable[s].2}}:
 			<br>
-			<canvas id="{{letable[s].0}}" width="1000" height=400" ></canvas><br>
+			<canvas id="{{letable[s].0}}" width="1000" height="400" ></canvas><br>
 		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
