@@ -165,7 +165,7 @@
 		{% if itemSort %}
 			{{letable[s].2}}:
 			<br>
-			<canvas id="{{letable[s].0}}" width="800" height=400" ></canvas><br>
+			<canvas id="{{letable[s].0}}" width="1000" height=400" ></canvas><br>
 		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
@@ -173,7 +173,7 @@
 			{% for part in letable %}
 				{{part.2}}: <a href ="#top">(back to top)</a>
 				<br>
-				<canvas id="{{part.0}}" width="400" height="400"></canvas><br>	
+				<canvas id="{{part.0}}" width="1000" height="400"></canvas><br>	
 			{% endfor %}
 			</div>
 		{% endif %}
