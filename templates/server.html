@@ -85,10 +85,10 @@
 					{% call input() %}
 						{% set firstTime = True %}
 						{% for datatable in alls %}
-							{% if datatable[i] is not string %}
-								{% if part[1] == "radio" %}
+							{% if datatable[s] is not string %}
+								{% if letable[s].1 == "radio" %}
 								{% else%}
-									{% if not firstTime %},{% endif %}{{datatable[i]}}
+									{% if not firstTime %},{% endif %}{{datatable[s]}}
 									{% set firstTime = False %}
 								{% endif %}
 							{% endif %}
@@ -103,7 +103,7 @@
 							{% set firstTime = True %}
 							{% for datatable in alls %}
 								{% if datatable[i] is not string %}
-									{% if part[1] == "radio" %}
+									{% if letable[1] == "radio" %}
 									{% else%}
 										{% if not firstTime %},{% endif %}{{datatable[i]}}
 										{% set firstTime = False %}
@@ -114,7 +114,7 @@
 						var ctx = document.getElementById("{{part.0}}").getContext("2d");
 						new Chart(ctx).Bar(data, options);
 					{% endfor %}
-				{% end %}
+				{% endif %}
 			
 			}
 			function showhide()
