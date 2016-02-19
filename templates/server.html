@@ -142,7 +142,7 @@
 		{% endfor %}
 		<br>
 		{% if itemSort %}
-			{{letable[s].3}}:
+			{{letable[s].2}}:
 			<br>
 			<canvas id="{{letable[s].0}}"></canvas><br>
 		{% elif avg or minmax %}
@@ -150,9 +150,9 @@
 			<br>
 			<div id="charts" style="display: none;">
 			{% for part in letable %}
-				{{part.3}}: <a href ="#top">(back to top)</a>
+				{{part.2}}: <a href ="#top">(back to top)</a>
 				<br>
-				<canvas id="{{part.0}}"></canvas><br>	
+				<canvas id="{{part.0}}" width="400" height="400"></canvas><br>	
 			{% endfor %}
 			</div>
 		{% endif %}
