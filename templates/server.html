@@ -2,10 +2,14 @@
 	var data = {
 		labels: [
 		{% set firstTime = True %}
-		{% for team in teams %}
-			{% if not firstTime %},{% endif %}"Team {{team.0}}"
-			{% set firstTime = False %}
-		{% endfor %}
+		{% if itemSort %}
+			
+		{% else %}
+			{% for team in teams %}
+				{% if not firstTime %},{% endif %}"Team {{team.0}}"
+				{% set firstTime = False %}
+			{% endfor %}
+		{% endif %}
 
 		],
 
@@ -118,8 +122,6 @@
 						var ctx = document.getElementById("{{part.0}}").getContext("2d");
 						new Chart(ctx).Bar(data, options);
 					{% endfor %}
-				{% endif %}
-				{% if needGraphs %}
 				{% endif %}
 			
 			}
