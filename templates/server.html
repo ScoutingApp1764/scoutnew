@@ -81,9 +81,7 @@
 				};
 
 		
-				{% set i=-1 %}
-				{% for part in letable %}
-					{% set i=i+1 %}
+				{% if itemSort %}
 					{% call input() %}
 						{% set firstTime = True %}
 						{% for datatable in alls %}
@@ -96,9 +94,27 @@
 							{% endif %}
 						{% endfor %}
 					{% endcall %}
-					var ctx = document.getElementById("{{part.0}}").getContext("2d");
-					new Chart(ctx).Bar(data, options);
-				{% endfor %}
+				{% else %}
+
+					{% set i=-1 %}
+					{% for part in letable %}
+						{% set i=i+1 %}
+						{% call input() %}
+							{% set firstTime = True %}
+							{% for datatable in alls %}
+								{% if datatable[i] is not string %}
+									{% if part[1] == "radio" %}
+									{% else%}
+										{% if not firstTime %},{% endif %}{{datatable[i]}}
+										{% set firstTime = False %}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endcall %}
+						var ctx = document.getElementById("{{part.0}}").getContext("2d");
+						new Chart(ctx).Bar(data, options);
+					{% endfor %}
+				{% end %}
 			
 			}
 			function showhide()
