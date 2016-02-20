@@ -8,9 +8,9 @@
 				{% set firstTime = False %}
 			{% endfor %}
 		{% else %}
-			{% if radioButtNum is string %}
+			{% if radioButtNum != -1 %}
 				{% for team in teams %}
-					{% for letableButtName in letable[radioButtNum].4 %}
+					{% for letableButtName in letable[radioButtNum].1 %}
 						{% if not firstTime %},{% endif %}"Team {{team.0}} button {{letableButtName}}"
 						{% set firstTime = True %}
 					{% endfor %}
@@ -102,6 +102,7 @@
 					{% set i=-1 %}
 					{% for part in letable %}
 						{% set i=i+1 %}
+						{% set inp = -1 %}
 						{% if part[1] == "radio" %}
 							{% set inp =i %}
 						{% endif %}
