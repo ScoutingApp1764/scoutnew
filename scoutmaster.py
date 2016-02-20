@@ -251,6 +251,7 @@ if not doNotStart:
 		fakealls=[]
 		for team in teams:
 			fakealls.append(brilliance(team[0],True))
+		
 		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakealls)
 
 
@@ -348,13 +349,23 @@ if not doNotStart:
 		jsoned = request.form.get("json")
 		jsontoSql(jsoned)
 		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template. 
+
+
 	
-	@app.route("/Chart.js")
-	def chartjs():
-		_file = open("Chart.js","r")
+	def servefile(path):
+		_file = open(path,"r")
 		_res = _file.read()
 		_file.close()
 		return _res	
+
+	@app.route("/Chart.js")
+	def chartjs():
+		return servefile("Chart.js")	
+	@app.route("bootstrap.min.js")
+	def bootJs():
+		return servefile("bootstrap.min.js")
+	@app.route("bootstrap.min.css")
+		return servefile("bootstrap.min.css")
 	
 
 
