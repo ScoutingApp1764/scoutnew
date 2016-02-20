@@ -5,7 +5,9 @@ NOPE, just sanitized SQLite | Switch to SQLAlchemy (not using object stuff)
 YUPOS Then, add text box to other
 DUNZIES Submit databases to master over an internet connection. Needs to have some sort of fallback.
 *Graphs
+*Fake data generator(quick and dirty)
 *UI Clean-up
 PROBABLY A TERRABLE IDEA! Modifying data on the server-side. Probably won't be needed but you never know.
 *Watch all of my code break down while trying to run on a macbook
+
 
