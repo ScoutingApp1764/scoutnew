@@ -124,7 +124,7 @@ Options:
 		
 		
 if not doNotStart:
-	from flask import Flask,request,send_file,render_template,g,url_for
+	from flask import Flask,request,send_file,render_template,g
 	app = Flask(__name__)
 	def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
 		washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
@@ -352,16 +352,27 @@ if not doNotStart:
 
 
 	
-	'''def servefile(path):
+	def servefile(path):
 		_file = open(path,"r")
 		_res = _file.read()
 		_file.close()
-		return _res	'''
+		return _res	
 
-	url_for('/Chart.js', filename='Chart.js')
-	url_for('/bootstrap.min.js',filename='bootstrap.min.js')
-	url_for('/bootstrap.min.css',filename='bootstrap.min.css')
-	url_for('/jquery.min.js',filename='jquery.min.js')
+	@app.route("/Chart.js")
+	def chartjs():
+		return servefile("Chart.js")	
+	@app.route("/bootstrap.min.js")
+	def bootJs():
+		return servefile("bootstrap.min.js")
+	@app.route("/bootstrap.min.css")
+	def bootCss():
+		return servefile("bootstrap.min.css")
+	@app.route("/jquery.min.js")
+	def jqJs():
+		return servefile("jquery.min.js")
+	
+
+
 
 
 	if __name__ == '__main__' and not doNotStart:
