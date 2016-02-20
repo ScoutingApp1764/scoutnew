@@ -367,6 +367,9 @@ if not doNotStart:
 	@app.route("/bootstrap.min.css")
 	def bootCss():
 		return servefile("bootstrap.min.css")
+	@app.route("/jquery.min.js")
+	def jqJs():
+		return servefile("jquery.min.js")
 	
 
 
