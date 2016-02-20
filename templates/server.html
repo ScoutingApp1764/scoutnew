@@ -97,14 +97,12 @@
 								{% if letable[s].1 == "radio" %}
 									{% for buttavg in datatable[i] %}
 										{% if not firstTime %},{% endif %}{{buttavg}}
-											{% set firstTime = False %}
-										{% endfor %}
 										{% set firstTime = False %}
 									{% endfor %}
 								{% else %}
 									{% if not firstTime %},{% endif %}{{datatable[1]}}.0
 									{% set firstTime = False %}
-								{% endif 
+								{% endif %} 
 							{% endif %}
 						{% endfor %}
 					{% endcall %}
