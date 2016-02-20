@@ -10,6 +10,10 @@ from os import listdir
 
 
 #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
+what = ""
+for _ in letable:
+	what = what+"?,"
+what = what[0:-1]
 letable = [
 	["teamNum","updown","Team num","The team number"],
         ["roundNum","updown","Round Num","The round number"], 
@@ -93,14 +97,24 @@ Options:
     elif arg == "-xxs":
 	xxs = True
     elif arg == "-spam":
-	for _ in range(0,1)
+	allData =[]
+	for _ in range(0,1):
 		cData = []
 		for item in letable:
 			if item.1 == "radio":
 				cData.append(random.randrang(len(item.4)-1))
 			elif item.1 == "text":
-				
-			
+				cData.append("2lazy4randomtext")
+			elif item.1 == "updown":
+				cData.append(random.randrange(10)
+			else:
+				cData.append(random.randrange(1))
+		allData.append(tuple(cData))
+		s = sqlite3.connect("MASTERDB")
+		m = s.cursor()
+		m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
+		
+	
 		
 		
 if not doNotStart:
@@ -128,10 +142,6 @@ if not doNotStart:
 
 
 	#this will be used in clientSubmit and in the sql submitting
-	what = ""
-	for _ in letable:
-		what = what+"?,"
-	what = what[0:-1]
 
 	@app.route("/submit", methods=['POST']) #change back to post
 	def clientSubmit():
