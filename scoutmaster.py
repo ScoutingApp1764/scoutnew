@@ -361,10 +361,11 @@ if not doNotStart:
 	@app.route("/Chart.js")
 	def chartjs():
 		return servefile("Chart.js")	
-	@app.route("bootstrap.min.js")
+	@app.route("/bootstrap.min.js")
 	def bootJs():
 		return servefile("bootstrap.min.js")
-	@app.route("bootstrap.min.css")
+	@app.route("/bootstrap.min.css")
+	def bootCss():
 		return servefile("bootstrap.min.css")
 	
 
