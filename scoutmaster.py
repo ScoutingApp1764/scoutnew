@@ -98,7 +98,7 @@ Options:
 	xxs = True
     elif arg == "-spam":
 	allData =[]
-	for _ in range(0,1):
+	for _ in range(0,200):
 		cData = []
 		for item in letable:
 			if item[1] == "radio":
@@ -110,12 +110,12 @@ Options:
 			else:
 				cData.append(random.randrange(1))
 		allData.append(tuple(cData))
-		s = sqlite3.connect("MASTERDB")
-		m = s.cursor()
-		m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
-		m.close()
-		s.commit()
-		s.close()
+	s = sqlite3.connect("MASTERDB")
+	m = s.cursor()
+	m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
+	m.close()
+	s.commit()
+	s.close()
 
 		
 	
