@@ -101,7 +101,9 @@ Options:
 	for _ in range(0,200):
 		cData = []
 		for item in letable:
-			if item[1] == "radio":
+			if item[0] == "teamNum":
+				cData.append(random.randrange(1000)) 
+			elif item[1] == "radio":
 				cData.append(random.randrange(len(item[4])-1))
 			elif item[1] == "text":
 				cData.append("2lazy4randomtext")
