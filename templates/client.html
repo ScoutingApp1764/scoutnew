@@ -5,11 +5,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Scouting App</title>
-		<link href="bootstrap.min.css" rel="stylesheet">
+		<link href="bootstrap.min.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 		<h1><center>1764 Scouting App</center></h1>
-		<form action="/submit" method=POST >
+		<form action="/submit" method=POST role="form">
 		{% set i = -1 %}
 		{% for obj in letable %}
 			<div title="{{obj.3}}"> {# Gives tootips #}
@@ -41,7 +41,7 @@
 		{% endfor %}
 
 
-		<input type="submit">
+		<input type="submit" class="btn btn-default">
 		</form>
 		<script src="jquery.min.js"></script>
 		<script src="bootstrap.min.js"></script>
