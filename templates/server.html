@@ -84,16 +84,27 @@
 		
 				{% if itemSort %}
 					{% set needGraphs = True %}
-					{% call input() %}
+					{% set inp = -1 %}
+					{% if part[1] == "radio" %}
+						{% set inp =i %}
+					{% endif %}
+
+					{% call input(inp) %}
 						{% set firstTime = True %}
 						{% for datatable in alls %}
 
 							{% if datatable[1] is not string %}
 								{% if letable[s].1 == "radio" %}
+									{% for buttavg in datatable[i] %}
+										{% if not firstTime %},{% endif %}{{buttavg}}
+											{% set firstTime = False %}
+										{% endfor %}
+										{% set firstTime = False %}
+									{% endfor %}
 								{% else %}
 									{% if not firstTime %},{% endif %}{{datatable[1]}}.0
 									{% set firstTime = False %}
-								{% endif %}
+								{% endif 
 							{% endif %}
 						{% endfor %}
 					{% endcall %}
