@@ -124,7 +124,7 @@ Options:
 		
 		
 if not doNotStart:
-	from flask import Flask,request,send_file,render_template,g
+	from flask import Flask,request,send_file,render_template,g,Response
 	app = Flask(__name__)
 	def soap(washed): #!!!!!!!!!!!!!!!!!canidate for deletion!!!!!!!!!!!!!!!!!!!!!!!!!!1
 		washed = str(washed) #scrub off any unicode. Okay, actually, probably throw an error for unicode. Better than an incident with the database.
