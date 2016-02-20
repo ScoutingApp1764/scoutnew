@@ -1,4 +1,4 @@
-{% macro input() -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
+{% macro input(radioButtNum) -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
 	var data = {
 		labels: [
 		{% set firstTime = True %}
@@ -97,7 +97,12 @@
 							{% set firstTime = True %}
 							{% for datatable in alls %}
 								{% if datatable[i] is not string %}
-									{% if letable[1] == "radio" %}
+									{% if part[1] == "radio" %}
+										{% if not firstTime %},{% endif %}
+										{% for buttavg in datatable[i]}
+											{{buttavg}}
+										{% endfor %}
+										{% set firstTime = True %}
 									{% else%}
 										{% if not firstTime %},{% endif %}{{datatable[i]}}
 										{% set firstTime = False %}
