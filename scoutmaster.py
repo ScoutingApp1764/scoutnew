@@ -82,6 +82,7 @@ Options:
 -c	Clear the database
 -s	Secure mode--No uploading databases
 -p 	Paranoid mode--No uploading or using the client
+-spam	Create a 200 entries of randomized scouting data
 -xxs	Debug option to host on a different port to test uploading databases'''
 	
     elif arg == "-s": #secure mode
@@ -91,6 +92,16 @@ Options:
 	paranoidMode = True
     elif arg == "-xxs":
 	xxs = True
+    elif arg == "-spam":
+	for _ in range(0,1)
+		cData = []
+		for item in letable:
+			if item.1 == "radio":
+				cData.append(random.randrang(len(item.4)-1))
+			elif item.1 == "text":
+				
+			
+		
 		
 if not doNotStart:
 	from flask import Flask,request,send_file,render_template,g
