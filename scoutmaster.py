@@ -352,24 +352,28 @@ if not doNotStart:
 
 
 	
-	def servefile(path):
+	def servefile(path,mime):
 		_file = open(path,"r")
 		_res = _file.read()
 		_file.close()
-		return _res	
+		resp = Response(response=_res,
+                	status=200,
+                	mimetype=mime
+		)
+		return resp
 
 	@app.route("/Chart.js")
 	def chartjs():
-		return servefile("Chart.js")	
+		return servefile("Chart.js","text/javascript")	
 	@app.route("/bootstrap.min.js")
 	def bootJs():
-		return servefile("bootstrap.min.js")
+		return servefile("bootstrap.min.js","text/javascript")
 	@app.route("/bootstrap.min.css")
 	def bootCss():
-		return servefile("bootstrap.min.css")
+		return servefile("bootstrap.min.css","text/css")
 	@app.route("/jquery.min.js")
 	def jqJs():
-		return servefile("jquery.min.js")
+		return servefile("jquery.min.js","text/javascript")
 	
 
 
