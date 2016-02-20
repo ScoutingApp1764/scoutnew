@@ -199,7 +199,7 @@
 				<br>
 				{% set addAdds = 0 %}
 				{% if part.1 == "radio" %}
-					{% set addAdds = ((part.4|length)-1) *25 %}
+					{% set addAdds = (part.4|length)*50%}
 				{% endif %}
 	
 				<canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
