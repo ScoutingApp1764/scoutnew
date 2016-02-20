@@ -352,27 +352,16 @@ if not doNotStart:
 
 
 	
-	def servefile(path):
+	'''def servefile(path):
 		_file = open(path,"r")
 		_res = _file.read()
 		_file.close()
-		return _res	
+		return _res	'''
 
-	@app.route("/Chart.js")
-	def chartjs():
-		return servefile("Chart.js")	
-	@app.route("/bootstrap.min.js")
-	def bootJs():
-		return servefile("bootstrap.min.js")
-	@app.route("/bootstrap.min.css")
-	def bootCss():
-		return servefile("bootstrap.min.css")
-	@app.route("/jquery.min.js")
-	def jqJs():
-		return servefile("jquery.min.js")
-	
-
-
+	url_for('Chart.js', filename='Chart.js')
+	url_for('bootstrap.min.js',filename='bootstrap.min.js')
+	url_for('bootstrap.min.css',filename='bootstrap.min.css')
+	url_for('jquery.min.js',filename='jquery.min.js')
 
 
 	if __name__ == '__main__' and not doNotStart:
