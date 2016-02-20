@@ -10,10 +10,6 @@ from os import listdir
 
 
 #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
-what = ""
-for _ in letable:
-	what = what+"?,"
-what = what[0:-1]
 letable = [
 	["teamNum","updown","Team num","The team number"],
         ["roundNum","updown","Round Num","The round number"], 
@@ -55,6 +51,10 @@ letable = [
 	["gotStuck","check","Got stuck","Did the robot get itself in a position where it struggled significantly or did not get out of?"],
 	["paperweight","check","Didn't move at all","Was the robot a paperweight?"],
 ]
+what = ""
+for _ in letable:
+	what = what+"?,"
+what = what[0:-1]
 doNotStart = False
 secureMode = False
 paranoidMode = False
@@ -101,18 +101,22 @@ Options:
 	for _ in range(0,1):
 		cData = []
 		for item in letable:
-			if item.1 == "radio":
-				cData.append(random.randrang(len(item.4)-1))
-			elif item.1 == "text":
+			if item[1] == "radio":
+				cData.append(random.randrange(len(item[4])-1))
+			elif item[1] == "text":
 				cData.append("2lazy4randomtext")
-			elif item.1 == "updown":
-				cData.append(random.randrange(10)
+			elif item[1] == "updown":
+				cData.append(random.randrange(10))
 			else:
 				cData.append(random.randrange(1))
 		allData.append(tuple(cData))
 		s = sqlite3.connect("MASTERDB")
 		m = s.cursor()
 		m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
+		m.close()
+		s.commit()
+		s.close()
+
 		
 	
 		
