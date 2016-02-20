@@ -98,7 +98,7 @@ Options:
 	xxs = True
     elif arg == "-spam":
 	allData =[]
-	for _ in range(0,200):
+	for _ in range(0,25):
 		cData = []
 		for item in letable:
 			if item[0] == "teamNum":
