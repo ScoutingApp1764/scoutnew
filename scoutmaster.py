@@ -87,7 +87,8 @@ Options:
 -s	Secure mode--No uploading databases
 -p 	Paranoid mode--No uploading or using the client
 -spam	Create a 200 entries of randomized scouting data
--xxs	Debug option to host on a different port to test uploading databases'''
+-xxs	Debug option to host on a different port to test uploading databases
+-d	Debug mode. You want this if you're modifying code.'''
 	
     elif arg == "-s": #secure mode
 	secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
@@ -96,6 +97,8 @@ Options:
 	paranoidMode = True
     elif arg == "-xxs":
 	xxs = True
+    elif arg == "-d":
+	debug = True
     elif arg == "-spam":
 	allData =[]
 	for _ in range(0,25):
@@ -380,8 +383,8 @@ if not doNotStart:
 
 
 	if __name__ == '__main__' and not doNotStart:
-		port =	82
+		port =	5000
 		if xxs:
 			port = 83
 		
-		app.run(debug=True, host='0.0.0.0',port=port)
+		app.run(debug=debug, host='0.0.0.0',port=port)
