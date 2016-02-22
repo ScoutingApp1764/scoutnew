@@ -59,7 +59,7 @@ doNotStart = False
 secureMode = False
 paranoidMode = False
 xxs=False
-debug = True
+debug = False
 for arg in sys.argv:
     if arg == "-c":
 	doNotStart = True
