@@ -384,7 +384,7 @@ if not doNotStart:
 
 
 	if __name__ == '__main__' and not doNotStart:
-		port =	5000
+		port =	9001
 		if xxs:
 			port = 83
 		

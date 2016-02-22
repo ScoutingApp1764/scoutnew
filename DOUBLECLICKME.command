@@ -9,8 +9,8 @@ if [ ! -d "FlaskExists" ]; then
     mkdir FlaskExists
 fi
 
-./scout.py &
+./scoutmaster.py &
 sleep 8
 cd /
-./Applications/Firefox.app/Contents/MacOS/firefox 127.0.0.1:5000
+./Applications/Firefox.app/Contents/MacOS/firefox 127.0.0.1:9001
 
