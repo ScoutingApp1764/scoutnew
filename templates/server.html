@@ -189,7 +189,13 @@
 		{% if itemSort %}
 			{{letable[s].2}}:
 			<br>
-			<canvas  id="{{letable[s].0}}" width="1000" height="400" ></canvas><br>
+			{% set addAdds = 0 %}
+			{% if letable[s].1 == "radio" %}
+				{% set addAdds = (part.4|length)*50%}
+			{% endif %}
+
+
+			<canvas  id="{{letable[s].0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400" ></canvas><br>
 		{% elif needGraphs %}
 			<input type="button" value="Show/hide graphs" onclick="showhide();" />
 			<br>
