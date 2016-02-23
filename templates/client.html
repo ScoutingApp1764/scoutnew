@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
-	<div class = "container" style="width: 100%; position: absolute; margin: auto;">
-		<div class="col-sm-12">
-			<head>
-				<meta charset="utf-8">
-				<meta http-equiv="X-UA-Compatible" content="IE=edge">
-				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<title>Scouting App</title>
-				<link href="bootstrap.min.css" type="text/css" rel="stylesheet">
-			</head>
-			<body>
+    <head>
+        <style>
+            div.container { 
+                width: 100%;
+                position: absolute;
+                margin: auto; 
+                background: linear-gradient( #{% if evil %}FF0000{% else %}99ccff{% endif %}, white );
+            }
+            hr.def { 
+                border-color: black;
+                background-color: black;
+                border-width: 3px; 
+            }
+        </style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Scouting App</title>
+        <link href="bootstrap.min.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+	    <div class = "container" >
+		    <div class="col-sm-12">
 				<h1><center>1764 Scouting App</center></h1>
 				<form action="/submit" method=POST role="form">
 				{% set i = -1 %}
@@ -31,7 +44,7 @@
 						{% endfor %}
 						<br>
 					{% elif obj.1 == 'head' %}
-						<hr><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
+                    <hr class = "def"><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
 					{% else %}
 						{% if obj.1 == 'check' %}
 							{% set type = 'checkbox' %}
