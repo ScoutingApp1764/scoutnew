@@ -50,11 +50,15 @@
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-							{{obj.2}}
 							{% if br %}
+								{{obj.2}}
 								<br>
 							{% endif %}
-							<input type="{{type}}" name="{{i}}" value="{{val}}"><br> 
+							<input type="{{type}}" name="{{i}}" value="{{val}}">
+							{% if not br %}
+								{{obj.2}}
+							{% endif %}
+							<br> 
 							<p class="help-block">{{obj.3}}</p>
 						</label>
 						</div>
