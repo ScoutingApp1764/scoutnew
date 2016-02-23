@@ -1,6 +1,6 @@
 while [ "1" = "1" ]
 do
-	python scoutmaster.py
+	python scoutmaster.py -d
 	if [ "$?" = "1" ]; then
 		sleep 2
 	fi
