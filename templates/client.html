@@ -12,7 +12,7 @@
 		<form action="/submit" method=POST role="form">
 		{% set i = -1 %}
 		{% for obj in letable %}
-			<div title="{{obj.3}}"> {# Gives tootips #}
+			{#<div title="{{obj.3}}"> {# Gives tootips #}
 			{% set i = i+1 %}
 			{% if obj.1 == 'radio' %}
 				{{obj.2}}: {# print out the name of the object #} 
@@ -35,7 +35,8 @@
 					{% set type = 'text' %}
 					{% set val = ' ' %}
 				{% endif %} {# These all have just about the same handling, so they're all down here #}
-				<input type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
+				<input class="form-control" type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
+				<p class="help-block">{{obj.3}}</p>
 				</div>
 			{% endif %}
 		{% endfor %}
