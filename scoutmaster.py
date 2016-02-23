@@ -136,8 +136,9 @@ if not doNotStart:
 		sql = g._database = sqlite3.connect("MASTERDB")
 		return sql
 
-    @app.route('/')
-    def reroute():
+	@app.route('/')
+	def reroute():
+		return render_template("redirect.html",to="/client/")
 
 	@app.route('/client/<evil>')
 	def clientEnd(evil = False):
@@ -335,7 +336,7 @@ if not doNotStart:
 	@app.route("/importdbs/")
 	def importDbs():
 		if secureMode:
-			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 
 		location = "rawDatabases/"
 		print("list " + str(listdir(location)))
