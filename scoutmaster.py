@@ -195,6 +195,15 @@ if not doNotStart:
 		sql=get_db()
 		m=sql.cursor()
 		return render_template("server.html",secureMode = secureMode,s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY teamNum").fetchall()) 
+	@app.route('/itemSortLarge/<s>')
+	def itemSort2(s):
+		s=int(s) #can never be too safe
+		sql=get_db()
+		m=sql.cursor()
+		return render_template("server.html",secureMode = secureMode,s=s,itemSort = True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(),   alls = m.execute("SELECT teamNum, "+letable[s][0]+" FROM Data ORDER BY "+letable[s][0]+"").fetchall()) 
+		
+
+
 		
 
 	@app.route('/teamSort/<s>')
