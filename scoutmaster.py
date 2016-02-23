@@ -136,7 +136,10 @@ if not doNotStart:
 		sql = g._database = sqlite3.connect("MASTERDB")
 		return sql
 
-	@app.route('/<evil>')
+    @app.route('/')
+    def reroute():
+
+	@app.route('/client/<evil>')
 	def clientEnd(evil = False):
 		if paranoidMode:
 			return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
@@ -350,7 +353,7 @@ if not doNotStart:
 	def securityVulnerability():
 		print("uploaddb_up requerst")
 		if secureMode:
-			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned off uploading JSON\'d databases.</p></body></html>'#well, when you put it like that it makes me want to turn it off always
+			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 		jsoned = request.form.get("json")
 		jsontoSql(jsoned)
 		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template.
