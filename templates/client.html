@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Scouting App</title>
-		<link href="bootstrap.min.css" type="text/css" rel="stylesheet">
-	</head>
-	<body>
-		<h1><center>1764 Scouting App</center></h1>
-		<form action="/submit" method=POST role="form">
-		{% set i = -1 %}
-		{% for obj in letable %}
-			{#<div title="{{obj.3}}"> {# Gives tootips #}
-			{% set i = i+1 %}
-			{% if obj.1 == 'radio' %}
-				{{obj.2}}: {# print out the name of the object #} 
-				{% set thisval = -1 %}
-				{% set o = -1 %}
-				{% for thisname in obj.4 %}
-					{% set o = o+1 %}
-					{% set thisval = thisval+1 %}
-					<div class = "radio">
-						<label>
-							<input type="radio" name ="{{letable[i].0}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
-						</label>
-					</div>
+	<div class = "row">
+		<div class="col-sm-6">
+			<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<title>Scouting App</title>
+				<link href="bootstrap.min.css" type="text/css" rel="stylesheet">
+			</head>
+			<body>
+				<h1><center>1764 Scouting App</center></h1>
+				<form action="/submit" method=POST role="form">
+				{% set i = -1 %}
+				{% for obj in letable %}
+					{#<div title="{{obj.3}}"> {# Gives tootips #}
+					{% set i = i+1 %}
+					{% if obj.1 == 'radio' %}
+						{{obj.2}}: {# print out the name of the object #} 
+						{% set thisval = -1 %}
+						{% set o = -1 %}
+						{% for thisname in obj.4 %}
+							{% set o = o+1 %}
+							{% set thisval = thisval+1 %}
+							<div class = "radio">
+								<label>
+									<input type="radio" name ="{{letable[i].0}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
+								</label>
+							</div>
+						{% endfor %}
+						<br>
+					{% elif obj.1 == 'head' %}
+						<hr><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
+					{% else %}
+						{% if obj.1 == 'check' %}
+							{% set type = 'checkbox' %}
+							{% set val = 1 %}
+							<div class = "checkbox">
+						{% elif obj.1 == 'updown' %}
+							{% set type = 'number' %}
+							{% set val = 0 %}
+							<div class = "form-group">
+						{% elif obj.1 == 'text' %}
+							{% set type = 'text' %}
+							{% set val = ' ' %}
+							<div class = "form-group">
+						{% endif %} {# These all have just about the same handling, so they're all down here #}
+						<input class="form-control" type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
+						<p class="help-block">{{obj.3}}</p>
+						</div>
+					{% endif %}
 				{% endfor %}
-				<br>
-			{% elif obj.1 == 'head' %}
-				<hr><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
-			{% else %}
-				{% if obj.1 == 'check' %}
-					{% set type = 'checkbox' %}
-					{% set val = 1 %}
-					<div class = "checkbox">
-				{% elif obj.1 == 'updown' %}
-					{% set type = 'number' %}
-					{% set val = 0 %}
-					<div class = "form-group">
-				{% elif obj.1 == 'text' %}
-					{% set type = 'text' %}
-					{% set val = ' ' %}
-					<div class = "form-group">
-				{% endif %} {# These all have just about the same handling, so they're all down here #}
-				<input class="form-control" type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
-				<p class="help-block">{{obj.3}}</p>
-				</div>
-			{% endif %}
-		{% endfor %}
 
 
-		<input type="submit" class="btn btn-default">
-		</form>
-		<script src="jquery.min.js"></script>
-		<script src="bootstrap.min.js"></script>
-	</body>
+				<input type="submit" class="btn btn-default">
+				</form>
+				<script src="jquery.min.js"></script>
+				<script src="bootstrap.min.js"></script>
+			</body>
+		</div>
+	</div>
 </html>
