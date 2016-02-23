@@ -304,17 +304,17 @@ if not doNotStart:
 	@app.route("/exportdb/")
 	def exportdb():
 		if secureMode:
-            return render_template("msg.html","Sorry, the host has turned off exporting JSON\'d databases.")
+			return render_template("msg.html","Sorry, the host has turned off exporting JSON\'d databases.")
 
 		_file = open("exportedDb_"+str(random.randrange(9999)),"w")
 		_file.write(jsondb())
 		_file.close()
-        return render_template("msg.html","Database can be found at exportedDB_ and then a random number")
+		return render_template("msg.html","Database can be found at exportedDB_ and then a random number")
 
 
 	@app.route("/uploaddb/",methods=["GET","POST"])
 	def uploaddb():
-        if secureMode:
+		if secureMode:
 			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 
 		#upload our database to the master
