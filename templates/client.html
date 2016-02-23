@@ -17,9 +17,15 @@
 			{% if obj.1 == 'radio' %}
 				{{obj.2}}: {# print out the name of the object #} 
 				{% set thisval = -1 %}
+				{% set o = -1 %}
 				{% for thisname in obj.4 %}
+					{% set o = o+1 %}
 					{% set thisval = thisval+1 %}
-					<input type="radio" name ="{{i}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
+					<div class = "radio">
+						<label>
+							<input type="radio" name ="{{letable[i].0}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
+						</label>
+					</div>
 				{% endfor %}
 				<br>
 			{% elif obj.1 == 'head' %}
