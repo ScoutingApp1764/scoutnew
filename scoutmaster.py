@@ -320,7 +320,7 @@ if not doNotStart:
 		#upload our database to the master
 		if request.method == "POST":
 			ip = request.form.get("ip")
-			json = jsondb()
+			jsoned = jsondb()
 			return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 
 		return render_template("uploaddb.html")
@@ -341,7 +341,6 @@ if not doNotStart:
 		if secureMode:
 			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 
-
 		location = "rawDatabases/"
 		print("list " + str(listdir(location)))
 		for tfile in listdir(location):
@@ -354,6 +353,14 @@ if not doNotStart:
 		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master/\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template.
 
 
+	@app.route("/uploaddb_up/",methods=["POST"])
+	def securityVulnerability():
+		print("uploaddb_up requerst")
+		if secureMode:
+			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
+		jsoned = request.form.get("json")
+		jsontoSql(jsoned)
+		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template.
 
 
 
