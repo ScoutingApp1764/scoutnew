@@ -314,6 +314,9 @@ if not doNotStart:
 
 	@app.route("/uploaddb/",methods=["GET","POST"])
 	def uploaddb():
+        if secureMode:
+			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
+
 		#upload our database to the master
 		if request.method == "POST":
 			ip = request.form.get("ip")
