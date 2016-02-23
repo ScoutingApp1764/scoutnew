@@ -28,12 +28,15 @@
 				{% if obj.1 == 'check' %}
 					{% set type = 'checkbox' %}
 					{% set val = 1 %}
+					<div class = "checkbox">
 				{% elif obj.1 == 'updown' %}
 					{% set type = 'number' %}
 					{% set val = 0 %}
+					<div class = "form-group">
 				{% elif obj.1 == 'text' %}
 					{% set type = 'text' %}
 					{% set val = ' ' %}
+					<div class = "form-group">
 				{% endif %} {# These all have just about the same handling, so they're all down here #}
 				<input class="form-control" type="{{type}}" name="{{i}}" value="{{val}}"> {{obj.2}} <br> 
 				<p class="help-block">{{obj.3}}</p>
