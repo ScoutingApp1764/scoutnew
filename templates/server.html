@@ -45,7 +45,7 @@
 <html>
 	<head>
         <link rel="stylesheet" type="text/css" href="/defstyle.css">
-		{% if avg or minmax or itemSort %}
+		{% if allAvg or minmax or itemSort %}
 			<script src="/Chart.js"></script>
 			<script>
 			function onBodyStart()
@@ -179,7 +179,7 @@
 
 				<h3><center><a href="/allavg/">All averages</a></center></h3><br>
 				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Avg/min/max
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Category sort
 					<span class="caret"></span>
 					</button>
 					<ul class = "dropdown-menu" aria-labelledby="dropdownMenu1">

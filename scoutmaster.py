@@ -265,7 +265,7 @@ if not doNotStart:
 		for team in teams:
 			fakealls.append(brilliance(team[0],True))
 
-		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakealls)
+		return render_template("server.html",secureMode = secureMode,avg=True,letable=letable, teams = m.execute("SELECT DISTINCT teamNum FROM Data").fetchall(), alls = fakealls,allAvg=True)
 
 
 	@app.route("/min/<s>")
