@@ -140,11 +140,15 @@ if not doNotStart:
 	def reroute():
 		return render_template("redirect.html",to="/client/")
 
-	@app.route('/client/<evil>')
+	@app.route('/client/')
 	def clientEnd(evil = False):
 		if paranoidMode:
 			return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
 		return render_template('client.html',letable=letable,evil = evil)
+	@app.route("/allvilliansarelemons/")
+	def evil():
+		return clientEnd(evil = True)
+
 
 
 	#this will be used in clientSubmit and in the sql submitting
