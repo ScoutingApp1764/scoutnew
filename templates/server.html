@@ -258,7 +258,7 @@
 							{% set i = i+1 %}
 							<tr title="{{letable[i].3}}">
 							{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
-							<td><hr class="def"><h1>{{letable[i].2}}</h1></td><td></td><td>
+								<td><hr class="def"><h1>{{letable[i].2}}</h1></td><td>
 							{% else %}
 								<td>{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
 								{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
