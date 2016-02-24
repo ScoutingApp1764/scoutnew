@@ -138,7 +138,7 @@ if not doNotStart:
 
 	@app.route('/')
 	def reroute():
-		return render_template("redirect.html",to="/client/")
+		return render_template("redirect.html",url="/client/")
 
 	@app.route('/client/')
 	def clientEnd(evil = False):
@@ -390,6 +390,9 @@ if not doNotStart:
 	@app.route("/jquery.min.js")
 	def jqJs():
 		return servefile("jquery.min.js","text/javascript")
+	@app.route("/defstyle.css")
+	def defstyle():
+		return servefile("defstyle.css","text/css")
 
 
 

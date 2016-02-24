@@ -1,0 +1,11 @@
+div.container { 
+	width: 100%;
+	position: absolute;
+	margin: auto; 
+	background: linear-gradient( #{% if evil %}FF0000{% else %}99ccff{% endif %}, white );
+}
+hr.def { 
+	border-color: black;
+	background-color: black;
+	border-width: 3px; 
+}
