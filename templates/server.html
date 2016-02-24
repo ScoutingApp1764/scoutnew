@@ -248,7 +248,7 @@
 						{% if lastTeam != datatable.0 %} {#we just need to give the team number, and the value of the variable requested. We also don't
 		want to duplicate team number and line--it helps that SQL has orginized it by team for us.#}
 							<hr class="def">
-							<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</td></tr>
+							<tr title="{{letable[0].3}}" class="def"><td>Team num</td><td> {{datatable.0}}</tr>
 						{% endif %}
 						{% set lastTeam = datatable.0 %}
 						<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
