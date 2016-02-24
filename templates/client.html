@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-                    <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/defstyle.css">
+        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Scouting App - Client </title>
         <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-	    <div class = "container" >
+	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
 		    <div class="col-sm-12">
                 <h1><center>{% if evil %}EEEVVVILLL!!!!!{% else %}1764 Scouting App{% endif %}</center></h1>
 				<form action="/submit" method=POST role="form">

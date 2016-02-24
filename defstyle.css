@@ -2,7 +2,7 @@ div.container {
 	width: 100%;
 	position: absolute;
 	margin: auto; 
-	background: linear-gradient( #{% if evil %}FF0000{% else %}99ccff{% endif %}, white );
+	background: linear-gradient( #99ccff, white );
 }
 hr.def { 
 	border-color: black;
