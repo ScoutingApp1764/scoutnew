@@ -9,3 +9,6 @@ hr.def {
 	background-color: black;
 	border-width: 3px; 
 }
+tr.def {
+	padding: 5px;
+}
