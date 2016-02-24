@@ -3,7 +3,7 @@ div.container {
 	position: absolute;
 	margin: auto; 
 }
-body.def {
+div.prebod {
 	background: linear-gradient( #99ccff, white, #99cc99);
 } 
 hr.def { 
