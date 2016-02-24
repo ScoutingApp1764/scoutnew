@@ -114,7 +114,7 @@ Options:
 			elif item[1] == "updown":
 				cData.append(random.randrange(10))
 			else:
-				cData.append(random.randrange(1))
+				cData.append(random.randrange(0,1))
 		allData.append(tuple(cData))
 	s = sqlite3.connect("MASTERDB")
 	m = s.cursor()
