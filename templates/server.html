@@ -164,129 +164,135 @@
 
 	</head>
 	<body {% if itemSort %}onLoad="onBodyStart();"{% endif %}>
-		<center>
-			<h1>1764 Scouting App</h1>
+	    <div class = "container">
+			<div class="col-sm-12">
+				<center>
+					<h1>1764 Scouting App</h1>
 
-			{% if secureMode %}
-				<h2>Secure Mode - No modifying data.</h2>
-			{% endif %}
-			<a href="/master/"><h3>Database View</h3></a>
-		</center>
+					{% if secureMode %}
+						<h2>Secure Mode - No modifying data.</h2>
+					{% endif %}
+					<a href="/master/"><h3>Database View</h3></a>
+				</center>
 
-		<a href="/allavg/">All averages</a><br>
-		{% set i = -1 %}
-		{% for part in letable %}
-			{% set i = i+1 %}
-			<a href="/itemSort/{{i}}">{{part.2}}</a><a href="/itemSortLarge/{{i}}">(small to large)</a>
-		{% endfor %}
-		<br>
-
-		{% for team in teams %}
-			{{team.0}}:
-			{% set humanReads = ["Team","Avg","Min","Max"] %}
-			{% set i = -1 %}
-			{% for link in ["teamSort","avg","min","max"] %}
-				{% set i = i+1 %}
-				<a href="/{{link}}/{{team.0}}">{{humanReads[i]}}</a>
-			{% endfor %}
-			<br> 
-		{% endfor %}
-		<br>
-		{% if itemSort %}
-			{{letable[s].2}}:
-			<br>
-			{% set addAdds = 0 %}
-			{% if letable[s].1 == "radio" %}
-				{% set addAdds = (part.4|length)*50%}
-			{% endif %}
-
-
-			<canvas  id="{{letable[s].0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400" ></canvas><br>
-		{% elif needGraphs %}
-			<input type="button" value="Show/hide graphs" onclick="showhide();" />
-			<br>
-			<div id="charts" style="display: none;">
-			{% for part in letable %}
-				{{part.2}}: <a href ="#top">(back to top)</a>
-				<br>
-				{% set addAdds = 0 %}
-				{% if part.1 == "radio" %}
-					{% set addAdds = (part.4|length)*50%}
-				{% endif %}
-	
-				<canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
-			{% endfor %}
-			</div>
-		{% endif %}
-
-
-
-
-
-
-
-
-		{% set lastTeam = -1337 %}
-		{% for datatable in alls %}
-			<table>
-			{% set i = -1 %}
-			{% if itemSort %}
-				{% if lastTeam != datatable.0 %} {#we just need to give the team number, and the value of the variable requested. We also don't
-want to duplicate team number and line--it helps that SQL has orginized it by team for us.#}
-					<hr>
-					<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
-				{% endif %}
-				{% set lastTeam = datatable.0 %}
-				<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
-						
-			{% else %}
-				{% for data in datatable %}
+				<a href="/allavg/">All averages</a><br>
+				{% set i = -1 %}
+				{% for part in letable %}
 					{% set i = i+1 %}
-					<tr title="{{letable[i].3}}">
-					{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
-						<td><hr><h1>{{letable[i].2}}</h1></td><td>
-					{% else %}
-						<td>{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
-						{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
+					<a href="/itemSort/{{i}}">{{part.2}}</a><a href="/itemSortLarge/{{i}}">(small to large)</a>
+				{% endfor %}
+				<br>
 
-							{% if minmax %}
-								No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
-							{% elif avg %} {#can show the avg times each one was selected #}
-								{% set butnum = -1 %}
-								{% for butavged in data %}
-									{% set butnum = butnum + 1 %}
-									{{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
-								{% endfor %}
-									
-							{% else %}
-								{{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
-							{% endif %}
+				{% for team in teams %}
+					{{team.0}}:
+					{% set humanReads = ["Team","Avg","Min","Max"] %}
+					{% set i = -1 %}
+					{% for link in ["teamSort","avg","min","max"] %}
+						{% set i = i+1 %}
+						<a href="/{{link}}/{{team.0}}">{{humanReads[i]}}</a>
+					{% endfor %}
+					<br> 
+				{% endfor %}
+				<br>
+				{% if itemSort %}
+					{{letable[s].2}}:
+					<br>
+					{% set addAdds = 0 %}
+					{% if letable[s].1 == "radio" %}
+						{% set addAdds = (part.4|length)*50%}
+					{% endif %}
 
-						{% elif letable[i].1 == 'check' %}
-							{% if minmax == 'max' %}
-								was ever checked
-							{% elif minmax == 'min' %}
-								was ever unchecked
-							{% endif %}
-							{% if avg  %}
-								{{data * 100}}% of the time {# demical > percentage #}
-							{% else %}
-								{% if data == 0 %}
-									[x]
-								{% else %}
-									[√]
-								{% endif %}
-							{% endif %}
-						{% else %}
-							{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
-							{# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
+
+					<canvas  id="{{letable[s].0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400" ></canvas><br>
+				{% elif needGraphs %}
+					<input type="button" value="Show/hide graphs" onclick="showhide();" />
+					<br>
+					<div id="charts" style="display: none;">
+					{% for part in letable %}
+						{{part.2}}: <a href ="#top">(back to top)</a>
+						<br>
+						{% set addAdds = 0 %}
+						{% if part.1 == "radio" %}
+							{% set addAdds = (part.4|length)*50%}
 						{% endif %}
-						</td></tr>	
+			
+						<canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
+					{% endfor %}
+					</div>
+				{% endif %}
+
+
+
+
+
+
+
+
+				{% set lastTeam = -1337 %}
+				{% for datatable in alls %}
+					<table>
+					{% set i = -1 %}
+					{% if itemSort %}
+						{% if lastTeam != datatable.0 %} {#we just need to give the team number, and the value of the variable requested. We also don't
+		want to duplicate team number and line--it helps that SQL has orginized it by team for us.#}
+							<hr>
+							<tr title="{{letable[0].3}}"><td>Team num</td><td> {{datatable.0}}</tr>
+						{% endif %}
+						{% set lastTeam = datatable.0 %}
+						<tr title="{{letable[s].3}}"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
+								
+					{% else %}
+						{% for data in datatable %}
+							{% set i = i+1 %}
+							<tr title="{{letable[i].3}}">
+							{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
+								<td><hr><h1>{{letable[i].2}}</h1></td><td>
+							{% else %}
+								<td>{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
+								{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
+
+									{% if minmax %}
+										No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
+									{% elif avg %} {#can show the avg times each one was selected #}
+										{% set butnum = -1 %}
+										{% for butavged in data %}
+											{% set butnum = butnum + 1 %}
+											{{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
+										{% endfor %}
+											
+									{% else %}
+										{{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
+									{% endif %}
+
+								{% elif letable[i].1 == 'check' %}
+									{% if minmax == 'max' %}
+										was ever checked
+									{% elif minmax == 'min' %}
+										was ever unchecked
+									{% endif %}
+									{% if avg  %}
+										{{data * 100}}% of the time {# demical > percentage #}
+									{% else %}
+										{% if data == 0 %}
+											[x]
+										{% else %}
+											[√]
+										{% endif %}
+									{% endif %}
+								{% else %}
+									{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+									{# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
+								{% endif %}
+								</td></tr>	
+							{% endif %}
+						{% endfor %}
+						</table>
+						<hr style = "border-width: 5px;">
 					{% endif %}
 				{% endfor %}
-				</table>
-				<hr style = "border-width: 5px;">
-			{% endif %}
-		{% endfor %}
+				<script src="/jquery.min.js"></script>
+				<script src="/bootstrap.min.js"></script>
+			</div>
+		</div>
 	</body>
 </html>
