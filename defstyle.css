@@ -2,8 +2,10 @@ div.container {
 	width: 100%;
 	position: absolute;
 	margin: auto; 
-	background: linear-gradient( #99ccff, white, #99cc99);
 }
+body.def {
+	background: linear-gradient( #99ccff, white, #99cc99);
+} 
 hr.def { 
 	border-color: black;
 	background-color: black;
