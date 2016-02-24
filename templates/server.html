@@ -176,6 +176,7 @@
 					<a href="/master/"><h3>Database View</h3></a>
 				</center>
 
+
 				<a href="/allavg/">All averages</a><br>
 				{% set i = -1 %}
 				{% for part in letable %}
@@ -184,16 +185,21 @@
 				{% endfor %}
 				<br>
 
-				{% for team in teams %}
-					{{team.0}}:
-					{% set humanReads = ["Team","Avg","Min","Max"] %}
-					{% set i = -1 %}
-					{% for link in ["teamSort","avg","min","max"] %}
-						{% set i = i+1 %}
-						<a href="/{{link}}/{{team.0}}">{{humanReads[i]}}</a>
+				<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown
+					<span class="caret"></span>
+				</button>
+				<ul class = "dropdown-menu" aria-labelledby="dropdownMenu1">
+					{% for team in teams %}
+						{{team.0}}:
+						{% set humanReads = ["Team","Avg","Min","Max"] %}
+						{% set i = -1 %}
+						{% for link in ["teamSort","avg","min","max"] %}
+							{% set i = i+1 %}
+							<li><a href="/{{link}}/{{team.0}}">{{humanReads[i]}}</a></li>
+						{% endfor %}
 					{% endfor %}
-					<br> 
-				{% endfor %}
+				</ul>
 				<br>
 				{% if itemSort %}
 					{{letable[s].2}}:
