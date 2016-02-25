@@ -43,32 +43,28 @@
 					{% else %}
 						{% if obj.1 == 'check' %}
 							{% set type = 'checkbox' %}
-							{% set val = 1 %}
-							{% set br = False %}
-                            {% set lastCheckbox = 0 %}
-							<div class = "checkbox">
-						{% elif obj.1 == 'updown' %}
-							{% set type = 'number' %}
-                            {% set val = 0 %}
-                            {% set br = False %}
+                            {% set val = 1 %}
+                            {% set div = False %}
                             {% set lastCheckbox = lastCheckbox+1 %}
                             {% if lastCheckbox == 2 %}
                                 {% set lastCheckbox = 0 %}
-    							{% set br = True %}
+                                {% set div = True %}
+                            {% else %}
+    							<div class = "checkbox">
                             {% endif %}
+
+						{% elif obj.1 == 'updown' %}
+							{% set type = 'number' %}
+                            {% set val = 0 %}
+                            {% set div = False %}
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
-							{% set br = True %}
-                            {% set lastCheckbox = 0 %}
+							{% set div = True %}
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-                            {# % if br %} {#if our object wants a br }
-								{{obj.2}}
-								<br>
-							{% endif % #}
 							<input type="{{type}}" name="{{i}}" value="{{val}}">
 							{% if not br %}
 								{{obj.2}}
@@ -76,8 +72,9 @@
 							<br> 
 							<p class="help-block">{{obj.3}}</p>
 						</label>
-                        {% if lastCheckbox !=
-						</div>
+                        {% if div %}
+    						</div>
+                        {% endif %}
 					{% endif %}
 				{% endfor %}
 
