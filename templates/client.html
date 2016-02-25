@@ -48,10 +48,8 @@
                             {% set lastCheckbox = lastCheckbox+1 %}
                             {% if lastCheckbox == 2 %}
                                 {% set lastCheckbox = 0 %}
-                                {% set div = True %}
-                            {% else %}
+                                </div>
     							<div class = "checkbox">
-    						<label>
                             {% endif %}
 
 						{% elif obj.1 == 'updown' %}
@@ -59,18 +57,17 @@
                             {% set val = 0 %}
                             {% set div = False %}
 							<div class = "form-group">
-    						<label>
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = True %}
 							<div class = "form-group">
-    						<label>
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
+						<label>
 							<input type="{{type}}" name="{{i}}" value="{{val}}">
-							<p class="help-block">{{obj.3}}</p>
+							<p hidden="" class="help-block">{{obj.3}}</p>
+						</label>
                         {% if div %}
-    						</label>
     						</div>
                         {% endif %}
 					{% endif %}
