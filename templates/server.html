@@ -251,7 +251,7 @@
 							<tr title="{{letable[0].3}}" class="def"><td class="def">Team num</td><td class="def"> {{datatable.0}}</tr>
 						{% endif %}
 						{% set lastTeam = datatable.0 %}
-						<tr title="{{letable[s].3}}" class="def"><td>{{letable[s].2}}</td><td>{{datatable.1}}</td></tr>
+						<tr title="{{letable[s].3}}" class="def"><td class="def">{{letable[s].2}}</td><td class="def">{{datatable.1}}</td></tr>
 								
 					{% else %}
 						{% for data in datatable %}
@@ -260,7 +260,7 @@
 							{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
 								<td><hr class="def"><h1>{{letable[i].2}}</h1></td><td>
 							{% else %}
-								<td>{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
+								<td class="def">{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
 								{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
 
 									{% if minmax %}
