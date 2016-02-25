@@ -10,7 +10,7 @@
     </head>
     <body>
 	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
-		    <div class="col-sx-12">
+		    <div class="col-sm-12">
                 <h1><center>
                         {% if evil %}
                             EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
@@ -18,7 +18,7 @@
                             1764 Scouting App
                         {% endif %}
                 </center></h1>
-				<form action="/submit" method=POST role="form">
+				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
 				{% for obj in letable %}
 					{#<div title="{{obj.3}}"> {# Gives tootips #}

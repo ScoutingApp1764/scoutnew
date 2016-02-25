@@ -140,10 +140,31 @@ if not doNotStart:
 	def reroute():
 		return render_template("redirect.html",url="/client/")
 
-	@app.route('/client/')
+	@app.route('/client/',methods=["POST","GET"])
 	def clientEnd(evil = False):
 		if paranoidMode:
 			return '<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/master\"></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
+		elif request.method == "POST":
+			res = []
+			i = -1
+			for ty in letable:
+				i = i +1
+				#try:
+				var = request.form.get(str(i))
+				if ty[1] != "text":
+					try:
+						var = str(int(var)) #make sure no text is put in in place of a number
+					except: #1337 H4X0RS!
+						var = 0
+				if var == None:
+					var = 0
+				res.append(var)
+			#insert into db
+
+			sql=get_db()
+			m=sql.cursor()
+			m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
+			sql.commit()
 		return render_template('client.html',letable=letable,evil = evil)
 	@app.route("/allvilliansarelemons/")
 	def evil():
@@ -151,37 +172,6 @@ if not doNotStart:
 
 
 
-	#this will be used in clientSubmit and in the sql submitting
-
-	@app.route("/submit", methods=['POST']) #change back to post
-	def clientSubmit():
-		if paranoidMode:
-			return '<!DOCTYPE html><html><head></head><body><p>Sorry, the host has turned submitting data off.</p></body></html>'
-		res = []
-		i = -1
-		for ty in letable:
-			i = i +1
-			#try:
-			var = request.form.get(str(i))
-			if ty[1] != "text":
-				try:
-					var = str(int(var)) #make sure no text is put in in place of a number
-				except: #1337 H4X0RS!
-					var = 0
-			if var == None:
-				var = 0
-			res.append(var)
-			#except:
-			#	return "<p>Something went wrong with the data. Did you enter text in number boxes? Try hitting the back arrow and resubmitting the data, without text in number boxes.</p><!--you've not caused database errors, the database is sanitized"
-		#insert into db
-
-		sql=get_db()
-		m=sql.cursor()
-		m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(res)])
-		sql.commit()
-
-	#m.executemany("INSERT INTO Data VALUES("+what+")",res)
-		return "<!DOCTYPE html><html><head><meta http-equiv=\"refresh\" content=\"0;url=/#top\"></head><body><p>Hit the back button on your browser. The redirect failed, however your scouting data was submitted successfully.</p></body></html>" #doesn't really need to be its own file or template.
 
 	@app.route("/master/")
 	def serverEnd():
