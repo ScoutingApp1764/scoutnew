@@ -21,7 +21,8 @@
 				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
 				{% for obj in letable %}
-					{#<div title="{{obj.3}}"> {# Gives tootips #}
+                    {#<div title="{{obj.3}}"> {# Gives tootips #}
+                    {% set lastCheckbox = 0 %}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
 						{{obj.2}}: {# print out the name of the object #} 
@@ -47,8 +48,13 @@
 							<div class = "checkbox">
 						{% elif obj.1 == 'updown' %}
 							{% set type = 'number' %}
-							{% set val = 0 %}
-							{% set br = True %}
+                            {% set val = 0 %}
+                            {% set br = False %}
+                            {% set lastCheckbox = lastCheckbox+1 %}
+                            {% if lastCheckbox == 2 %}
+                                {% set lastCheckbox = 0 %}
+    							{% set br = True %}
+                            {% endif %}
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
@@ -57,7 +63,7 @@
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-							{% if br %}
+                            {% if br %} {#if our object wants a br #}
 								{{obj.2}}
 								<br>
 							{% endif %}
