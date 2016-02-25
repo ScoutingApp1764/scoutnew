@@ -62,27 +62,27 @@ xxs=False
 debug = False
 for arg in sys.argv:
     if arg == "-c":
-	doNotStart = True
-	print"Really clear database? [y/n]"
-	if raw_input() == "y":
-		s = sqlite3.connect("MASTERDB")
-		m = s.cursor()
-		m.execute("DROP TABLE IF EXISTS Data")
-		s.commit()
-		print("Database cleared. Recreating template and quitting.")
+		doNotStart = True
+		print"Really clear database? [y/n]"
+		if raw_input() == "y":
+			s = sqlite3.connect("MASTERDB")
+			m = s.cursor()
+			m.execute("DROP TABLE IF EXISTS Data")
+			s.commit()
+			print("Database cleared. Recreating template and quitting.")
 
-		strTable = ""
-		for _list in letable:
-			if _list[1] == "text":
-				strTable = strTable+_list[0]+" TEXT,"
-			else:
-				strTable = strTable+_list[0]+" INT,"
-		m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
-		s.commit()
-		s.close()
+			strTable = ""
+			for _list in letable:
+				if _list[1] == "text":
+					strTable = strTable+_list[0]+" TEXT,"
+				else:
+					strTable = strTable+_list[0]+" INT,"
+			m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
+			s.commit()
+			s.close()
     elif arg == "--help":
-	doNotStart = True
-	print'''Usage: sudo python scoutmaster.py
+		doNotStart = True
+		print'''Usage: sudo python scoutmaster.py
 Options:
 -c	Clear the database
 -s	Secure mode--No uploading databases
@@ -92,36 +92,37 @@ Options:
 -d	Debug mode. You want this if you're modifying code.'''
 
     elif arg == "-s": #secure mode
-	secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
+		secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
     elif arg == "-p":
-	secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
-	paranoidMode = True
+		secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
+		paranoidMode = True
     elif arg == "-xxs":
-	xxs = True
+		xxs = True
     elif arg == "-d":
-	debug = True
+		debug = True
     elif arg == "-spam":
-	allData =[]
-	for _ in range(0,25):
-		cData = []
-		for item in letable:
-			if item[0] == "teamNum":
-				cData.append(random.randrange(1000))
-			elif item[1] == "radio":
-				cData.append(random.randrange(len(item[4])-1))
-			elif item[1] == "text":
-				cData.append("2lazy4randomtext")
-			elif item[1] == "updown":
-				cData.append(random.randrange(10))
-			else:
-				cData.append(random.randrange(0,2))
-		allData.append(tuple(cData))
-	s = sqlite3.connect("MASTERDB")
-	m = s.cursor()
-	m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
-	m.close()
-	s.commit()
-	s.close()
+		doNotStart = True
+		allData =[]
+		for _ in range(0,25):
+			cData = []
+			for item in letable:
+				if item[0] == "teamNum":
+					cData.append(random.randrange(1000))
+				elif item[1] == "radio":
+					cData.append(random.randrange(len(item[4])-1))
+				elif item[1] == "text":
+					cData.append("2lazy4randomtext")
+				elif item[1] == "updown":
+					cData.append(random.randrange(10))
+				else:
+					cData.append(random.randrange(0,2))
+			allData.append(tuple(cData))
+		s = sqlite3.connect("MASTERDB")
+		m = s.cursor()
+		m.executemany("INSERT INTO Data VALUES ("+what+")",allData)
+		m.close()
+		s.commit()
+		s.close()
 
 
 
