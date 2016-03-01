@@ -56,11 +56,13 @@
 							{% set type = 'number' %}
                             {% set val = 0 %}
                             {% set div = False %}
+                            {% set lastCheckbox = 1 %}
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = True %}
+                            {% set lastCheckbox = 1 %}
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
