@@ -9,8 +9,10 @@ if [ ! -d "FlaskExists" ]; then
     mkdir FlaskExists
 fi
 
+killall python #kill the server if it was started
 ./scoutmaster.py &
 sleep 8
 cd /
+killall firefox # kill firefox if it was started
 ./Applications/Firefox.app/Contents/MacOS/firefox 127.0.0.1:9001
 
