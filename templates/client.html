@@ -15,14 +15,13 @@
                         {% if evil %}
                             EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
                         {% else %}
-                            1764 Scouting App22
+                            1764 Scouting App
                         {% endif %}
                 </center></h1>
 				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
 				{% for obj in letable %}
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
-                    {% set lastCheckbox = 0 %}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
 						{{obj.2}}: {# print out the name of the object #} 
