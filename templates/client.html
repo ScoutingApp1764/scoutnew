@@ -15,7 +15,7 @@
                         {% if evil %}
                             EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
                         {% else %}
-                            1764 Scouting App22
+                            1764 Scouting App
                         {% endif %}
                 </center></h1>
 				<form action="/client/" method=POST role="form">
@@ -44,11 +44,11 @@
 						{% if obj.1 == 'check' %}
 							{% set type = 'checkbox' %}
                             {% set val = 1 %}
-                            {% set div = False %}
+                            {% set div = True %}
                             {% set lastCheckbox = lastCheckbox+1 %}
-                            {% if lastCheckbox == 2 %}
+                            {% if 2 == 2 %}
                                 {% set lastCheckbox = 0 %}
-                                </div>
+                               
     							<div class = "checkbox">
                             {% endif %}
 
@@ -66,7 +66,7 @@
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-                            {{obj.2}}<input type="{{type}}" name="{{i}}" value="{{val}}">{{lastCheckbox}}
+                            {{obj.2}}<input type="{{type}}" name="{{i}}" value="{{val}}">
 							<!--p class="help-block">{{obj.3}}</p-->
 						</label>
                         {% if div %}
