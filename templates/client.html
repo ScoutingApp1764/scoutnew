@@ -20,6 +20,7 @@
                 </center></h1>
 				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
+                <div class="useless"> {#this is for the first /div #}
 				{% for obj in letable %}
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
 					{% set i = i+1 %}
@@ -45,7 +46,7 @@
                             {% set val = 1 %}
                             {% set div = False %}
                             {% set lastCheckbox = lastCheckbox+1 %}
-                            {% if lastCheckbox == 2 %}
+                            {% if lastCheckbox == 3 %}
                                 {% set lastCheckbox = 0 %}
                                 </div>
     							<div class = "checkbox">
@@ -55,26 +56,27 @@
 							{% set type = 'number' %}
                             {% set val = 0 %}
                             {% set div = False %}
+    						</div>
                             {% set lastCheckbox = 1 %}
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = True %}
+    						</div>
                             {% set lastCheckbox = 1 %}
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-                            {{obj.2}}<input type="{{type}}" name="{{i}}" value="{{val}}">{{lastCheckbox}}
+                            {{obj.2}}<input type="{{type}}" name="{{i}}" value="{{val}}">
 							<!--p class="help-block">{{obj.3}}</p-->
 						</label>
                         {% if div %}
-    						</div>
                         {% endif %}
 					{% endif %}
 				{% endfor %}
 
-
+                </div>
 				<input type="submit" class="btn btn-default">
                 <br><br>
 				</form>

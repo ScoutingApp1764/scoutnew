@@ -15,4 +15,4 @@ sleep 4
 cd /
 killall firefox # kill firefox if it was started
 ./Applications/Firefox.app/Contents/MacOS/firefox 127.0.0.1:9001 &
-
+#killall terminal
