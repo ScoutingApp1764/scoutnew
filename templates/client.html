@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-{% set lastType = "" %}
 {% macro write(type,name,val)  -%}
     <label>
         <input type="{{type}}" name="{{name}}" value="{{val}}">{{caller()}} - {{lastType}}
-        <!--p class="help-block">{{obj.3}}</p-->
+        {#<!--p class="help-block">{{obj.3}}</p-->#}
     </label>
     {% set lastType = type %}
 {%- endmacro %}
