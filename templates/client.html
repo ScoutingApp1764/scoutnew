@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% let lastType = "" %}
+{% set lastType = "" %}
 {% macro write(type,name,val)  -%}
     <label>
         <input type="{{type}}" name="{{name}}" value="{{val}}">{{caller()}} - {{lastType}}
