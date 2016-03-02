@@ -60,6 +60,7 @@ secureMode = False
 paranoidMode = False
 xxs=False
 debug = False
+host = '0.0.0.0'
 for arg in sys.argv:
     if arg == "-c":
 		doNotStart = True
@@ -100,6 +101,7 @@ Options:
 		xxs = True
     elif arg == "-d":
 		debug = True
+		host = '127.0.0.1'
     elif arg == "-spam":
 		doNotStart = True
 		allData =[]
@@ -394,4 +396,5 @@ if not doNotStart:
 		if xxs:
 			port = 83
 
-		app.run(debug=debug, host='0.0.0.0',port=port)
+
+		app.run(debug=debug, host=host,port=port)
