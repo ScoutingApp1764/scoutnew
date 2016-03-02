@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% set lastCheckbox = 0 %}
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="/defstyle.css">
@@ -22,7 +23,6 @@
 				{% set i = -1 %}
 				{% for obj in letable %}
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
-                    <div class="col-sm-4">
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
 						{{obj.2}}: {# print out the name of the object #} 
@@ -31,14 +31,15 @@
 						{% for thisname in obj.4 %}
 							{% set o = o+1 %}
 							{% set thisval = thisval+1 %}
+                            <div class="col-sm-4">
 							<div class = "radio">
 								<label>
 									<input type="radio" name ="{{i}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
 								</label>
 							</div>
+                            </div>
 						{% endfor %}
 						<br>
-                    </div>
 					{% elif obj.1 == 'head' %}
                     <hr class = "def"><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
 					{% else %}
@@ -50,22 +51,22 @@
                             {% if lastCheckbox == 3 %}
                                 {% set lastCheckbox = 0 %}
                             {% endif %}
-                            <div class="checkbox">
                             <div class="col-sm-4">
+                            <div class="checkbox">
                             
 
 						{% elif obj.1 == 'updown' %}
 							{% set type = 'number' %}
                             {% set val = 0 %}
                             {% set div = False %}
-							<div class = "form-group">
                             <div class="col-sm-12">
+							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = False %}
-							<div class = "form-group">
                             <div class="col-sm-12">
+							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
                             <input type="{{type}}" name="{{i}}" value="{{val}}">{{obj.2}}
@@ -79,7 +80,7 @@
 				{% endfor %}
 
 
-				<input type="submit" class="btn btn-default">
+                <div class ="col-sm-12"><input type="submit" class="btn btn-default"></div>
                 <br><br>
 				</form>
 				<script src="/jquery.min.js"></script>
