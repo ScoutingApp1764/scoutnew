@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+{%- macro write(
+    <label>
+        <input type="{{type}}" name="{{i}}" value="{{val}}">{{obj.2}}
+        <!--p class="help-block">{{obj.3}}</p-->
+    </label>
+{%- endmacro %}
 {% set lastCheckbox = 0 %}
 <html>
     <head>
@@ -25,7 +31,6 @@
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
-                        <br>
 						{{obj.2}}: {# print out the name of the object #} 
 						{% set thisval = -1 %}
 						{% set o = -1 %}
@@ -71,10 +76,6 @@
                             <div class="col-sm-12">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
-						<label>
-                            <input type="{{type}}" name="{{i}}" value="{{val}}">{{obj.2}}
-							<!--p class="help-block">{{obj.3}}</p-->
-						</label>
     					</div>
                         {% if 1 == 1 %} {# extra div #}
                             </div>
