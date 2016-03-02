@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-{%- macro write(
+{% set lastType = "" %}
+{% macro write(type,name,val,humantext)  -%}
     <label>
-        <input type="{{type}}" name="{{i}}" value="{{val}}">{{obj.2}}
+        <input type="{{type}}" name="{{name}}" value="{{val}}">{{humantext}} - {{lastType}}
         <!--p class="help-block">{{obj.3}}</p-->
     </label>
+    {% set lastType = type %}
 {%- endmacro %}
 {% set lastCheckbox = 0 %}
 <html>
@@ -83,7 +85,7 @@
 					{% endif %}
 				{% endfor %}
 
-
+                {% call write(type,i,val,"up") %}{% endcall %}
                 <div class ="col-sm-12"><input type="submit" class="btn btn-default"></div>
                 <br><br>
 				</form>
