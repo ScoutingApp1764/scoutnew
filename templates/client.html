@@ -9,6 +9,7 @@
         <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
     </head>
     <body>
+        {% set lastCheckbox = 4 %}
 	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
 		    <div class="col-lg-12">
                 <h1><center>
@@ -45,8 +46,11 @@
 							{% set type = 'checkbox' %}
                             {% set val = 1 %}
                             {% set div = False %}
+                            {% if lastCheckbox == 4 %}
+                                {% set lastCheckbox = 0 %}
+                            {% endif %}
                             {% set lastCheckbox = lastCheckbox+1 %}
-                            {% if lastCheckbox == 3 %}
+                            {% if lastCheckbox >= 3 %}
                                 {% set lastCheckbox = 0 %}
                                 </div>
                                 </div>
@@ -59,14 +63,20 @@
                             {% set val = 0 %}
                             {% set div = False %}
     						</div>
-                            {% set lastCheckbox = 1 %}
+                            {% if lastCheckbox != 4 %}
+                                </div>
+                            {% endif %}
+                            {% set lastCheckbox = 4 %}
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = True %}
     						</div>
-                            {% set lastCheckbox = 1 %}
+                            {% if lastCheckbox != 4 %}
+                                </div>
+                            {% endif %}
+                            {% set lastCheckbox = 4 %}
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
