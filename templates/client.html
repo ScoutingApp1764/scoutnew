@@ -25,6 +25,7 @@
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
+                        <br>
 						{{obj.2}}: {# print out the name of the object #} 
 						{% set thisval = -1 %}
 						{% set o = -1 %}
@@ -43,9 +44,8 @@
 					{% elif obj.1 == 'head' %}
                         <div class="col-sm-12"><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
                     {% else %}
-                        <div class="col-sm-12">
-                            {{obj.2}}
-                        </div>
+                        <!--div class="col-sm-12">
+                        </div-->
 						{% if obj.1 == 'check' %}
 							{% set type = 'checkbox' %}
                             {% set val = 1 %}
@@ -72,7 +72,7 @@
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
 						<label>
-                            <input type="{{type}}" name="{{i}}" value="{{val}}">
+                            <input type="{{type}}" name="{{i}}" value="{{val}}">{{obj.2}}
 							<!--p class="help-block">{{obj.3}}</p-->
 						</label>
     					</div>
