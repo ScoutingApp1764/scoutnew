@@ -4,11 +4,10 @@
         <input type="{{type}}" name="{{name}}" value="{{val}}"> - {{lastType}}
         {#<!--p class="help-block">{{obj.3}}</p-->#}
     </label>
-    {% set lastType = type %}
 {%- endmacro %}
 {% macro endrow() -%}
     </div>
-    <div class"row">
+    <div class="row">
 {%-endmacro %}
     
 {% set lastCheckbox = 0 %}
@@ -86,6 +85,9 @@
                             <div class="col-sm-12">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
+                        {% if type != lastType %}
+                            {{endrow()}}
+                        {% endif %}
                         {{write(type,obj.2,val,lastType)}}
     					</div>
                         {% if 1 == 1 %} {# extra div #}
