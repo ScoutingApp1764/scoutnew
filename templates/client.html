@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+{% macro write(type,name,val,lastType)  -%}
+    <label>
+        <input type="{{type}}" name="{{name}}" value="{{val}}">{{name}}
+        {#<!--p class="help-block">{{obj.3}}</p-->#}
+    </label>
+{%- endmacro %}
+{% macro endrow() -%}
+    </div>
+    <div class="row">
+{%-endmacro %}
+    
+{% set lastCheckbox = 0 %}
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="/defstyle.css">
@@ -10,7 +22,7 @@
     </head>
     <body>
 	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
-		    <div class="col-sm-12">
+		   <!--div class="col-sm-12"-->
                 <h1><center>
                         {% if evil %}
                             EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
@@ -20,9 +32,10 @@
                 </center></h1>
 				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
+                {% set lastType = "" %}
+                <div class ="row">
 				{% for obj in letable %}
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
-                    {% set lastCheckbox = 0 %}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
 						{{obj.2}}: {# print out the name of the object #} 
@@ -31,40 +44,65 @@
 						{% for thisname in obj.4 %}
 							{% set o = o+1 %}
 							{% set thisval = thisval+1 %}
+                            <div class="colNO-sm-4">
 							<div class = "radio">
 								<label>
 									<input type="radio" name ="{{i}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
 								</label>
 							</div>
+                            </div>
 						{% endfor %}
 						<br>
+                        {% set lastType="radio" %}
 					{% elif obj.1 == 'head' %}
-                    <hr class = "def"><h1>{{obj.2}}</h1> {# Headers just need to be printed out #}
-					{% else %}
+                        <div class="col-sm-12"><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
+                        {% set lastType="head" %}
+                    {% else %}
+                        <!--div class="col-sm-12">
+                        </div-->
 						{% if obj.1 == 'check' %}
 							{% set type = 'checkbox' %}
                             {% set val = 1 %}
                             {% set div = True %}
                             {% set lastCheckbox = lastCheckbox+1 %}
+<<<<<<< HEAD
                             {% if 2 == 2 %}
                                 {% set lastCheckbox = 0 %}
                                
     							<div class = "checkbox">
+=======
+                            {% if lastCheckbox == 3 %}
+                                {% set lastCheckbox = 0 %}
+                                {% endif %}
+                                
+                            {% if type != lastType %}
+                                {{endrow()}}
+>>>>>>> unstable
                             {% endif %}
+                            <div class="cNOol-sm-4">
+                            <div class="checkbox">
+                            
 
 						{% elif obj.1 == 'updown' %}
 							{% set type = 'number' %}
                             {% set val = 0 %}
                             {% set div = False %}
-                            {% set lastCheckbox = 1 %}
+                            {% if type != lastType %}
+                                {{endrow()}}
+                            {% endif %}
+                            <div class="cNOol-sm-12">
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
-							{% set div = True %}
-                            {% set lastCheckbox = 1 %}
+							{% set div = False %}
+                            {% if type != lastType %}
+                                {{endrow()}}
+                            {% endif %}
+                            <div class="cNOol-sm-12">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
+<<<<<<< HEAD
 						<label>
                             {{obj.2}}<input type="{{type}}" name="{{i}}" value="{{val}}">
 							<!--p class="help-block">{{obj.3}}</p-->
@@ -72,16 +110,23 @@
                         {% if div %}
     						</div>
                         {% endif %}
+=======
+                                                {{write(type,obj.2,val,lastType)}}
+    					</div>
+                        {% if 1 == 1 %} {# extra div #}
+                            </div>
+                        {% endif %} 
+                        {% set lastType = type %}    
+>>>>>>> unstable
 					{% endif %}
 				{% endfor %}
 
-
-				<input type="submit" class="btn btn-default">
+                <div class ="col-sm-12"><input type="submit" class="btn btn-default"></div>
                 <br><br>
 				</form>
 				<script src="/jquery.min.js"></script>
 				<script src="/bootstrap.min.js"></script>
 		    </div>
-	    </div>
+	    <!--/div-->
 	</body>
 </html>
