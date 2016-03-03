@@ -7,6 +7,9 @@
     {% set lastType = type %}
 {%- endmacro %}
 {% macro endrow() -%}
+    </div>
+    <div class"row">
+{%-endmacro %}
     
 {% set lastCheckbox = 0 %}
 <html>
@@ -31,6 +34,7 @@
 				<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
                 {% set lastType = "" %}
+                <div class ="row">
 				{% for obj in letable %}
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
 					{% set i = i+1 %}
