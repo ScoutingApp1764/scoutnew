@@ -38,24 +38,26 @@
                     {#<div title="{{obj.3}}"> {# Gives tootips #}
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
+                        {{endrow()}}
+                        <div class="col-sm-4">
 						{{obj.2}}: {# print out the name of the object #} 
 						{% set thisval = -1 %}
 						{% set o = -1 %}
 						{% for thisname in obj.4 %}
 							{% set o = o+1 %}
 							{% set thisval = thisval+1 %}
-                            <div class="colNO-sm-4">
 							<div class = "radio">
 								<label>
 									<input type="radio" name ="{{i}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
 								</label>
 							</div>
-                            </div>
 						{% endfor %}
+                        </div>
 						<br>
                         {% set lastType="radio" %}
 					{% elif obj.1 == 'head' %}
-                        <div class="cNOol-sm-12"><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
+                        {{endrow()}}
+                        <div class="col-sm-12"><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
                         {% set lastType="head" %}
                     {% else %}
                         <!--div class="col-sm-12">
@@ -82,7 +84,7 @@
                             {% set div = False %}
                             {{endrow()}}
                             <br>
-                            <div class="cNOol-sm-12">
+                            <div class="col-sm-12">
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
@@ -90,7 +92,7 @@
 							{% set div = False %}
                             {{endrow()}}
                             <br>
-                            <div class="cNOol-sm-12">
+                            <div class="col-sm-12">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
                                                 {{write(type,obj.2,val,lastType)}}
