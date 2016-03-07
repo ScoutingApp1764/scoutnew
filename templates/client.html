@@ -67,12 +67,12 @@
                             {% set lastCheckbox = lastCheckbox+1 %}
                             {% if lastCheckbox == 3 %}
                                 {% set lastCheckbox = 0 %}
-                                {% endif %}
+                            {% endif %}
                                 
                             {% if type != lastType %}
                                 {{endrow()}}
                             {% endif %}
-                            <div class="cNOol-sm-4">
+                            <div class="col-sm-4">
                             <div class="checkbox">
                             
 
@@ -80,18 +80,16 @@
 							{% set type = 'number' %}
                             {% set val = 0 %}
                             {% set div = False %}
-                            {% if type != lastType %}
-                                {{endrow()}}
-                            {% endif %}
+                            {{endrow()}}
+                            <br>
                             <div class="cNOol-sm-12">
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
 							{% set val = ' ' %}
 							{% set div = False %}
-                            {% if type != lastType %}
-                                {{endrow()}}
-                            {% endif %}
+                            {{endrow()}}
+                            <br>
                             <div class="cNOol-sm-12">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
