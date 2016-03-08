@@ -2,9 +2,26 @@
 <html>
 	<head></head>
 	<body>
+		<h1>Upload this database to the master database</h1>
+		<p>This will transfer the local database and upload it, through the switch, to the master database. Please make sure that:</p>
+		<ol>
+			<li>
+				The coord is plugged into the switch, and into the macbook through the converter
+			</li>
+			<li>
+				The IP address is correct(ask the person operating the master database for their IP)
+			</li>
+			<li>
+				Stray cosmic rays from deep space alien wars are not interfering with your connecting
+			</li>
+		</ol>
+		<h2 style="color: #FF0000;">BEWARNED - ON A SUCCESSFULL SUBMISSION, THIS WILL CLEAR YOUR LOCAL DATABASE.</h2>
+		<p>This is in effort to prevent duplicate submissions in the master.</p>	
 		<form action ="/uploaddb/" method=POST >
 			IP Address: <input type="text" name="ip">
+			<input type="submit" value = "Okay">		
 		</form>
+		<p>Example: 192.168.0.2</p>
 	</body>
 </html>
 

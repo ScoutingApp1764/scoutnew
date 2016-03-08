@@ -22,7 +22,12 @@
     </head>
     <body>
 	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
-		   <!--div class="col-sm-12"-->
+		<div class="row">
+			<center>
+				<h1><a href="/uploaddb">Upload over switch</a>
+				<a href="/exportdb">Export to file</a></h1>
+			</center>
+		</div>
                 <h1><center>
                         {% if evil %}
                             EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
@@ -39,7 +44,7 @@
 					{% set i = i+1 %}
 					{% if obj.1 == 'radio' %}
                         {{endrow()}}
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
 						{{obj.2}}: {# print out the name of the object #} 
 						{% set thisval = -1 %}
 						{% set o = -1 %}
@@ -57,7 +62,7 @@
                         {% set lastType="radio" %}
 					{% elif obj.1 == 'head' %}
                         {{endrow()}}
-                        <div class="col-sm-12"><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
+                        <div class="col-sm-12" ><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
                         {% set lastType="head" %}
                     {% else %}
                         <!--div class="col-sm-12">
@@ -74,7 +79,7 @@
                             {% if type != lastType %}
                                 {{endrow()}}
                             {% endif %}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
                             <div class="checkbox">
                             
 
@@ -84,7 +89,7 @@
                             {% set div = False %}
                             {{endrow()}}
                             <br>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
 							<div class = "form-group">
 						{% elif obj.1 == 'text' %}
 							{% set type = 'text' %}
@@ -92,14 +97,12 @@
 							{% set div = False %}
                             {{endrow()}}
                             <br>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
                                                 {{write(type,obj.2,val,lastType)}}
     					</div>
-                        {% if 1 == 1 %} {# extra div #}
                             </div>
-                        {% endif %} 
                         {% set lastType = type %}    
 					{% endif %}
 				{% endfor %}

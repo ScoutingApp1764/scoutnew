@@ -51,6 +51,22 @@ letable = [
 	["gotStuck","check","Got stuck","Did the robot get itself in a position where it struggled significantly or did not get out of?"],
 	["paperweight","check","Didn't move at all","Was the robot a paperweight?"],
 ]
+def clrdb():
+	s = sqlite3.connect("MASTERDB")
+	m = s.cursor()
+	m.execute("DROP TABLE IF EXISTS Data")
+	s.commit()
+
+	strTable = ""
+	for _list in letable:
+		if _list[1] == "text":
+			strTable = strTable+_list[0]+" TEXT,"
+		else:
+			strTable = strTable+_list[0]+" INT,"
+	m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
+	s.commit()
+	s.close()
+
 what = ""
 for _ in letable:
 	what = what+"?,"
@@ -60,28 +76,19 @@ secureMode = False
 paranoidMode = False
 xxs=False
 debug = False
+masterMode = False
 host = '0.0.0.0'
 for arg in sys.argv:
     if arg == "-c":
 		doNotStart = True
 		print"Really clear database? [y/n]"
 		if raw_input() == "y":
-			s = sqlite3.connect("MASTERDB")
-			m = s.cursor()
-			m.execute("DROP TABLE IF EXISTS Data")
-			s.commit()
+			clrdb()
 			print("Database cleared. Recreating template and quitting.")
-
-			strTable = ""
-			for _list in letable:
-				if _list[1] == "text":
-					strTable = strTable+_list[0]+" TEXT,"
-				else:
-					strTable = strTable+_list[0]+" INT,"
-			m.executescript("CREATE TABLE Data ("+strTable[0:-1]+");")
-			s.commit()
-			s.close()
+    elif arg == "-m":
+	masterMode = True 
     elif arg == "--help":
+		
 		doNotStart = True
 		print'''Usage: sudo python scoutmaster.py
 Options:
@@ -90,11 +97,14 @@ Options:
 -p 	Paranoid mode--No uploading or using the client
 -spam	Create a 200 entries of randomized scouting data
 -xxs	Debug option to host on a different port to test uploading databases
--d	Debug mode. You want this if you're modifying code.'''
+-d	Debug mode. You want this if you're modifying code.
+-m	Master mode. Disables clear and disables uploading the database to somewhere else'''
 
     elif arg == "-s": #secure mode
+		masterMode = True
 		secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
     elif arg == "-p":
+		masterMode = True 
 		secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
 		paranoidMode = True
     elif arg == "-xxs":
@@ -301,17 +311,17 @@ if not doNotStart:
 	@app.route("/exportdb/")
 	def exportdb():
 		if secureMode:
-			return render_template("msg.html","Sorry, the host has turned off exporting JSON\'d databases.")
+			return render_template("msg.html",msg="Sorry, the host has turned off exporting JSON\'d databases.")
 
 		_file = open("exportedDb_"+str(random.randrange(9999)),"w")
 		_file.write(jsondb())
 		_file.close()
-		return render_template("msg.html","Database can be found at exportedDB_ and then a random number")
+		return render_template("msg.html",msg="Database can be found at exportedDB_ and then a random number")
 
 
 	@app.route("/uploaddb/",methods=["GET","POST"])
 	def uploaddb():
-		if secureMode:
+		if masterMode:
 			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 
 		#upload our database to the master
@@ -332,6 +342,12 @@ if not doNotStart:
 			m.executemany("INSERT INTO Data VALUES("+what+")",[tuple(listed)])
 		m.close()
 		sql.commit()
+	@app.route("/clear")
+	def clearP():
+		if masterMode:
+			return render_template("msg.html",msg="Sorry, the host has turned off clearing the database.")
+		clrdb()
+		return render_template("redirect.html",url="/client")
 	@app.route("/uploaddb_up/",methods=["POST"])
 	def securityVulnerability():
 		print("uploaddb_up requerst")
@@ -339,7 +355,7 @@ if not doNotStart:
 			return render_template('msg.html',msg='Sorry, the host has turned off uploading JSON\'d databases.')
 		jsoned = request.form.get("json")
 		jsonToSql(jsoned)
-		return render_template("redirect.html",url="/client/")
+		return render_template("redirect.html",url="http://127.0.0.1:9001/clear")
 
 
 
