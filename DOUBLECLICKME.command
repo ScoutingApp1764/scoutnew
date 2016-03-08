@@ -13,7 +13,6 @@ elif [ $1 ]; then
     echo running...
     if [ ! -d "FlaskExists" ]; then
         easy_install --user flask
-        easy_install --user sqlalchemy
         mkdir FlaskExists
     fi
     ./DOUBLECLICKME.command these arguementsdontmatter &
