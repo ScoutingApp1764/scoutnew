@@ -13,6 +13,7 @@ elif [ $1 ]; then
     echo running...
     if [ ! -d "FlaskExists" ]; then
         easy_install --user flask
+        rm MASTERDB #i might forget to not upload this to git
         mkdir FlaskExists
     fi
     ./DOUBLECLICKME.command these arguementsdontmatter &

@@ -86,9 +86,9 @@ for arg in sys.argv:
 			clrdb()
 			print("Database cleared. Recreating template and quitting.")
     elif arg == "-m":
-	masterMode = True 
+	masterMode = True
     elif arg == "--help":
-		
+
 		doNotStart = True
 		print'''Usage: sudo python scoutmaster.py
 Options:
@@ -104,7 +104,7 @@ Options:
 		masterMode = True
 		secureMode = True #basically, just turns off the ability to upload SQL databases--useful if you where to be running this on a non-secure network
     elif arg == "-p":
-		masterMode = True 
+		masterMode = True
 		secureMode = True #This is for running this specifically somewhere you really don't want people adding stuff to the database--say you are showing everyone your scouting data.
 		paranoidMode = True
     elif arg == "-xxs":
@@ -166,8 +166,9 @@ if not doNotStart:
 				var = request.form.get(str(i))
 				if ty[1] != "text":
 					try:
-						var = str(int(var)) #make sure no text is put in in place of a number
+						var = int(var) #make sure no text is put in in place of a number
 					except: #1337 H4X0RS!
+						print("fail to get value for "+str(i))
 						var = 0
 				if var == None:
 					var = 0
