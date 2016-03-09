@@ -115,7 +115,7 @@ Options:
     elif arg == "-spam":
 		doNotStart = True
 		allData =[]
-		for _ in range(0,25):
+		for _ in range(0,200):
 			cData = []
 			for item in letable:
 				if item[0] == "teamNum":
@@ -327,6 +327,8 @@ if not doNotStart:
 		#upload our database to the master
 		if request.method == "POST":
 			ip = request.form.get("ip")
+			if ip == "127.0.0.1" or ip=="localhost":
+				return render_template("msg.html",msg="Cannot submit to yourself. Find the master IP address.")
 			jsoned = jsondb()
 			return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 
