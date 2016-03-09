@@ -13,7 +13,8 @@ elif [ $1 ]; then
     echo running...
     if [ ! -d "FlaskExists" ]; then
         easy_install --user flask
-        rm MASTERDB #i might forget to not upload this to git
+        yes | ./scoutmaster.py -c
+        #^^pipe yes to confirm to clear the database, just in case i forgot to do so before git commiting
         mkdir FlaskExists
     fi
     ./DOUBLECLICKME.command these arguementsdontmatter &
