@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-{% macro write(type,name,val,lastType)  -%}
+{% macro write(type,name,humanName,val,lastType)  -%}
     <label>
-        <input type="{{type}}" name="{{name}}" value="{{val}}">{{name}}
+        <input type="{{type}}" name="{{name}}" value="{{val}}">{{humanName}}
         {#<!--p class="help-block">{{obj.3}}</p-->#}
     </label>
 {%- endmacro %}
@@ -100,7 +100,7 @@
                             <div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
 							<div class = "form-group">
 						{% endif %} {# These all have just about the same handling, so they're all down here #}
-                                                {{write(type,obj.2,val,lastType)}}
+                        {{write(type,i,obj.2,val,lastType)}}
     					</div>
                             </div>
                         {% set lastType = type %}    
