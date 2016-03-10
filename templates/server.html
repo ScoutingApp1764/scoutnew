@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 {% macro dataset(numb,label) -%}
 	{% set fillColor = "rgba(51,51,51,0.5)"  %}
+	{% if numb == 1 %} {# shoddy solution, out of time #}
+		{% set fillColor = "#cc0066"  %}
+	{% elif numb == 2 %}
+		{% set fillColor = "#6600cc"  %}
+	{% elif numb == 3 %}
+		{% set fillColor = "#FF6666"  %}
+	{% elif numb == 4 %}
+		{% set fillColor = "#FF9900"  %}
+	{% elif numb == 5 %}
+		{% set fillColor = "#000066"  %}
+			
+	{% endif %}
+		
 	{
-			label: "Data{{label}}",
-			fillColor: "rgba(51,51,51,0.5)",
+			label: "Data - {{label}}",
+			fillColor: "{{fillColor}}",
 			strokeColor: "rgba(220,220,220,1)",
 			pointColor: "rgba(0,0,0,1)",
 			pointStrokeColor: "#fff",
@@ -36,7 +49,7 @@
 		],
 		datasets: [
 			{% if part[1] != "radio" %}
-				{{dataset(1)}}
+				{{dataset(0)}}
 					{% set firstTime = True %}
 
 					{% for datatable in alls %}
@@ -52,8 +65,8 @@
 			{% else %}
 				{% set buttnum = -1 %}
 				{% for butt in part[4] %}
-					{{dataset(1,buttnum)}}
 					{% set buttnum = buttnum +1 %}
+					{{dataset(buttnum,butt)}}
 					{% set firstTime = True %}
 						{% for datatable in alls %}
 							{% if firstTime %}
