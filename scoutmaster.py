@@ -329,7 +329,7 @@ if not doNotStart:
 		if request.method == "POST":
 			ip = request.form.get("ip")
 			if ip == "127.0.0.1" or ip=="localhost":
-				return render_template("msg.html",msg="Cannot submit to yourself. Find the master IP address.")
+				return render_template("msg.html",msg="Cannot submit toyourself. Find the master IP address.")
 			jsoned = jsondb()
 			return render_template("uploaddb_ok.html",ip=ip,json=jsoned)
 

@@ -1,4 +1,23 @@
-{% macro input(radioButtNum) -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
+<!DOCTYPE html>
+{% macro dataset(numb,label) -%}
+	{% set fillColor = "rgba(51,51,51,0.5)"  %}
+	{
+			label: "Data{{label}}",
+			fillColor: "rgba(51,51,51,0.5)",
+			strokeColor: "rgba(220,220,220,1)",
+			pointColor: "rgba(0,0,0,1)",
+			pointStrokeColor: "#fff",
+			pointHighlightFill: "#fff",
+			pointHighlightStroke: "rgba(220,220,220,1)",
+			data: [
+
+
+{%- endmacro %}
+
+
+{% macro input(field,part) -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
+
+	
 	var data = {
 		labels: [
 		{% set firstTime = True %}
@@ -8,40 +27,53 @@
 				{% set firstTime = False %}
 			{% endfor %}
 		{% else %}
-			{% if radioButtNum != -1 %}
-				{% set firstTime = True %}
-				{% for team in teams %}
-					{% for letableButtName in letable[radioButtNum].4 %}
-						{% if not firstTime %},{% endif %}"Team {{team.0}} button {{letableButtName}}"
-						{% set firstTime = False %}
-					{% endfor %}
-					{% set firstTime = False %}
-				{% endfor %}
-			{% else %}
-				{% for team in teams %}
-					{% if not firstTime %},{% endif %}"Team {{team.0}}"
-					{% set firstTime = False %}
-				{% endfor %}
-			{% endif %}
+			{% for team in teams %}
+				{% if not firstTime %},{% endif %}"Team {{team.0}}"
+				{% set firstTime = False %}
+			{% endfor %}
 		{% endif %}
 
 		],
-
 		datasets: [
-		{
-			label: "Data",
-			fillColor: "rgba(51,51,51,0.5)",
-			strokeColor: "rgba(220,220,220,1)",
-			pointColor: "rgba(0,0,0,1)",
-			pointStrokeColor: "#fff",
-			pointHighlightFill: "#fff",
-			pointHighlightStroke: "rgba(220,220,220,1)",
-			data: [{{caller()}}]
-		},]
+			{% if part[1] != "radio" %}
+				{{dataset(1)}}
+					{% set firstTime = True %}
+
+					{% for datatable in alls %}
+						{% if firstTime %}
+							{% set firstTime = False %} 
+						{% else %}
+							,
+						{% endif %}
+						{{datatable[field]}}
+					{% endfor %}
+						]
+						},
+			{% else %}
+				{% set buttnum = -1 %}
+				{% for butt in part[4] %}
+					{{dataset(1,buttnum)}}
+					{% set buttnum = buttnum +1 %}
+					{% set firstTime = True %}
+						{% for datatable in alls %}
+							{% if firstTime %}
+								{% set firstTime = False %} 
+							{% else %}
+								,
+							{% endif %}
+							{{datatable[field][buttnum]}}
+						{% endfor %}
+						]
+						},
+				{% endfor %}
+
+						
+			{% endif %}
+
+		]
 	};
 
 {%- endmacro %}
-<!DOCTYPE html>
 <html>
 	<head>
         <link rel="stylesheet" type="text/css" href="/defstyle.css">
@@ -85,28 +117,8 @@
 		
 				{% if itemSort %}
 					{% set needGraphs = True %}
-					{% set inp = -1 %}
-					{% if letable[s][1] == "radio" %}
-						{% set inp =i %}
-					{% endif %}
 
-					{% call input(inp) %}
-						{% set firstTime = True %}
-						{% for datatable in alls %}
-
-							{% if datatable[1] is not string %}
-								{% if letable[s].1 == "radio" %}
-									{% for buttavg in datatable[i] %}
-										{% if not firstTime %},{% endif %}{{buttavg}}
-										{% set firstTime = False %}
-									{% endfor %}
-								{% else %}
-									{% if not firstTime %},{% endif %}{{datatable[1]}}.0
-									{% set firstTime = False %}
-								{% endif %} 
-							{% endif %}
-						{% endfor %}
-					{% endcall %}
+					{{input(1,letable[s])}}
 					var ctx = document.getElementById("{{letable[s].0}}").getContext("2d");
 					new Chart(ctx).Bar(data, options);
 				{% elif avg or minmax %}
@@ -114,29 +126,12 @@
 					{% set i=-1 %}
 					{% for part in letable %}
 						{% set i=i+1 %}
-						{% set inp = -1 %}
-						{% if part[1] == "radio" %}
-							{% set inp =i %}
+						{% if part.1 == "text" %}
+						{% else %}
+							{{ input(i,part) }}
+							var ctx = document.getElementById("{{part.0}}").getContext("2d");
+							new Chart(ctx).Bar(data, options);
 						{% endif %}
-						{% call input(inp) %}
-							{% set firstTime = True %}
-							{% for datatable in alls %}
-								{% if datatable[i] is not string %}
-									{% if part[1] == "radio" %}
-										{% for buttavg in datatable[i] %}
-											{% if not firstTime %},{% endif %}{{buttavg}}
-											{% set firstTime = False %}
-										{% endfor %}
-										{% set firstTime = False %}
-									{% else %}
-										{% if not firstTime %},{% endif %}{{datatable[i]}}
-										{% set firstTime = False %}
-									{% endif %}
-								{% endif %}
-							{% endfor %}
-						{% endcall %}
-						var ctx = document.getElementById("{{part.0}}").getContext("2d");
-						new Chart(ctx).Bar(data, options);
 					{% endfor %}
 				{% endif %}
 			
@@ -186,7 +181,9 @@
 					{% set i = -1 %}
 					{% for part in letable %}
 						{% set i = i+1 %}
-						<li><a href="/itemSort/{{i}}">{{part.2}}</a></li><li><a href="/itemSortLarge/{{i}}">{{part.2}}: (small to large)</a></li>
+						{% if not letable[i].1 == "radio" %}
+							<li><a href="/itemSort/{{i}}">{{part.2}}</a></li><li><a href="/itemSortLarge/{{i}}">{{part.2}}: (small to large)</a></li>
+						{% endif %}
 					{% endfor %}
 				</div>
 
@@ -211,7 +208,7 @@
 					<br>
 					{% set addAdds = 0 %}
 					{% if letable[s].1 == "radio" %}
-						{% set addAdds = (part.4|length)*50%}
+						{% set addAdds = (letable[s].4|length)*50%}
 					{% endif %}
 
 
