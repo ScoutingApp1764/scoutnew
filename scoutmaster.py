@@ -12,37 +12,62 @@ from os import listdir
 #Syntax: Variable Name, type, human name, [radiobutton options]. Variable names really only help with teamNum and if fort debugging via interacting with the database directly
 letable = [
 	["teamNum","updown","Team num","The team number"],
-        ["roundNum","updown","Round Num","The round number"],
 	["isRed","check","Is on red team","Is the robot on the red team?"],
 	["posi","radio","Position","The position--starting from the closest to you and going to the farthest--the robot is in",["Position 1","Position 2","Position 3"]],
+    ["noshow","check","No show","Robot did not show for this competition"],
+
+
 	["autoHead","head","Autonomous"],
+
+
+    ["Apicsally","pic","sallyport.png"],
 	["sallyScrossed","check","Crossed Sallyport","Wheather the robot crossed the sallyport in autonomous"],
-	["drawCrossed","check","Crossed drawbridge","Wheather the robot crossed the drawbridge in autonomous"],
+	["Apicrough","pic","rough.png"],
 	["roughCrossed","check","Crossed rough terrain","Wheather the robot crossed the rought terrain in autonomous"],
-	["stoneCrossed","check","Crossed stone wall","Wheather the robot crossed the stone wall in autonomous"],
+	["Apicstone","pic","stone.png"],
+	["stoneCrossed","check","Crossed rock wall","Wheather the robot crossed the stone wall in autonomous"],
+	["Apicmoat","pic","moat.png"],
 	["moatCrossed","check","Crossed moat","Wheather the robot crossed the moat in autonomous"],
-	["sawCrossed","check","Crossed seasaw","Wheather the robot crossed the seasaw in autonomous"],
+	["Apicsaw","pic","cheval.png"],
+	["sawCrossed","check","Crossed Cheval de Frise","Wheather the robot crossed the seasaw in autonomous"],
+	["Apiclow","pic","lowbar.png"],
 	["lowCrossed","check","Crossed lowbar","Wheather the robot crossed the lowbar in autonomous"],
-	["rampCrossed","check","Crossed ramp","Wheather the robot crossed the ramp in autonomous"],
-	["gateCrossed","check","Crossed gate", "Wheather the robot crossed the gate in autonomous"],
+	["Apicramp","pic","ramparts.png"],
+	["rampCrossed","check","Crossed ramparts","Wheather the robot crossed the ramp in autonomous"],
+	["Apicgate","pic","portcullis.png"],
+	["gateCrossed","check","Crossed portcullis", "Wheather the robot crossed the gate in autonomous"],
+	["Apicdrawm","pic","drawbridge.png"],
+	["drawCrossed","check","Crossed drawbridge","Wheather the robot crossed the drawbridge in autonomous"],
 	["pickedBall","check","Picked up a ball","Did the robot pick up a ball in autonomous?"],
 	["startedBall","check","Started w/ ball","Did the robot start with a ball in autonomous?"],
 	["shotBall","radio","Shot ball","Did the robot shoot a ball in autonomous? Where?",["Didn't","Low","High"]],
 	["wasntABrick","check","Moved to ramp","Did the robot move to the ramp in autonomous?"],
+
+
 	["teleHead","head","Teleop"],
+
+
+    ["picsally","pic","sallyport.png"],
 	["teleCSally","updown","Crossed sallyport","Number of times the robot crossed the sallyport in teleop"],
+	["picrough","pic","rough.png"],
 	["teleCRough","updown","Crossed rough terrain","Number of times the robot crossed the rough terrain in teleop"],
-	["teleCStone","updown","Crossed stone wall","Number of times the robot crossed the stone wall in teleop"],
+	["picstone","pic","stone.png"],
+	["teleCStone","updown","Crossed rock wall","Number of times the robot crossed the rock wall in teleop"],
+	["picmoat","pic","moat.png"],
 	["teleCMoat","updown","Crossed moat","Number of times the robot crossed the moat in teleop"],
-	["teleCSaw","updown","Crossed seasaw","Number of times the robot crossed the seasaw in teleop"],
+	["picsaw","pic","cheval.png"],
+	["teleCSaw","updown","Crossed Cheval de Frise","Number of times the robot crossed the Cheval de Frise(the one with the four ramps) in teleop"],
+	["piclow","pic","lowbar.png"],
 	["teleCLow","updown","Crossed lowbar","Number of times the robot crossed the lowbar in teleop"],
-	["teleCRamp","updown","Crossed ramp","Number of times the robot crossed the ramp in teleop"],
-	["teleCGate","updown","Crossed gate","Number of times the robot crossed the gate in teleop"],
+	["picramp","pic","ramparts.png"],
+	["teleCRamp","updown","Crossed ramparts","Number of times the robot crossed the ramparts in teleop"],
+	["picgate","pic","portcullis.png"],
+	["teleCGate","updown","Crossed portcullis","Number of times the robot crossed the portcullis  in teleop"],
+	["picdrawm","pic","drawbridge.png"],
+    ["teleCDraw","updown","Crossed drawbridge","Number of times the robot crossed the gate in teleop"],
 	["ballsPicked","updown","Balls picked up","Number of times the robot picked up a ball in teleop"],
 	["lowScored","updown","High scored","Number of times the robot scored in the high goal in teleop"],
 	["highScored","updown","Low scored","Number of times the robot scored in the low goal in teleop"],
-	["strategy","radio","Strategy","Strategy deployed. Be sure to fill in \"other\" ONLY if you checked it on here.",["Spy", "Defense", "Attack", "Defense" "Destroyer", "Multipurpose", "Other"]],
-	["strategyOther","text","Other textbox (leave blank if not other)","Fill this in ONLY if you checked other above. Be concise."],
 	["gaveBall","updown","Number of balls given to teammate","Did the robot give a ball to another teammate?"],
 	["recBall","updown","Number of balls recieved from team","Did the robot recieve a ball from another teammate?"],
 	["scaledTower","check","Climbed tower","Did the robot climb the tower during the last 30 seconds?"],
@@ -50,6 +75,9 @@ letable = [
 	["explodes","check","Spontaneous combustion","Did the robot sustain battery damaged, sparking wires, or fire during operation?"],
 	["gotStuck","check","Got stuck","Did the robot get itself in a position where it struggled significantly or did not get out of?"],
 	["paperweight","check","Didn't move at all","Was the robot a paperweight?"],
+    ["stoppedMoving","check","Stopped moving","Did the robot stop moving for a significant period of time"],
+    ["challtower","check","Challenged tower","Did the robot challenge the tower?"],
+    ["climbedtower","check","Climbed tower","Did the robot climb the tower at the last 15 seconds?"],
 ]
 def clrdb():
 	s = sqlite3.connect("MASTERDB")
@@ -141,7 +169,7 @@ Options:
 
 
 if not doNotStart:
-	from flask import Flask,request,send_file,render_template,g,Response
+	from flask import Flask,request,send_file,render_template,g,Response,send_from_directory
 	app = Flask(__name__)
 	def get_db():
 	    sql = getattr(g, 'MASTERDB', None)
@@ -405,6 +433,13 @@ if not doNotStart:
 	@app.route("/defstyle.css")
 	def defstyle():
 		return servefile("defstyle.css","text/css")
+	@app.route("/img/<path:path>")
+	def img(path):
+		response=send_from_directory("img",path)
+		#err()
+		response.mimetype="image/jpeg" #; error()
+
+		return response
 
 
 

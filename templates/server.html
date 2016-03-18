@@ -138,13 +138,15 @@
 					{% set needGraphs = True %}
 					{% set i=-1 %}
 					{% for part in letable %}
-						{% set i=i+1 %}
-						{% if part.1 == "text" %}
-						{% else %}
-							{{ input(i,part) }}
-							var ctx = document.getElementById("{{part.0}}").getContext("2d");
-							new Chart(ctx).Bar(data, options);
-						{% endif %}
+						{% if (not part[1] == "pic") and (not  part[1] == "text") %}
+                            {% set i=i+1 %}
+                            {% if part.1 == "text" %}
+                            {% else %}
+                                {{ input(i,part) }}
+                                var ctx = document.getElementById("{{part.0}}").getContext("2d");
+                                new Chart(ctx).Bar(data, options);
+                            {% endif %}
+                        {% endif %}
 					{% endfor %}
 				{% endif %}
 			
@@ -194,7 +196,7 @@
 					{% set i = -1 %}
 					{% for part in letable %}
 						{% set i = i+1 %}
-						{% if not letable[i].1 == "radio" %}
+						{% if not (letable[i].1 == "radio" or letable[i].1 == "pic") %}
 							<li><a href="/itemSort/{{i}}">{{part.2}}</a></li><li><a href="/itemSortLarge/{{i}}">{{part.2}}: (small to large)</a></li>
 						{% endif %}
 					{% endfor %}
@@ -231,18 +233,20 @@
 					<br>
 					<div id="charts" style="display: none;">
 					{% for part in letable %}
-						{{part.2}}: <a href ="#top">(back to top)</a>
-						<br>
-						{% set addAdds = 0 %}
-						{% if part.1 == "radio" %}
-							{% set addAdds = (part.4|length)*50%}
-						{% endif %}
-			
-						<canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
+
+						{% if (not part[1] == "pic") and (not  part[1] == "text") %}
+                            {{part.2}}: <a href ="#top">(back to top)</a>
+                            <br>
+                            {% set addAdds = 0 %}
+                            {% if part.1 == "radio" %}
+                                {% set addAdds = (part.4|length)*50%}
+                            {% endif %}
+                
+                            <canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
+                        {% endif %}
 					{% endfor %}
 					</div>
 				{% endif %}
-
 
 
 
