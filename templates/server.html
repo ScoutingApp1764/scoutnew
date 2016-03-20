@@ -269,48 +269,50 @@
 								
 					{% else %}
 						{% for data in datatable %}
-							{% set i = i+1 %}
-							<tr title="{{letable[i].3}}" class="def">
-							{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
-								<td><hr class="def"><h1>{{letable[i].2}}</h1></td><td>
-							{% else %}
-								<td class="def">{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
-								{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
+                            {% set i = i+1 %}
+                            {% if not letable[i].1 == "pic" %}
+                                <tr title="{{letable[i].3}}" class="def">
+                                {% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
+                                    <td><hr class="def"><h1>{{letable[i].2}}</h1></td><td>
+                                {% else %}
+                                    <td class="def">{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
+                                    {% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
 
-									{% if minmax %}
-										No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
-									{% elif avg %} {#can show the avg times each one was selected #}
-										{% set butnum = -1 %}
-										{% for butavged in data %}
-											{% set butnum = butnum + 1 %}
-											{{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
-										{% endfor %}
-											
-									{% else %}
-										{{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
-									{% endif %}
+                                        {% if minmax %}
+                                            No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
+                                        {% elif avg %} {#can show the avg times each one was selected #}
+                                            {% set butnum = -1 %}
+                                            {% for butavged in data %}
+                                                {% set butnum = butnum + 1 %}
+                                                {{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
+                                            {% endfor %}
+                                                
+                                        {% else %}
+                                            {{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
+                                        {% endif %}
 
-								{% elif letable[i].1 == 'check' %}
-									{% if minmax == 'max' %}
-										was ever checked
-									{% elif minmax == 'min' %}
-										was ever unchecked
-									{% endif %}
-									{% if avg  %}
-										{{data * 100}}% of the time {# demical > percentage #}
-									{% else %}
-										{% if data == 0 %}
-											[ ]
-										{% else %}
-											[√]
-										{% endif %}
-									{% endif %}
-								{% else %}
-									{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
-									{# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
-								{% endif %}
-								</td></tr>	
-							{% endif %}
+                                    {% elif letable[i].1 == 'check' %}
+                                        {% if minmax == 'max' %}
+                                            was ever checked
+                                        {% elif minmax == 'min' %}
+                                            was ever unchecked
+                                        {% endif %}
+                                        {% if avg  %}
+                                            {{data * 100}}% of the time {# demical > percentage #}
+                                        {% else %}
+                                            {% if data == 0 %}
+                                                [ ]
+                                            {% else %}
+                                                [√]
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        {{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+                                        {# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
+                                    {% endif %}
+                                    </td></tr>	
+                                {% endif %}
+                            {% endif %}
 						{% endfor %}
 						</table>
 						<hr class="def" style = "border-width: 5px;">
