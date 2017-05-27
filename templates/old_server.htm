@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+{% macro dataset(numb,label) -%}
+	{% set fillColor = "rgba(51,51,51,0.5)"  %}
+	{% if numb == 1 %} {# shoddy solution, out of time #}
+		{% set fillColor = "#cc0066"  %}
+	{% elif numb == 2 %}
+		{% set fillColor = "#6600cc"  %}
+	{% elif numb == 3 %}
+		{% set fillColor = "#FF6666"  %}
+	{% elif numb == 4 %}
+		{% set fillColor = "#FF9900"  %}
+	{% elif numb == 5 %}
+		{% set fillColor = "#000066"  %}
+			
+	{% endif %}
+		
+	{
+			label: "Data - {{label}}",
+			fillColor: "{{fillColor}}",
+			strokeColor: "rgba(220,220,220,1)",
+			pointColor: "rgba(0,0,0,1)",
+			pointStrokeColor: "#fff",
+			pointHighlightFill: "#fff",
+			pointHighlightStroke: "rgba(220,220,220,1)",
+			data: [
+
+
+{%- endmacro %}
+
+
+{% macro input(field,part) -%} {# I would like to do this in pure javascript but I don't know js well and need to get this scouting app finished #}
+
+	
+	var data = {
+		labels: [
+		{% set firstTime = True %}
+		{% if itemSort %}
+			{% for teamtab in alls %}
+				{%if not firstTime %},{% endif %}"Team {{teamtab.0}}"	
+				{% set firstTime = False %}
+			{% endfor %}
+		{% else %}
+			{% for team in teams %}
+				{% if not firstTime %},{% endif %}"Team {{team.0}}"
+				{% set firstTime = False %}
+			{% endfor %}
+		{% endif %}
+
+		],
+		datasets: [
+			{% if part[1] != "radio" %}
+				{{dataset(0)}}
+					{% set firstTime = True %}
+
+					{% for datatable in alls %}
+						{% if firstTime %}
+							{% set firstTime = False %} 
+						{% else %}
+							,
+						{% endif %}
+						{{datatable[field]}}
+					{% endfor %}
+						]
+						},
+			{% else %}
+				{% set buttnum = -1 %}
+				{% for butt in part[4] %}
+					{% set buttnum = buttnum +1 %}
+					{{dataset(buttnum,butt)}}
+					{% set firstTime = True %}
+						{% for datatable in alls %}
+							{% if firstTime %}
+								{% set firstTime = False %} 
+							{% else %}
+								,
+							{% endif %}
+							{{datatable[field][buttnum]}}
+						{% endfor %}
+						]
+						},
+				{% endfor %}
+
+						
+			{% endif %}
+
+		]
+	};
+
+{%- endmacro %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/defstyle.css">
+		{% if allAvg or minmax or itemSort %}
+			<script src="/Chart.js"></script>
+			<script>
+			function onBodyStart()
+			{
+				var options = {//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+					scaleBeginAtZero : true,
+
+					//Boolean - Whether grid lines are shown across the chart
+					scaleShowGridLines : true,
+
+					//String - Colour of the grid lines
+					scaleGridLineColor : "rgba(1,1,1,0.5)",
+
+					//Number - Width of the grid lines
+					scaleGridLineWidth : 1,
+
+					//Boolean - Whether to show horizontal lines (except X axis)
+					scaleShowHorizontalLines: true,
+
+					//Boolean - Whether to show vertical lines (except Y axis)
+					scaleShowVerticalLines: true,
+
+					//Boolean - If there is a stroke on each bar
+					barShowStroke : true,
+
+					//Number - Pixel width of the bar stroke
+					barStrokeWidth : 2,
+
+					//Number - Spacing between each of the X value sets
+					barValueSpacing : 5,
+
+					//Number - Spacing between data sets within X values
+					barDatasetSpacing : 1,
+
+				};
+				{% set needGraphs = False %}
+		
+				{% if itemSort %}
+					{% set needGraphs = True %}
+
+					{{input(1,letable[s])}}
+					var ctx = document.getElementById("{{letable[s].0}}").getContext("2d");
+					new Chart(ctx).Bar(data, options);
+				{% elif avg or minmax %}
+					{% set needGraphs = True %}
+					{% set i=-1 %}
+					{% for part in letable %}
+						{% if (not part[1] == "pic") and (not  part[1] == "text") %}
+							{% set i=i+1 %}
+							{% if part.1 == "text" %}
+							{% else %}
+								{{ input(i,part) }}
+								var ctx = document.getElementById("{{part.0}}").getContext("2d");
+								new Chart(ctx).Bar(data, options);
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			
+			}
+			var loaded = false;
+			function showhide()
+			{
+				if (loaded == false)
+				{
+					loaded = true;
+					onBodyStart();
+				}
+				charts = document.getElementById("charts")
+				if (charts.style.display=="block")
+					charts.style.display="none"
+				else
+					charts.style.display="block"
+			}
+		</script>
+		{% endif %}
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Scouting App - Master</title>
+		<link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
+
+	</head>
+	<body {% if itemSort %}onLoad="onBodyStart();"{% endif %} class="def" >
+		<div class = "container">
+			<div class="col-sm-12">
+				<center>
+					<h1>1764 Scouting App</h1>
+
+					{% if secureMode %}
+						<h2>Secure Mode - No modifying data.</h2>
+					{% endif %}
+					<a href="/master/"><h3>Database View</h3></a>
+				</center>
+
+
+				<h3><center><a href="/allavg/">All averages</a></center></h3><br>
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Category sort
+					<span class="caret"></span>
+					</button>
+					<ul class = "dropdown-menu" aria-labelledby="dropdownMenu1">
+					{% set i = -1 %}
+					{% for part in letable %}
+						{% set i = i+1 %}
+						{% if not (letable[i].1 == "radio" or letable[i].1 == "pic") %}
+							<li><a href="/itemSort/{{i}}">{{part.2}}</a></li><li><a href="/itemSortLarge/{{i}}">{{part.2}}: (small to large)</a></li>
+						{% endif %}
+					{% endfor %}
+				</div>
+
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Avg/min/max
+						<span class="caret"></span>
+					</button>
+					<ul class = "dropdown-menu" aria-labelledby="dropdownMenu1">
+						{% for team in teams %}
+							{% set humanReads = ["Team","Avg","Min","Max"] %}
+							{% set i = -1 %}
+							{% for link in ["teamSort","avg","min","max"] %}
+								{% set i = i+1 %}
+								<li><a href="/{{link}}/{{team.0}}">{{team.0}}: {{humanReads[i]}}</a></li>
+							{% endfor %}
+						{% endfor %}
+					</ul>
+				</div>
+				<br>
+				{% if itemSort %}
+					{{letable[s].2}}:
+					<br>
+					{% set addAdds = 0 %}
+					{% if letable[s].1 == "radio" %}
+						{% set addAdds = (letable[s].4|length)*50%}
+					{% endif %}
+
+
+					<canvas  id="{{letable[s].0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400" ></canvas><br>
+				{% elif needGraphs %}
+					<input type="button" value="Show/hide graphs" onclick="showhide();" />
+					<br>
+					<div id="charts" style="display: none;">
+					{% for part in letable %}
+
+						{% if (not part[1] == "pic") and (not  part[1] == "text") %}
+							{{part.2}}: <a href ="#top">(back to top)</a>
+							<br>
+							{% set addAdds = 0 %}
+							{% if part.1 == "radio" %}
+								{% set addAdds = (part.4|length)*50%}
+							{% endif %}
+				
+							<canvas id="{{part.0}}" width="{{1000+(((alls|length)+addAdds) * 25)}}" height="400"></canvas><br>	
+						{% endif %}
+					{% endfor %}
+					</div>
+				{% endif %}
+
+
+
+
+
+
+
+				{% set lastTeam = -1337 %}
+				{% for datatable in alls %}
+					<table>
+					{% set i = -1 %}
+					{% if itemSort %}
+						{% if lastTeam != datatable.0 %} {#we just need to give the team number, and the value of the variable requested. We also don't
+		want to duplicate team number and line--it helps that SQL has orginized it by team for us.#}
+							<hr class="def">
+							<tr title="{{letable[0].3}}" class="def"><td class="def">Team num</td><td class="def"> {{datatable.0}}</tr>
+						{% endif %}
+						{% set lastTeam = datatable.0 %}
+						<tr title="{{letable[s].3}}" class="def"><td class="def">{{letable[s].2}}</td><td class="def">{{datatable.1}}</td></tr>
+								
+					{% else %}
+						{% for data in datatable %}
+							{% set i = i+1 %}
+							{% if not letable[i].1 == "pic" %}
+								<tr title="{{letable[i].3}}" class="def">
+								{% if letable[i].1 == 'head' %} {#heads just need to be printed out#}
+									<td><hr class="def"><h1>{{letable[i].2}}</h1></td><td>
+								{% else %}
+									<td class="def">{{letable[i].2}}</td><td> {#print out the name on the first sect of the table #}
+									{% if letable[i].1 == 'radio' %} {#radio buttons need special handling #}
+
+										{% if minmax %}
+											No radiobutton data for {{minmax}}imum {#cannot min/max radios #}
+										{% elif avg %} {#can show the avg times each one was selected #}
+											{% set butnum = -1 %}
+											{% for butavged in data %}
+												{% set butnum = butnum + 1 %}
+												{{letable[i].4[butnum]}}: {{butavged * 100}}%, {# decimal > percentage #}
+											{% endfor %}
+												
+										{% else %}
+											{{letable[i].4[data]}} {# if this is just normal, print out the button selected #}
+										{% endif %}
+
+									{% elif letable[i].1 == 'check' %}
+										{% if minmax == 'max' %}
+											was ever checked
+										{% elif minmax == 'min' %}
+											was ever unchecked
+										{% endif %}
+										{% if avg  %}
+											{{data * 100}}% of the time {# demical > percentage #}
+										{% else %}
+											{% if data == 0 %}
+												[ ]
+											{% else %}
+												[√]
+											{% endif %}
+										{% endif %}
+									{% else %}
+										{{data}} times {% if avg %}on average{%elif minmax %}on {{minmax}}imum{% endif%}
+										{# minmax is a string var containing either min or max, so it will come out minimum or maximum #}
+									{% endif %}
+									</td></tr>	
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+						</table>
+						<hr class="def" style = "border-width: 5px;">
+					{% endif %}
+				{% endfor %}
+				<script src="/jquery.min.js"></script>
+				<script src="/bootstrap.min.js"></script>
+			</div>
+		</div>
+	</body>
+</html>

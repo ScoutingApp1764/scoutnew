@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% macro write(type,name,humanName,val)  -%}
+	<label>
+		<input type="{{type}}" name="{{name}}" value="{{val}}">{{humanName}}
+		{#<!--p class="help-block">{{obj.3}}</p-->#}
+	</label>
+{%- endmacro %}
+{% macro endrow() -%}
+	</div>
+	<div class="row">
+{%-endmacro %}
+	
+{% set lastCheckbox = 0 %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/defstyle.css">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Scouting App - Client </title>
+		<link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
+		<div class="row" data-toggle="tool" data-placement="top" title="Only use these if you are instructed to do so.">
+			<center>
+				<h3><a href="/uploaddb">Upload over switch</a>
+				<a href="/exportdb">Export to file</a></h3>
+			</center>
+		</div>
+				<h1><center>
+					{% if evil %}
+						EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
+					{% else %}
+						1764 Scouting App
+					{% endif %}
+				</center></h1>
+				{# submitting explosion: #}
+
+				<form action="/client/" method=POST role="form">
+				<div class ="row">
+				{% set i = -1 %}
+				{% for entryname in layout %}
+					{% set i = i+1 %}
+					{% set entry = layout[entryname] %}
+					{% if entry["type"] == "forumElement" %}
+						<p>forumElement - {{i}}</p>
+					{% endif %}
+				{% endfor %}
+	
+		
+
+				{#
+				{% set i = -1 %}
+				{% set form_i = -1 %}
+				{% set lastType = "" %}
+				{% for obj in layout %} {# Go through the layout. We'll look at formtable if the layout references it. #
+					{#<div title="{{obj.3}}"> {# Gives tootips #
+					{% set i = i+1 %}
+					{% if obj.0 == 'forumElement' %} 
+						{% set form_i=form_1+1 %}
+						{% set form_obj = formtable[obj.1] %}
+						{% if obj.1 == 'radio' %}
+							{{endrow()}}
+							<div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
+							{{form_obj.2}}: {# print out the name of the object #
+							{% set thisval = -1 %}
+							{% set o = -1 %}
+							{% for thisname in form_obj.4 %}
+								{% set o = o+1 %}
+								{% set thisval = thisval+1 %}
+								<div class = "radio">
+									<label>
+										<input type="radio" name ="{{form_i}}" id="{{{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #
+									</label>
+								</div>
+							{% endfor %}
+							</div>
+							<br>
+							{% set lastType="radio" %}
+							{{endrow()}}
+						{% elif obj.1 == 'check' %}
+							{{write("checkbox",i,obj.1,obj.1,0)ble[obj.1] %}
+
+							
+							
+							{{endrow()}}
+							{# {% if type != lastType %}
+								{{endrow()}}
+							{% endif %}  #
+							
+							<div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
+							<div class="checkbox">
+							
+
+						{% elif obj.1 == 'updown' %}
+							{{endrow()}}
+							<br>
+							<div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
+							<div class = "form-group">
+						{% endif %}
+					{% endif %}
+
+					{% if obj.1 == 'head' %}
+						{{endrow()}}
+						<div class="col-sm-12" ><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #
+						{% set lastType="head" %}
+					{% elif obj.1 == 'uic' %}
+						{{endrow()}}
+						<div class="col-sm-12">
+								<img src="/img/{{obj.2}}" alt="Picture missing"> ↓
+						</div>
+					{% endif %}
+				{% endfor %}
+
+				#}
+
+
+
+
+
+
+
+				<div class ="col-sm-12"><input type="submit" class="btn btn-default"></div>
+				<br><br>
+				</form>
+				<script src="/jquery.min.js"></script>
+				<script src="/bootstrap.min.js"></script>
+			</div>
+		<!--/div-->
+	</body>
+</html>

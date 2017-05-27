@@ -1,8 +1,14 @@
-div.container { 
-	width: 100%;
-	position: absolute;
-	margin: auto; 
-	background: linear-gradient( #99ccff, white, #99cc99);
+html {
+	height: 100%;
+}
+body { 
+	background: #99cccc;
+	background: url('/img/we-didnt-need-a-third-gym.jpg');
+	background-attachment: fixed;
+	background-size: cover;
+	background-origin: fixed;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #333;
 }
 hr.def { 
 	border-color: black;
@@ -11,4 +17,53 @@ hr.def {
 }
 td.def {
 	padding-right: 10px;
+}
+div.floating-box
+{
+	margin: auto; 
+	width: 50%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	border-bottom-style: none; /*google chrome is too bad to realize that the bottom should be 100% transparrent.*/
+	padding: 25px;
+	background: rgba(153,204,204,0.9); /*for non-linear gradient supporting browsers and firefox's weird 1-pixel-off background bug */
+}
+div.end
+{
+	padding: 25px 25px;
+	background: linear-gradient(rgba(153, 204, 204,0.9), rgba(0,0,0,0));
+	margin: auto; 
+	width: 50%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	border-image: linear-gradient( black, rgba(0, 0, 0, 0)) 1;
+	border-top-style: none;
+	border-bottom-style: none;
+}
+div.centerall
+{
+	width: -moz-fit-content;
+	width: -webkit-fit-content;
+	margin: auto;
+
+}
+div.centertext
+{
+	text-align: center;
+}
+.button
+{
+	text-decoration: none;
+	transition: background-color 0.5s;
+	padding: 5px;
+	color: black;
+	border-width: 5px;
+	border-color: blue;
+
+}
+.button:hover
+{
+	background-color: #0000cc;
 }

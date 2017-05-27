@@ -1,125 +1,74 @@
 <!DOCTYPE html>
-{% macro write(type,name,humanName,val,lastType)  -%}
-    <label>
-        <input type="{{type}}" name="{{name}}" value="{{val}}">{{humanName}}
-        {#<!--p class="help-block">{{obj.3}}</p-->#}
-    </label>
-{%- endmacro %}
-{% macro endrow() -%}
-    </div>
-    <div class="row">
-{%-endmacro %}
-    
-{% set lastCheckbox = 0 %}
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="/defstyle.css">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Scouting App - Client </title>
-        <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
-    </head>
-    <body>
-	    <div class = "container" {% if evil %}style="background: linear-gradient( #ff0000, white );"{% endif %}>
-		<div class="row" data-toggle="tool" data-placement="top" title="Only use these if you are instructed to do so.">
-			<center>
-				<h3><a href="/uploaddb">Upload over switch</a>
-				<a href="/exportdb">Export to file</a></h3>
-			</center>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/defstyle.css">
+		<meta charset="utf-8">
+		<title>Scouting App - Client </title>
+	</head>
+	<body>
+		<div class="centerall">
+			<h3><a href="/uploaddb" class="button" style="border-left-style: solid;">Upload over switch</a>
+			<a href="/exportdb" class="button" style="border-right-style: solid;">Export to file</a></h3>
 		</div>
-                <h1><center>
-                        {% if evil %}
-                            EEEVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIILLLLLLLLLLL!!!!!
-                        {% else %}
-                            1764 Scouting App
-                        {% endif %}
-                </center></h1>
-                {# submitting explosion: #}
+		<div class="centertext">
+			<h1>
+				1764 Scouting App
+			</h1>
+		</div>
 
-				<form action="/client/" method=POST role="form">
+		<div class = "floating-box">
+			<form action="/client/" method=POST role="form">
 				{% set i = -1 %}
-                {% set lastType = "" %}
-                <div class ="row">
-				{% for obj in letable %}
-                    {#<div title="{{obj.3}}"> {# Gives tootips #}
+				{% for entryname in layoutOrder %}
 					{% set i = i+1 %}
-					{% if obj.1 == 'radio' %}
-                        {{endrow()}}
-                        <div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
-						{{obj.2}}: {# print out the name of the object #} 
-						{% set thisval = -1 %}
-						{% set o = -1 %}
-						{% for thisname in obj.4 %}
-							{% set o = o+1 %}
-							{% set thisval = thisval+1 %}
-							<div class = "radio">
-								<label>
-									<input type="radio" name ="{{i}}" id="{{letable[i].0}}{{o}}" value ="{{thisval}}"> {{thisname}} {# print out each choice #}
-								</label>
-							</div>
-						{% endfor %}
-                        </div>
-						<br>
-                        {% set lastType="radio" %}
-					{% elif obj.1 == 'head' %}
-                        {{endrow()}}
-                        <div class="col-sm-12" ><hr class = "def"><h1>{{obj.2}}</h1></div> {# Headers just need to be printed out #}
-                        {% set lastType="head" %}
-                    {% elif obj.1 == 'pic' %}
-                    {{endrow()}}
-                    <div class="col-sm-12">
-                            <img src="/img/{{obj.2}}" alt="Picture missing"> ↓
-                    </div>
-                    {% else %}
-                        <!--div class="col-sm-12">
-                        </div-->
-						{% if obj.1 == 'check' %}
-							{% set type = 'checkbox' %}
-                            {% set val = 1 %}
-                            {% set div = True %}
-                            {% set lastCheckbox = lastCheckbox+1 %}
-                            {% if lastCheckbox == 3 %}
-                                {% set lastCheckbox = 0 %}
-                            {% endif %}
-                                
-                            {% if type != lastType %}
-                                {{endrow()}}
-                            {% endif %}
-                            <div class="col-sm-4" data-toggle="tool" data-placement="top" title="{{obj.3}}">
-                            <div class="checkbox">
-                            
-
-						{% elif obj.1 == 'updown' %}
-							{% set type = 'number' %}
-                            {% set val = 0 %}
-                            {% set div = False %}
-                            {{endrow()}}
-                            <br>
-                            <div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
-							<div class = "form-group">
-						{% elif obj.1 == 'text' %}
-							{% set type = 'text' %}
-							{% set val = ' ' %}
-							{% set div = False %}
-                            {{endrow()}}
-                            <br>
-                            <div class="col-sm-12" data-toggle="tool" data-placement="top" title="{{obj.3}}">
-							<div class = "form-group">
-						{% endif %} {# These all have just about the same handling, so they're all down here #}
-                        {{write(type,i,obj.2,val,lastType)}}
-    					</div>
-                            </div>
-                        {% set lastType = type %}    
-					{% endif %}
+					{% set entry = layout[entryname] %}
+					{% if entry %}
+						{% if entry["type"] == "forumElement" %}
+							{% set element = formtable[entryname] %}
+							{% if element %}
+								{% if element["type"] == "check" %}
+									{{entryname}}
+									<input type="checkbox" name="{{entryname}}" value="1"> 
+									<br>
+								{% elif element["type"] == "text" %}
+									{{entryname}}
+									<input type="text" name="{{entryname}}" value ="">
+									<br>
+								{% elif element["type"] == "updown" %}
+									{{entryname}}
+									<input type="number" name="{{entryname}}" value ="0"> 
+									<br>
+								{% elif element["type"] == "radio" %}
+									{{entryname}}
+									<br>
+									{% set i = -1 %}
+									{% for button in element["buttons"] %} 
+										{% set i = i+1 %}
+										<input type="radio" name="{{entryname}}" value="{{i}}">{{button}}
+									{% endfor%}
+									<br>
+								{% endif %}
+								
+							{% else %}
+								<p>ERROR: Layout element {{entryname}} doesn't have a forum element to back it up.</p>
+							{% endif %}
+						{% elif entry["type"] == "text" %}
+							<p {% if entry["style"] %} style="{{entry["style"]}}" {% endif %}>{% if entry["text"] %} {{entry["text"]}} {% endif %}</p>		
+						{% elif entry["type"] == "pic" %}
+							<img src="/img/{{entry['image']}}" alt="Picture missing"> 
+							<br>
+						{% endif %}
+					{% else %}
+						<p>ERROR: Non-existing element listed</p>
+					{% endif%}
 				{% endfor %}
-
-                <div class ="col-sm-12"><input type="submit" class="btn btn-default"></div>
-                <br><br>
-				</form>
-				<script src="/jquery.min.js"></script>
-				<script src="/bootstrap.min.js"></script>
-		    </div>
-	    <!--/div-->
+				<input type="submit">
+				<br>
+				<br>
+			</form>
+		</div>
+		<div class="end"></div>
+		<br>
+		<br>
 	</body>
 </html>
